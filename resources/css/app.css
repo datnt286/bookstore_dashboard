@@ -1,0 +1,12 @@
+/* Đặt nút và ô tìm kiếm cùng hàng */
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter {
+    display: flex;
+    align-items: center;
+}
+
+/* Điều chỉnh khoảng cách giữa nút và ô tìm kiếm */
+.dataTables_length,
+.dataTables_filter {
+    margin-right: 10px; /* Thay đổi giá trị khoảng cách theo ý muốn của bạn */
+}
