@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
@@ -13,7 +12,7 @@ class AdminController extends Controller
 {
     public function master()
     {
-        if (Auth::check()) {
+        if (auth()->check()) {
             return view('index');
         }
 
@@ -29,7 +28,7 @@ class AdminController extends Controller
     {
         $credentials = $request->only('username', 'password');
 
-        if (Auth::attempt($credentials)) {
+        if (auth()->attempt($credentials)) {
             return redirect()->route('/')->with(['message' => 'Đăng nhập thành công']);
         }
 
@@ -38,8 +37,9 @@ class AdminController extends Controller
 
     public function account()
     {
-        if (Auth::check()) {
-            $admin = Auth::user();
+        if (auth()->check()) {
+            $admin = auth()->user();
+
             return view('admins.account', compact('admin'));
         }
 
@@ -48,7 +48,8 @@ class AdminController extends Controller
 
     public function logout()
     {
-        Auth::logout();
+        auth()->logout();
+
         return redirect()->route('login');
     }
 
@@ -153,13 +154,13 @@ class AdminController extends Controller
 
             $data['avatar'] = $fileName;
 
-            $admin = Admin::find(Auth::user()->id);
+            $admin = Admin::find(auth()->id());
             if ($admin->avatar && Storage::exists($admin->avatar)) {
                 Storage::delete($admin->avatar);
             }
         }
 
-        $admin = Admin::find(Auth::user()->id);
+        $admin = Admin::find(auth()->id());
         $admin->update($data);
 
         return redirect()->route('account')->with(['message' => 'Cập nhật thông tin thành công']);
@@ -188,7 +189,7 @@ class AdminController extends Controller
 
     public function changePassword(Request $request)
     {
-        $admin = Admin::find(Auth::user()->id);
+        $admin = Admin::find(auth()->id());
         $admin->update(['password' => Hash::make($request->new_password)]);
     }
 }

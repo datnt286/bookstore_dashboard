@@ -12,4 +12,9 @@ class Category extends Model
     use SoftDeletes;
     protected $table = 'categories';
     protected $fillable = ['id', 'name'];
+
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
 }

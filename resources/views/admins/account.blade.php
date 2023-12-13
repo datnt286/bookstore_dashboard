@@ -7,11 +7,11 @@
     <div class="col-md-3">
         <div class="card card-primary card-outline">
             <div class="card-body box-profile text-center">
-                <img id="avatar-preview" src="{{ asset('uploads/admins/' . Auth::user()->avatar) }}" alt="Ảnh đại diện" class="profile-user-img img-fluid img-circle d-block" style="max-width: 100px; max-height: 100px;">
+                <img id="avatar-preview" src="{{ asset('uploads/admins/' . $admin->avatar) }}" alt="Ảnh đại diện" class="profile-user-img img-fluid img-circle d-block" style="max-width: 100px; max-height: 100px;">
                 <label for="avatar" id="btn-change-avatar" class="btn btn-secondary my-3 font-weight-normal">
                     Chọn ảnh
                 </label>
-                <h3 class="profile-username">{{ Auth::user()->name }}</h3>
+                <h3 class="profile-username">{{ $admin->name }}</h3>
                 <p class="text-muted">Admin</p>
             </div>
         </div>
