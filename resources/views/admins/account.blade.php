@@ -114,11 +114,11 @@
             if ($(this).is(':checked')) {
                 $('#old-password').attr('type', 'text');
                 $('#new-password').attr('type', 'text');
-                $('#re-password').attr('type', 'text');
+                $('#re-enter-password').attr('type', 'text');
             } else {
                 $('#old-password').attr('type', 'password');
                 $('#new-password').attr('type', 'password');
-                $('#re-password').attr('type', 'password');
+                $('#re-enter-password').attr('type', 'password');
             }
         });
     })
