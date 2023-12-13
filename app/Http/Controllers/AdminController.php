@@ -144,8 +144,6 @@ class AdminController extends Controller
             'address' => $request->address,
         ];
 
-        $password = $request->filled('password') ? ['password' => Hash::make($request->input('password'))] : [];
-
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $extension = $file->getClientOriginalExtension();
@@ -162,7 +160,7 @@ class AdminController extends Controller
         }
 
         $admin = Admin::find(Auth::user()->id);
-        $admin->update(array_merge($data, $password));
+        $admin->update($data);
 
         return redirect()->route('account')->with(['message' => 'Cập nhật thông tin thành công']);
     }
