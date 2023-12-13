@@ -72,9 +72,13 @@
                                 <label for="new-password" class="col-md-2">Mật khẩu mới: </label>
                                 <input type="password" name="new_password" id="new-password" class="form-control col-md-5">
                             </div>
-                            <div class="row d-flex justify-content-center my-4">
-                                <label for="re-password" class="col-md-2">Nhập lại mật khẩu: </label>
-                                <input type="password" name="re_password" id="re-password" class="form-control col-md-5">
+                            <div class="row d-flex justify-content-center my-2">
+                                <label for="re-enter-password" class="col-md-2">Nhập lại mật khẩu: </label>
+                                <input type="password" name="re_enter_password" id="re-enter-password" class="form-control col-md-5">
+                            </div>
+                            <div class="custom-control custom-checkbox text-center my-2">
+                                <input type="checkbox" id="show-password" class="custom-control-input">
+                                <label for="show-password" class="custom-control-label">Hiện mật khẩu</label>
                             </div>
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary mt-3">
@@ -88,7 +92,6 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 @section('page-js')
@@ -104,6 +107,18 @@
                 }
 
                 reader.readAsDataURL(input.files[0]);
+            }
+        });
+
+        $('#show-password').change(function() {
+            if ($(this).is(':checked')) {
+                $('#old-password').attr('type', 'text');
+                $('#new-password').attr('type', 'text');
+                $('#re-password').attr('type', 'text');
+            } else {
+                $('#old-password').attr('type', 'password');
+                $('#new-password').attr('type', 'password');
+                $('#re-password').attr('type', 'password');
             }
         });
     })
