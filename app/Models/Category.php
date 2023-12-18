@@ -11,7 +11,7 @@ class Category extends Model
     use HasFactory;
     use SoftDeletes;
     protected $table = 'categories';
-    protected $fillable = ['id', 'name', 'image'];
+    protected $fillable = ['id', 'name', 'image', 'slug'];
 
     public function books()
     {

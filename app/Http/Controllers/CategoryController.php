@@ -33,7 +33,10 @@ class CategoryController extends Controller
     {
         $category = Category::updateOrCreate(
             ['id' => $request->id],
-            ['name' => $request->name]
+            [
+                'name' => $request->name,
+                'slug' => Str::slug($request->name),
+            ],
         );
 
         if ($request->hasFile('image')) {

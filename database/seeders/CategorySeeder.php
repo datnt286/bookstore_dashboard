@@ -16,15 +16,18 @@ class CategorySeeder extends Seeder
         DB::table('categories')->insert([
             [
                 'name' => 'Sách tự lực',
-                'image' => 'sach-tu-luc.jpg'
+                'image' => 'sach-tu-luc.jpg',
+                'slug' => 'sach-tu-luc'
             ],
             [
                 'name' => 'Truyện tranh',
-                'image' => 'truyen-tranh.jpg'
+                'image' => 'truyen-tranh.jpg',
+                'slug' => 'truyen-tranh',
             ],
             [
                 'name' => 'Sách giáo khoa',
-                'image' => 'sach-giao-khoa.jpg'
+                'image' => 'sach-giao-khoa.jpg',
+                'slug' => 'sach-giao-khoa',
             ],
         ]);
     }
