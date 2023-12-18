@@ -8,7 +8,19 @@ use Illuminate\Http\Request;
 
 class APIBookController extends Controller
 {
-    public function getBooks()
+    public function index()
+    {
+        $books = Book::with('images')->get()->toArray();
+        $combos = Combo::all()->toArray();
+        $products = array_merge($books, $combos);
+
+        return response()->json([
+            'success' => true,
+            'data' => $products,
+        ]);
+    }
+
+    public function getNewBooksAndCombos()
     {
         $newBooks = Book::with('images')->latest()->get();
         $combos = Combo::all();
@@ -17,7 +29,7 @@ class APIBookController extends Controller
             'success' => true,
             'data' => [
                 'newBooks' => $newBooks,
-                'combo' => $combos,
+                'combos' => $combos,
             ],
         ]);
     }
@@ -53,6 +65,26 @@ class APIBookController extends Controller
                 'description' => $book->description,
                 'images' => $book->images,
             ],
+        ]);
+    }
+
+    public function getProductBySlug($slug)
+    {
+        $book = Book::where('slug', $slug)->first();
+        $combo = Combo::where('slug', $slug)->first();
+        $product = $book ? $book : $combo;
+
+        if (empty($product)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Sản phẩm không tồn tại!',
+                'data' => null,
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $product,
         ]);
     }
 }

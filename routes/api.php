@@ -27,5 +27,7 @@ Route::prefix('category')->group(function () {
     });
 });
 
-Route::get('get-books', [APIBookController::class, 'getBooks'])->name('get-books');
-Route::get('{id}', [APIBookController::class, 'show'])->name('show');
+Route::get('index', [APIBookController::class, 'index'])->name('index');
+Route::get('get-new-books-and-combos', [APIBookController::class, 'getNewBooksAndCombos'])->name('get-new-books-and-combos');
+Route::get('{slug}', [APIBookController::class, 'getProductBySlug'])->name('get-product-by-slug');
+//Route::get('{id}', [APIBookController::class, 'show'])->name('show');
