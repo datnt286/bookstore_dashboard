@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('publisher_id');
             $table->unsignedBigInteger('supplier_id');
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->string('link_download')->nullable();
             $table->string('description', 1000)->nullable();
-            $table->string('slug')->nullable();
+            $table->string('slug')->unique();
             $table->timestamps();
             $table->softDeletes();
 

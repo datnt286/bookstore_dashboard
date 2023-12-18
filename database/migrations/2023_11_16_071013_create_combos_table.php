@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('combos', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->unsignedBigInteger('supplier_id');
             $table->integer('price');
             $table->integer('quantity');
             $table->string('image')->default('default-image.jpg');
             $table->string('description', 1000)->nullable();
-            $table->string('slug')->nullable();
+            $table->string('slug')->unique();
             $table->timestamps();
             $table->softDeletes();
 

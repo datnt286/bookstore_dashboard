@@ -14,7 +14,6 @@ class AuthorSeeder extends Seeder
     public function run(): void
     {
         DB::table('authors')->insert([
-            ['name' => 'Gege Akutami'],
             ['name' => 'Dale Carnegie'],
             ['name' => 'Nguyễn Nhật Ánh'],
             ['name' => 'Rosie Nguyễn'],
