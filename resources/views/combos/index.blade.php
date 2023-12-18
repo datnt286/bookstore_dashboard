@@ -213,7 +213,7 @@
                 {
                     data: 'image',
                     render: function(data, type, row) {
-                        return '<img src="uploads/images/' + row.image + '" alt="Hình ảnh" class="img img-thumbnail" style="max-width: 100px; max-height: 100px;">';
+                        return '<img src="uploads/combos/' + row.image + '" alt="Hình ảnh" class="img img-thumbnail" style="max-width: 100px; max-height: 100px;">';
                     }
                 },
                 {
@@ -282,7 +282,7 @@
                 $('#price').val(res.data.combo.price);
                 $('#quantity').val(res.data.combo.quantity);
                 $('#description').summernote('code', res.data.combo.description);
-                $('#image-preview').attr('src', 'uploads/images/' + res.data.combo.image);
+                $('#image-preview').attr('src', 'uploads/combos/' + res.data.combo.image);
 
                 $('#supplier-id').empty();
                 $('#book-ids').empty();
@@ -370,7 +370,7 @@
                 $('#price-detail').text(res.data.price);
                 $('#quantity-detail').text(res.data.quantity);
                 $('#description-detail').text(res.data.description);
-                $('#image-detail-preview').attr('src', 'uploads/images/' + res.data.image);
+                $('#image-detail-preview').attr('src', 'uploads/combos/' + res.data.image);
                 $('#modal-detail').modal('show');
             } catch (error) {
                 handleError(error);

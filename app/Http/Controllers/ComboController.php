@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\Combo;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -63,11 +64,16 @@ class ComboController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
-            $fileName = time() . '_' . $request->name . '.' . $extension;
+            $fileName = time() . '_' . Str::slug($request->name) . '.' . $extension;
 
-            $file->move(public_path('uploads/images/'), $fileName);
+            $file->move(public_path('uploads/combos/'), $fileName);
 
-            $data['image'] = $fileName;
+            // if ($combo->image && Storage::exists('uploads/combos/' . $combo->image)) {
+            //     Storage::delete('uploads/combos/' . $combo->image);
+            // }
+
+            $combo->image = $fileName;
+            $combo->save();
         }
 
         $message = $request->id ? 'Cập nhật' : 'Thêm mới';

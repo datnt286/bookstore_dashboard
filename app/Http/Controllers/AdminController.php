@@ -121,10 +121,10 @@ class AdminController extends Controller
 
             $data['avatar'] = $fileName;
 
-            $admin = Admin::find($id);
-            if ($admin->avatar && Storage::exists($admin->avatar)) {
-                Storage::delete($admin->avatar);
-            }
+            // $admin = Admin::find($id);
+            // if ($admin->avatar && Storage::exists('uploads/admins/' . $admin->avatar)) {
+            //     Storage::delete('uploads/admins/' . $admin->avatar);
+            // }
         }
 
         $admin = Admin::find($id);

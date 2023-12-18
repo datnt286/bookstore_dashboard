@@ -27,4 +27,5 @@ Route::prefix('category')->group(function () {
     });
 });
 
+Route::get('get-books', [APIBookController::class, 'getBooks'])->name('get-books');
 Route::get('{id}', [APIBookController::class, 'show'])->name('show');

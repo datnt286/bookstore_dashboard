@@ -3,10 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Combo;
 use Illuminate\Http\Request;
 
 class APIBookController extends Controller
 {
+    public function getBooks()
+    {
+        $newBooks = Book::with('images')->latest()->get();
+        $combos = Combo::all();
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'newBooks' => $newBooks,
+                'combo' => $combos,
+            ],
+        ]);
+    }
+
     public function show($id)
     {
         $book = Book::with('images')->find($id);

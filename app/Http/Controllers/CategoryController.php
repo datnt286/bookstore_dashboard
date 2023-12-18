@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
 class CategoryController extends Controller
@@ -29,10 +31,25 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        Category::updateOrCreate(
+        $category = Category::updateOrCreate(
             ['id' => $request->id],
             ['name' => $request->name]
         );
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '_' . Str::slug($request->name) . '.' . $extension;
+
+            $file->move(public_path('uploads/categories/'), $fileName);
+
+            // if ($category->image && Storage::exists('uploads/categories/' . $category->image)) {
+            //     Storage::delete('uploads/categories/' . $category->image);
+            // }
+
+            $category->image = $fileName;
+            $category->save();
+        }
 
         $message = $request->id ? 'Cập nhật' : 'Thêm mới';
 

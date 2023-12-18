@@ -19,6 +19,7 @@
             <thead>
                 <tr>
                     <th>Id</th>
+                    <th>Hình ảnh</th>
                     <th>Thể loại</th>
                     <th></th>
                 </tr>
@@ -30,7 +31,7 @@
 </div>
 
 <div class="modal fade" id="modal-store">
-    <form id="form-store">
+    <form id="form-store" enctype="multipart/form-data">
         @csrf
         <div class="modal-dialog">
             <div class="modal-content">
@@ -43,6 +44,16 @@
                 <div class="modal-body">
                     <div class="card-body">
                         <input type="hidden" name="id" id="id">
+                        <div class="form-group text-center">
+                            <label for="image" class="form-label d-block">Hình ảnh:</label>
+                            <div>
+                                <img id="image-preview" src="{{ asset('img/default-image.jpg') }}" alt="Hình ảnh" class="img img-thumbnail my-2" style="max-width: 100px; max-height: 100px;">
+                            </div>
+                            <input type="file" name="image" id="image" class="d-none">
+                            <label for="image" class="btn btn-secondary font-weight-normal mt-2">
+                                Chọn ảnh
+                            </label>
+                        </div>
                         <div class="form-group">
                             <label for="name">Thể loại: </label>
                             <input type="text" name="name" id="name" class="form-control">
@@ -123,6 +134,12 @@
                     data: 'id'
                 },
                 {
+                    data: 'image',
+                    render: function(data, type, row) {
+                        return '<img src="uploads/categories/' + row.image + '" alt="Hình ảnh" class="img img-thumbnail" style="max-width: 100px; max-height: 100px;">';
+                    }
+                },
+                {
                     data: 'name'
                 },
                 {
@@ -139,10 +156,13 @@
         });
 
         var id = null;
-
+        var image = null;
+        var formData = new FormData($('#form-store')[0]);
+        
         $('#btn-create').click(function() {
             $('#id').val(null);
             $('#form-store').trigger('reset');
+            $('#image-preview').attr('src', 'img/default-image.jpg');
             $('#modal-title').text('Thêm thể loại');
             $('#modal-store').modal('show');
         });
@@ -155,10 +175,27 @@
 
                 $('#id').val(res.data.id);
                 $('#name').val(res.data.name);
+                $('#image-preview').attr('src', 'uploads/categories/' + res.data.image);
                 $('#modal-title').text('Cập nhật thể loại');
                 $('#modal-store').modal('show');
             } catch (error) {
                 handleError(error);
+            }
+        });
+
+        $('#image').change(function(event) {
+            var input = event.target;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#image-preview').attr('src', e.target.result);
+
+                    var formData = new FormData($('#form-store')[0]);
+                    formData.set('image', input.files[0]);
+                }
+
+                reader.readAsDataURL(input.files[0]);
             }
         });
 
