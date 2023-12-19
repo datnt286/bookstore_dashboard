@@ -12,6 +12,12 @@ class Combo extends Model
     use SoftDeletes;
     protected $table = 'combos';
     protected $fillable = ['id', 'name', 'supplier_id', 'price', 'quantity', 'description', 'slug', 'image'];
+    protected $appends = ['absolute_path'];
+
+    public function getAbsolutePathAttribute()
+    {
+        return env('APP_URL') . "/uploads/combos/{$this->image}";
+    }
 
     public function supplier()
     {
