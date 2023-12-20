@@ -70,7 +70,7 @@ class APIBookController extends Controller
 
     public function getProductBySlug($slug)
     {
-        $book = Book::where('slug', $slug)->first();
+        $book = Book::with('images')->where('slug', $slug)->first();
         $combo = Combo::where('slug', $slug)->first();
         $product = $book ? $book : $combo;
 
@@ -85,6 +85,24 @@ class APIBookController extends Controller
         return response()->json([
             'success' => true,
             'data' => $product,
+        ]);
+    }
+
+    public function getBooksByCategory($category_id)
+    {
+        $books = Book::with('images')->where('category_id', $category_id)->get();
+
+        if (empty($books)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Danh sách trống!',
+                'data' => null,
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $books,
         ]);
     }
 }

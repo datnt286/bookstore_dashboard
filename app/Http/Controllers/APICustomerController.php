@@ -10,14 +10,11 @@ class APICustomerController extends Controller
 {
     public function register(Request $request)
     {
-        $customer = new Customer();
-        $customer->username = $request->username;
-        $customer->password = Hash::make($request->password);
-        $customer->name = $request->name;
-        $customer->phone = $request->phone;
-        $customer->email = $request->email;
-        $customer->address = $request->address;
-        $customer->save();
+        Customer::create([
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+            'phone' => $request->phone,
+        ]);
 
         return response()->json([
             'success' => true,
@@ -40,7 +37,7 @@ class APICustomerController extends Controller
         ]);
     }
 
-    public function account()
+    public function me()
     {
         return response()->json(auth()->user());
     }
@@ -48,11 +45,12 @@ class APICustomerController extends Controller
     public function update(Request $request)
     {
         $customer = Customer::find($request->id);
-        $customer->name = $request->name;
-        $customer->phone = $request->phone;
-        $customer->email = $request->email;
-        $customer->address = $request->address;
-        $customer->save();
+
+        $customer->update([
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'address' => $request->address
+        ]);
 
         return response()->json([
             'success' => true,
