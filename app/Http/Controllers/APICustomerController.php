@@ -47,6 +47,7 @@ class APICustomerController extends Controller
         $customer = Customer::find($request->id);
 
         $customer->update([
+            'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,
             'address' => $request->address
@@ -55,6 +56,17 @@ class APICustomerController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Cập nhật thông tin thành công!'
+        ]);
+    }
+
+    public function changePassword(Request $request)
+    {
+        $customer = Customer::find($request->id);
+        $customer->update(['password' => Hash::make($request->new_password)]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Đổi mật khẩu thành công!'
         ]);
     }
 

@@ -23,7 +23,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('register', [APICustomerController::class, 'register'])->name('register');
 Route::post('login', [APICustomerController::class, 'login'])->name('login');
-Route::get('me', [APICustomerController::class, 'me'])->name('me');
+
+Route::middleware('auth:api')->group(function () {
+    Route::get('me', [APICustomerController::class, 'me'])->name('me');
+    Route::post('update', [APICustomerController::class, 'update'])->name('update');
+    Route::post('change-password', [APICustomerController::class, 'changePassword'])->name('change-password');
+});
 
 Route::prefix('category')->group(function () {
     Route::name('category.')->group(function () {
