@@ -3,6 +3,7 @@
 use App\Http\Controllers\APIBookController;
 use App\Http\Controllers\APICategoryController;
 use App\Http\Controllers\APICustomerController;
+use App\Http\Controllers\APIOrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,8 @@ Route::prefix('category')->group(function () {
         Route::get('{id}', [APICategoryController::class, 'show'])->name('show');
     });
 });
+
+Route::post('order/create', [APIOrderController::class, 'create'])->name('order.create');
 
 Route::get('index', [APIBookController::class, 'index'])->name('index');
 Route::get('get-new-books-and-combos', [APIBookController::class, 'getNewBooksAndCombos'])->name('get-new-books-and-combos');

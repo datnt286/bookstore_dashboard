@@ -30,7 +30,7 @@
                 @forelse($orders as $order)
                 <tr>
                     <td>{{ $order->id }}</td>
-                    <td>{{ $order->customer->name }}</td>
+                    <td>{{ $order->customer_id }}</td>
                     <td>{{ $order->phone }}</td>
                     <td>{{ $order->address }}</td>
                     <td>{{ $order->total }}</td>

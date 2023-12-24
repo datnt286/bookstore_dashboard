@@ -59,7 +59,7 @@ class GoodsReceviedNoteController extends Controller
             }
 
             if ($request->combo_id[$i]) {
-                $combo = Book::find($request->combo_id[$i]);
+                $combo = Combo::find($request->combo_id[$i]);
                 $combo->price = $request->price[$i];
                 $combo->quantity += $request->quantity[$i];
                 $combo->save();
