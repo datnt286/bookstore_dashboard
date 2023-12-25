@@ -42,4 +42,9 @@ class Book extends Model
     {
         return $this->belongsToMany(Combo::class);
     }
+
+    public function getImageAttribute()
+    {
+        return $this->images()->get()->toArray();
+    }
 }

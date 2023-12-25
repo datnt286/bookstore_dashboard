@@ -36,7 +36,7 @@ class APICategoryController extends Controller
 
     public function getCategoryBySlug($slug)
     {
-        $category = Category::with('books')->where('slug', $slug)->first();
+        $category = Category::with('books.images')->where('slug', $slug)->first();
 
         if (empty($category)) {
             return response()->json([
