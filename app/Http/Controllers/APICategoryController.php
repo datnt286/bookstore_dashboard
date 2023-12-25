@@ -33,4 +33,21 @@ class APICategoryController extends Controller
             'data' => $category,
         ]);
     }
+
+    public function getCategoryBySlug($slug)
+    {
+        $category = Category::with('books')->where('slug', $slug)->first();
+
+        if (empty($category)) {
+            return response()->json([
+                'success' => false,
+                'message' => "Thể loại không tồn tại"
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $category,
+        ]);
+    }
 }

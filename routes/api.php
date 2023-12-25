@@ -34,7 +34,7 @@ Route::middleware('auth:api')->group(function () {
 Route::prefix('category')->group(function () {
     Route::name('category.')->group(function () {
         Route::get('/', [APICategoryController::class, 'index'])->name('index');
-        Route::get('{id}', [APICategoryController::class, 'show'])->name('show');
+        Route::get('{slug}', [APICategoryController::class, 'getCategoryBySlug'])->name('get-category-by-slug');
     });
 });
 
@@ -44,4 +44,3 @@ Route::get('index', [APIBookController::class, 'index'])->name('index');
 Route::get('get-new-books-and-combos', [APIBookController::class, 'getNewBooksAndCombos'])->name('get-new-books-and-combos');
 Route::get('get-books-by-category/{category_id}', [APIBookController::class, 'getBooksByCategory'])->name('get-books-by-category');
 Route::get('{slug}', [APIBookController::class, 'getProductBySlug'])->name('get-product-by-slug');
-//Route::get('{id}', [APIBookController::class, 'show'])->name('show');
