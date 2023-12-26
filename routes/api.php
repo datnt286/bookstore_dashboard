@@ -41,6 +41,9 @@ Route::prefix('category')->group(function () {
 Route::post('order/create', [APIOrderController::class, 'create'])->name('order.create');
 
 Route::get('index', [APIBookController::class, 'index'])->name('index');
-Route::get('get-new-books-and-combos', [APIBookController::class, 'getNewBooksAndCombos'])->name('get-new-books-and-combos');
+Route::get('get-newbooks-and-combos', [APIBookController::class, 'getNewBooksAndCombos'])->name('get-newbooks-and-combos');
+Route::get('get-newbooks', [APIBookController::class, 'getNewBooks'])->name('get-newbooks');
+Route::get('get-combos', [APIBookController::class, 'getCombos'])->name('get-combos');
 Route::get('get-books-by-category/{category_id}', [APIBookController::class, 'getBooksByCategory'])->name('get-books-by-category');
+Route::get('search/{slug}', [APIBookController::class, 'searchProduct'])->name('search-product');
 Route::get('{slug}', [APIBookController::class, 'getProductBySlug'])->name('get-product-by-slug');

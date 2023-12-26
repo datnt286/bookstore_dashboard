@@ -34,6 +34,26 @@ class APIBookController extends Controller
         ]);
     }
 
+    public function getNewBooks()
+    {
+        $newBooks = Book::with('images')->latest()->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $newBooks,
+        ]);
+    }
+
+    public function getCombos()
+    {
+        $combos = Combo::all();
+
+        return response()->json([
+            'success' => true,
+            'data' => $combos,
+        ]);
+    }
+
     public function show($id)
     {
         $book = Book::with('images')->find($id);
@@ -103,6 +123,18 @@ class APIBookController extends Controller
         return response()->json([
             'success' => true,
             'data' => $books,
+        ]);
+    }
+
+    public function searchProduct($slug)
+    {
+        $books = Book::with('images')->where('slug', 'LIKE', '%' . $slug . '%')->get()->toArray();
+        $combos = Combo::where('slug', 'LIKE', '%' . $slug . '%')->get()->toArray();
+        $products = array_merge($books, $combos);
+
+        return response()->json([
+            'success' => true,
+            'data' => $products,
         ]);
     }
 }
