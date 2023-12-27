@@ -12,6 +12,7 @@ class Book extends Model
     use SoftDeletes;
     protected $table = 'books';
     protected $fillable = ['name', 'category_id', 'publisher_id', 'supplier_id', 'size', 'weight', 'num_pages', 'language', 'release_date', 'price', 'e_book_price', 'quantity', 'is_combo', 'combo_id', 'description', 'slug'];
+    protected $appends = ['category_name'];
 
     public function category()
     {
@@ -43,8 +44,8 @@ class Book extends Model
         return $this->belongsToMany(Combo::class);
     }
 
-    public function getImageAttribute()
+    public function getCategoryNameAttribute()
     {
-        return $this->images()->get()->toArray();
+        return $this->category->name;
     }
 }
