@@ -37,7 +37,7 @@ class PublisherController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $message . ' nhà xuất bản thành công',
+            'message' => $message . ' nhà xuất bản thành công!',
         ]);
     }
 
@@ -58,7 +58,7 @@ class PublisherController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Xoá nhà xuất bản thành công',
+            'message' => 'Xoá nhà xuất bản thành công!',
         ]);
     }
 }

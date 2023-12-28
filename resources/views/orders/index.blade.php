@@ -23,6 +23,7 @@
                     <th>Điện thoại</th>
                     <th>Địa chỉ</th>
                     <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
                     <th></th>
                 </tr>
             </thead>
@@ -34,9 +35,35 @@
                     <td>{{ $order->phone }}</td>
                     <td>{{ $order->address }}</td>
                     <td>{{ $order->total }}</td>
+                    @switch($order->status)
+                    @case(1)
+                    <td>Chờ xác nhận</td>
+                    @break
+                    @case(2)
+                    <td>Đã xác nhận</td>
+                    @break
+                    @case(3)
+                    <td>Đang giao</td>
+                    @break
+                    @case(4)
+                    <td>Đã giao</td>
+                    @break
+                    @case(5)
+                    <td>Đã huỷ</td>
+                    @break
+                    @endswitch
                     <td>
-                        <div class="project-actions text-right">
+                        <div class="project-actions d-flex justify-content-between">
                             <button data-id="{{ $order->id }}" class="btn btn-info btn-sm btn-detail mx-1"><i class="fas fa-info-circle"></i> Chi tiết</button>
+                            @if ($order->status === 1)
+                            <button data-id="{{ $order->id }}" data-status="2" class="btn btn-success btn-sm mx-1 btn-update-status">Duyệt đơn</button>
+                            @elseif ($order->status === 2)
+                            <button data-id="{{ $order->id }}" data-status="3" class="btn btn-warning btn-sm mx-1 btn-update-status">Chuyển cho đơn vị vận chuyển</button>
+                            @endif
+
+                            @if (!($order->status == 3 || $order->status == 4 || $order->status == 5))
+                            <button data-id="{{ $order->id }}" data-status="5" class="btn btn-danger btn-sm mx-1 btn-update-status">Huỷ đơn</button>
+                            @endif
                         </div>
                     </td>
                 </tr>
@@ -116,7 +143,7 @@
                 }
             ],
             columnDefs: [{
-                targets: [5],
+                targets: [6],
                 orderable: false
             }],
             language: {
@@ -137,8 +164,8 @@
 
         $('#data-table').on('click', '.btn-detail', async function() {
             try {
-                var order_id = $(this).data('id');
-                var response = await axios.get("{{ route('order.show', ['id' => '_id_']) }}".replace('_id_', order_id));
+                var id = $(this).data('id');
+                var response = await axios.get("{{ route('order.show', ['id' => '_id_']) }}".replace('_id_', id));
                 var res = response.data;
 
                 $('.details-table tbody').empty();
@@ -146,20 +173,48 @@
                 if (res.success && res.data.length > 0) {
                     res.data.forEach(detail => {
                         $('.details-table tbody').append(`
-                            <tr>
-                                <td>${detail.id}</td>
-                                <td>${detail.product_name}</td>
-                                <td>${detail.price}</td>
-                                <td>${detail.quantity}</td>
-                                <td>${detail.price * detail.quantity}</td>
-                            </tr>
-                        `);
+                        <tr>
+                            <td>${detail.id}</td>
+                            <td>${detail.product_name}</td>
+                            <td>${detail.price}</td>
+                            <td>${detail.quantity}</td>
+                            <td>${detail.price * detail.quantity}</td>
+                        </tr>
+                    `);
                     });
                 } else {
                     $('.details-table tbody').append('<tr><td colspan="5">Không có dữ liệu chi tiết!</td></tr>');
                 }
 
                 $('#modal-detail').modal('show');
+            } catch (error) {
+                handleError(error);
+            }
+        });
+
+        $('#data-table').on('click', '.btn-update-status', async function() {
+            try {
+                var id = $(this).data('id');
+                var status = $(this).data('status');
+                var response = await axios.post("{{ route('order.update-status', ['id' => '_id_', 'status' => '_status_']) }}".replace('_id_', id).replace('_status_', status));
+                var res = response.data;
+
+                switch (status) {
+                    case 2:
+                        $(this).closest('tr').find('td:eq(5)').text('Đã xác nhận');
+                        break;
+                    case 3:
+                        $(this).closest('tr').find('td:eq(5)').text('Đang giao');
+                        break;
+                    case 5:
+                        $(this).closest('tr').find('td:eq(5)').text('Đã huỷ');
+                        break;
+                    default:
+                        break;
+                }
+
+                // $('#data-table').DataTable().draw();
+                handleSuccess(res);
             } catch (error) {
                 handleError(error);
             }

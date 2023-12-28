@@ -136,8 +136,8 @@
 
         $('#data-table').on('click', '.btn-detail', async function() {
             try {
-                var goods_recevie_note_id = $(this).data('id');
-                var response = await axios.get("{{ route('goods-recevied-note.show', ['id' => '_id_']) }}".replace('_id_', goods_recevie_note_id));
+                var id = $(this).data('id');
+                var response = await axios.get("{{ route('goods-recevied-note.show', ['id' => '_id_']) }}".replace('_id_', id));
                 var res = response.data;
 
                 $('.details-table tbody').empty();

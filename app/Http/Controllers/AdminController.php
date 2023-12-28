@@ -29,10 +29,10 @@ class AdminController extends Controller
         $credentials = $request->only('username', 'password');
 
         if (auth()->attempt($credentials)) {
-            return redirect()->route('/')->with(['message' => 'Đăng nhập thành công']);
+            return redirect()->route('/')->with(['message' => 'Đăng nhập thành công!']);
         }
 
-        return redirect()->route('login')->with(['message' => 'Sai tên đăng nhập hoặc mật khẩu']);
+        return redirect()->route('login')->with(['message' => 'Sai tên đăng nhập hoặc mật khẩu!']);
     }
 
     public function account()
@@ -97,7 +97,7 @@ class AdminController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Thêm mới admin thành công',
+            'message' => 'Thêm mới admin thành công!',
         ]);
     }
 
@@ -132,7 +132,7 @@ class AdminController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Cập nhật admin thành công',
+            'message' => 'Cập nhật admin thành công!',
         ]);
     }
 
@@ -163,7 +163,7 @@ class AdminController extends Controller
         $admin = Admin::find(auth()->id());
         $admin->update($data);
 
-        return redirect()->route('account')->with(['message' => 'Cập nhật thông tin thành công']);
+        return redirect()->route('account')->with(['message' => 'Cập nhật thông tin thành công!']);
     }
 
     public function show($id)
@@ -183,7 +183,7 @@ class AdminController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Xoá admin thành công',
+            'message' => 'Xoá admin thành công!',
         ]);
     }
 

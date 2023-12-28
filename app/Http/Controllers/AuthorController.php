@@ -50,7 +50,7 @@ class AuthorController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $message . ' tác giả thành công',
+            'message' => $message . ' tác giả thành công!',
         ]);
     }
 
@@ -75,7 +75,7 @@ class AuthorController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Xoá tác giả thành công',
+            'message' => 'Xoá tác giả thành công!',
         ]);
     }
 }

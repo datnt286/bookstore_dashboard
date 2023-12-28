@@ -43,7 +43,7 @@ class SupplierController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $message . ' nhà cung cấp thành công',
+            'message' => $message . ' nhà cung cấp thành công!',
         ]);
     }
 
@@ -64,7 +64,7 @@ class SupplierController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Xoá nhà cung cấp thành công',
+            'message' => 'Xoá nhà cung cấp thành công!',
         ]);
     }
 }

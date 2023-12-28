@@ -80,7 +80,7 @@ class ComboController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $message . ' combo thành công',
+            'message' => $message . ' combo thành công!',
         ]);
     }
 
@@ -126,7 +126,7 @@ class ComboController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Xoá combo thành công',
+            'message' => 'Xoá combo thành công!',
         ]);
     }
 

@@ -71,16 +71,16 @@ class GoodsReceviedNoteController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Thêm hoá đơn nhập thành công'
+            'message' => 'Thêm hoá đơn nhập thành công!'
         ]);
     }
 
     public function show($id)
     {
         $goodsReceviedNoteDetails = GoodsReceviedNoteDetail::with(['book', 'combo'])
-        ->where('goods_recevied_note_id', $id)
-        ->get();
-        
+            ->where('goods_recevied_note_id', $id)
+            ->get();
+
         return response()->json([
             'success' => true,
             'data' => $goodsReceviedNoteDetails

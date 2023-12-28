@@ -15,6 +15,7 @@ class APICustomerController extends Controller
             'username' => $request->username,
             'password' => Hash::make($request->password),
             'phone' => $request->phone,
+            'email' => $request->email,
         ]);
 
         return response()->json([

@@ -24,7 +24,7 @@ class APICategoryController extends Controller
         if (empty($category)) {
             return response()->json([
                 'success' => false,
-                'message' => "Thể loại Id={$id} không tồn tại"
+                'message' => "Thể loại Id={$id} không tồn tại!"
             ]);
         }
 
@@ -41,7 +41,7 @@ class APICategoryController extends Controller
         if (empty($category)) {
             return response()->json([
                 'success' => false,
-                'message' => "Thể loại không tồn tại"
+                'message' => "Thể loại không tồn tại!"
             ]);
         }
 

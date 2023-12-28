@@ -43,7 +43,7 @@ class CustomerController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Thêm mới khách hàng thành công',
+            'message' => 'Thêm mới khách hàng thành công!',
         ]);
     }
 
@@ -63,7 +63,7 @@ class CustomerController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Cập nhật khách hàng thành công',
+            'message' => 'Cập nhật khách hàng thành công!',
         ]);
     }
 
@@ -84,7 +84,7 @@ class CustomerController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Xoá khách hàng thành công',
+            'message' => 'Xoá khách hàng thành công!',
         ]);
     }
 }

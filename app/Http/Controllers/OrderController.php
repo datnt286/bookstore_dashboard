@@ -75,7 +75,7 @@ class OrderController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Thêm hoá đơn thành công'
+            'message' => 'Thêm hoá đơn thành công!'
         ]);
     }
 
@@ -86,6 +86,31 @@ class OrderController extends Controller
         return response()->json([
             'success' => true,
             'data' => $orderDetails
+        ]);
+    }
+
+    public function updateStatus($id, $status)
+    {
+        $order = Order::find($id);
+
+        if (!$order) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Đơn hàng không tồn tại!'
+            ]);
+        }
+
+        $order->update(['status' => $status]);
+
+        $messages = [
+            2 => 'Duyệt đơn thành công!',
+            3 => 'Chuyển sang bộ phận vận chuyển thành công!',
+            5 => 'Huỷ đơn thành công!',
+        ];
+
+        return response()->json([
+            'success' => true,
+            'message' => $messages[$status]
         ]);
     }
 }

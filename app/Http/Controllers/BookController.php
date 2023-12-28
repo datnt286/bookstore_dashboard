@@ -112,7 +112,7 @@ class BookController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $message . ' sách thành công',
+            'message' => $message . ' sách thành công!',
         ]);
     }
 
@@ -173,7 +173,7 @@ class BookController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Xoá sách thành công',
+            'message' => 'Xoá sách thành công!',
         ]);
     }
 

@@ -58,7 +58,7 @@ class CategoryController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $message . ' thể loại thành công',
+            'message' => $message . ' thể loại thành công!',
         ]);
     }
 
@@ -79,7 +79,7 @@ class CategoryController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Xoá thể loại thành công',
+            'message' => 'Xoá thể loại thành công!',
         ]);
     }
 }
