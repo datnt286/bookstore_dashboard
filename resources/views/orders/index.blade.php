@@ -30,7 +30,7 @@
                 @forelse($orders as $order)
                 <tr>
                     <td>{{ $order->id }}</td>
-                    <td>{{ $order->customer_id }}</td>
+                    <td>{{ $order->customer_name }}</td>
                     <td>{{ $order->phone }}</td>
                     <td>{{ $order->address }}</td>
                     <td>{{ $order->total }}</td>
@@ -148,7 +148,7 @@
                         $('.details-table tbody').append(`
                             <tr>
                                 <td>${detail.id}</td>
-                                <td>${detail.book_id}</td>
+                                <td>${detail.product_name}</td>
                                 <td>${detail.price}</td>
                                 <td>${detail.quantity}</td>
                                 <td>${detail.price * detail.quantity}</td>

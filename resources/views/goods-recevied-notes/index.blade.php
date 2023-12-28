@@ -139,7 +139,6 @@
                 var goods_recevie_note_id = $(this).data('id');
                 var response = await axios.get("{{ route('goods-recevied-note.show', ['id' => '_id_']) }}".replace('_id_', goods_recevie_note_id));
                 var res = response.data;
-                console.log(res)
 
                 $('.details-table tbody').empty();
 
@@ -148,7 +147,7 @@
                         $('.details-table tbody').append(`
                             <tr>
                                 <td>${detail.id}</td>
-                                <td>${detail.book_id || detail.combo_id}</td>
+                                <td>${detail.product_name}</td>
                                 <td>${detail.import_price}</td>
                                 <td>${detail.price}</td>
                                 <td>${detail.quantity}</td>

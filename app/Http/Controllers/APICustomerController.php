@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 
 class APICustomerController extends Controller
 {
@@ -75,5 +76,16 @@ class APICustomerController extends Controller
         auth()->logout();
 
         return response()->json(['message' => 'Đăng xuất thành công!']);
+    }
+
+    public function sendResetEmail(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+
+        $response = Password::sendResetLink($request->only('email'));
+
+        return $response == Password::RESET_LINK_SENT
+            ? response()->json(['status' => 'success'])
+            : response()->json(['status' => 'error']);
     }
 }

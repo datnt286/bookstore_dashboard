@@ -10,6 +10,7 @@ class GoodsReceviedNoteDetail extends Model
     use HasFactory;
     protected $table = 'goods_recevied_note_details';
     protected $fillable = ['goods_recevied_note_id', 'book_id', 'combo_id', 'import_price', 'price', 'quantity'];
+    protected $appends = ['product_name'];
 
     public function book()
     {
