@@ -45,7 +45,8 @@
                         <input type="hidden" name="id" id="id">
                         <div class="form-group">
                             <label for="name">Tên tác giả: </label>
-                            <input type="text" name="name" id="name" class="form-control">
+                            <input type="text" name="name" id="name" class="form-control" required>
+                            <div class="invalid-feedback name-error">{{ $errors->first('name') }}</div>
                         </div>
                         <div class="form-group">
                             <label>Sách:</label>
@@ -149,12 +150,15 @@
 
         $('#btn-create').click(async function() {
             try {
-                var response = await axios.get("{{ route('author.create') }}");
-                var res = response.data;
-
                 $('#id').val(null);
                 $('#form-store').trigger('reset');
                 $('#book-ids').empty();
+
+                $('#name').removeClass('is-invalid');
+                $('.name-error').text('');
+
+                var response = await axios.get("{{ route('author.create') }}");
+                var res = response.data;
 
                 res.data.forEach(function(book) {
                     $('#book-ids').append('<option value="' + book.id + '">' + book.name + '</option>');
@@ -172,7 +176,6 @@
                 id = $(this).data('id');
                 var response = await axios.get("{{ route('author.show', ['id' => '_id_']) }}".replace('_id_', id));
                 var res = response.data;
-                console.log(res);
 
                 $('#id').val(res.data.author.id);
                 $('#name').val(res.data.author.name);
@@ -202,7 +205,23 @@
                 dataTable.draw();
                 handleSuccess(res);
             } catch (error) {
-                handleError(error);
+                if (error.response.status === 422) {
+                    var errors = error.response.data.errors;
+
+                    Object.keys(errors).forEach(function(key) {
+                        $('#' + key).addClass('is-invalid');
+                        $('.' + key + '-error').text(errors[key][0]);
+                    });
+                } else {
+                    handleError(error);
+                }
+            }
+        });
+
+        $('#name').on('input', function() {
+            if ($(this).hasClass('is-invalid')) {
+                $(this).removeClass('is-invalid');
+                $('.name-error').text('');
             }
         });
 

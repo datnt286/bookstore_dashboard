@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AuthorRequest;
 use App\Models\Author;
 use App\Models\Book;
 use Illuminate\Http\Request;
@@ -37,7 +38,7 @@ class AuthorController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(AuthorRequest $request)
     {
         $author = Author::updateOrCreate(
             ['id' => $request->id],

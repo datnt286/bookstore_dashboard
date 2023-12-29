@@ -210,6 +210,7 @@
                 dataTable.draw();
                 handleSuccess(res);
             } catch (error) {
+                console.log(res)
                 handleError(error);
             }
         });
