@@ -37,9 +37,9 @@ return [
         'smtp' => [
             'transport' => 'smtp',
             'url' => env('MAIL_URL'),
-            'host' => 'smpt.gmail.com ',
+            'host' => 'smtp.gmail.com',
             'port' => 587,
-            'encryption' => 'tsl',
+            'encryption' => 'tls',
             'username' => 'ddlbookstore@gmail.com',
             'password' => 'wqgilljvqqyetall',
             'timeout' => null,
@@ -100,7 +100,7 @@ return [
 
     'from' => [
         'address' => 'ddlbookstore@gmail.com',
-        'name' =>'ddlbookstore',
+        'name' => 'DDL Bookstore',
     ],
 
     /*

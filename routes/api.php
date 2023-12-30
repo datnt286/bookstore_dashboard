@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('register', [APICustomerController::class, 'register'])->name('register');
 Route::post('login', [APICustomerController::class, 'login'])->name('login');
-Route::post('reset-password', [APICustomerController::class, 'sendResetEmail'])->name('reset-password');
+Route::post('reset-password', [APICustomerController::class, 'resetPassword'])->name('reset-password');
 
 Route::middleware('auth:api')->group(function () {
     Route::get('me', [APICustomerController::class, 'me'])->name('me');

@@ -20,7 +20,7 @@ class CustomerSeeder extends Seeder
                 'password' => Hash::make('123'),
                 'name' => 'Nguyễn Thành Đạt',
                 'phone' => '0123456789',
-                'email' => 'dat@gmail.com',
+                'email' => 'ntdz2003@gmail.com',
                 'address' => 'Q. Bình Thạnh, TP. HCM',
             ],
             [

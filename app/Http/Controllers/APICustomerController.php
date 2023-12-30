@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class APICustomerController extends Controller
 {
@@ -79,14 +80,28 @@ class APICustomerController extends Controller
         return response()->json(['message' => 'Đăng xuất thành công!']);
     }
 
-    public function sendResetEmail(Request $request)
+    public function resetPassword(Request $request)
     {
-        $request->validate(['email' => 'required|email']);
+        $newPassword = Str::random(6);
+        $customer = Customer::where('email', $request->email)->first();
 
-        $response = Password::sendResetLink($request->only('email'));
+        if (empty($customer)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Không tìm thấy người dùng với địa chỉ email này.'
+            ], 404);
+        }
 
-        return $response == Password::RESET_LINK_SENT
-            ? response()->json(['status' => 'success'])
-            : response()->json(['status' => 'error']);
+        $customer->update(['password' => Hash::make($newPassword)]);
+
+        Mail::send('reset-password.index', compact('customer', 'newPassword'), function ($email) use ($request) {
+            $email->subject('Reset mật khẩu');
+            $email->to($request->email);
+        });
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Mật khẩu mới vừa được gửi vào email của bạn. Vui lòng kiểm tra lại email.'
+        ]);
     }
 }

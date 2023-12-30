@@ -11,7 +11,7 @@ class CategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -19,17 +19,18 @@ class CategoryRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            'name' => 'required'
+            'name' => 'required|unique:categories,name,' . $this->request->get('id'),
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Tên thể loại không được bỏ trống.'
+            'name.required' => 'Tên thể loại không được bỏ trống.',
+            'name.unique' => 'Tên thể loại đã tồn tại.',
         ];
     }
 }
