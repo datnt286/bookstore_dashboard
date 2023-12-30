@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\APIAuthorController;
 use App\Http\Controllers\APIBookController;
 use App\Http\Controllers\APICategoryController;
 use App\Http\Controllers\APICustomerController;
@@ -36,6 +37,12 @@ Route::prefix('category')->group(function () {
     Route::name('category.')->group(function () {
         Route::get('/', [APICategoryController::class, 'index'])->name('index');
         Route::get('{slug}', [APICategoryController::class, 'getCategoryBySlug'])->name('get-category-by-slug');
+    });
+});
+
+Route::prefix('author')->group(function () {
+    Route::name('author.')->group(function () {
+        Route::get('/', [APIAuthorController::class, 'index'])->name('index');
     });
 });
 

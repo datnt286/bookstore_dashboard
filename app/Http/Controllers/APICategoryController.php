@@ -9,7 +9,7 @@ class APICategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::with('books')->get();
+        $categories = Category::all();
 
         return response()->json([
             'success' => true,
