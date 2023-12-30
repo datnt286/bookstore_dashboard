@@ -22,15 +22,23 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:categories,name,' . $this->request->get('id'),
+            'name' => [
+                'required',
+                'unique:categories,name,' . $this->request->get('id'),
+                'regex:/^[\p{L}\s]+$/u',
+            ],
+            'image' => 'required|image',
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Tên thể loại không được bỏ trống.',
+            'name.required' => 'Vui lòng nhập tên thể loại.',
             'name.unique' => 'Tên thể loại đã tồn tại.',
+            'name.regex' => 'Tên thể loại không được chứa số và ký tự đặc biệt.',
+            'image.required' => 'Vui lòng chọn một ảnh.',
+            'image.image' => 'File phải là hình ảnh.',
         ];
     }
 }

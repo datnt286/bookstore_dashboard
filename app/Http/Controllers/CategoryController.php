@@ -29,7 +29,7 @@ class CategoryController extends Controller
         return view('categories.index', compact('categories'));
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         $category = Category::updateOrCreate(
             ['id' => $request->id],

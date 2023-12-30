@@ -49,7 +49,8 @@
                             <div>
                                 <img id="image-preview" src="{{ asset('img/default-image.jpg') }}" alt="Hình ảnh" class="img img-thumbnail my-2" style="max-width: 100px; max-height: 100px;">
                             </div>
-                            <input type="file" name="image" id="image" class="d-none">
+                            <input type="file" name="image" id="image" class="d-none" required>
+                            <div class="invalid-feedback image-error">{{ $errors->first('image') }}</div>
                             <label for="image" class="btn btn-secondary font-weight-normal mt-2">
                                 Chọn ảnh
                             </label>
@@ -57,6 +58,7 @@
                         <div class="form-group">
                             <label for="name">Thể loại: </label>
                             <input type="text" name="name" id="name" class="form-control">
+                            <div class="invalid-feedback name-error">{{ $errors->first('name') }}</div>
                         </div>
                     </div>
                 </div>
@@ -158,7 +160,7 @@
         var id = null;
         var image = null;
         var formData = new FormData($('#form-store')[0]);
-        
+
         $('#btn-create').click(function() {
             $('#id').val(null);
             $('#form-store').trigger('reset');
@@ -197,6 +199,20 @@
 
                 reader.readAsDataURL(input.files[0]);
             }
+
+            if ($(this).hasClass('is-invalid')) {
+                $(this).removeClass('is-invalid');
+                var errorClassName = $(this).attr('name') + '-error';
+                $('.' + errorClassName).text('');
+            }
+        });
+
+        $('#form-store input').on('input', function() {
+            if ($(this).hasClass('is-invalid')) {
+                $(this).removeClass('is-invalid');
+                var errorClassName = $(this).attr('name') + '-error';
+                $('.' + errorClassName).text('');
+            }
         });
 
         $('#btn-store').click(async function() {
@@ -211,7 +227,17 @@
                 handleSuccess(res);
             } catch (error) {
                 console.log(res)
-                handleError(error);
+
+                if (error.response.status === 422) {
+                    var errors = error.response.data.errors;
+
+                    Object.keys(errors).forEach(function(key) {
+                        $('#' + key).addClass('is-invalid');
+                        $('.' + key + '-error').text(errors[key][0]);
+                    });
+                } else {
+                    handleError(error);
+                }
             }
         });
 

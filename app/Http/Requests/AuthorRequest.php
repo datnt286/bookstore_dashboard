@@ -22,7 +22,11 @@ class AuthorRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:authors,name,' . $this->request->get('id'),
+            'name' => [
+                'required',
+                'unique:authors,name,' . $this->request->get('id'),
+                'regex:/^[\p{L}\s]+$/u',
+            ],
         ];
     }
 
@@ -31,6 +35,7 @@ class AuthorRequest extends FormRequest
         return [
             'name.required' => 'Vui lòng nhập tên tác giả.',
             'name.unique' => 'Tên tác giả đã tồn tại.',
+            'name.regex' => 'Tên tác giả không được chứa số và ký tự đặc biệt.',
         ];
     }
 }

@@ -205,6 +205,8 @@
                 dataTable.draw();
                 handleSuccess(res);
             } catch (error) {
+                console.log(res)
+
                 if (error.response.status === 422) {
                     var errors = error.response.data.errors;
 
@@ -218,10 +220,11 @@
             }
         });
 
-        $('#name').on('input', function() {
+        $('#form-store input').on('input', function() {
             if ($(this).hasClass('is-invalid')) {
                 $(this).removeClass('is-invalid');
-                $('.name-error').text('');
+                var errorClassName = $(this).attr('name') + '-error';
+                $('.' + errorClassName).text('');
             }
         });
 
