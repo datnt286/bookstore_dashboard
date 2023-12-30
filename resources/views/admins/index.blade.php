@@ -52,34 +52,41 @@
                             <div>
                                 <img id="avatar-preview" src="{{ asset('img/default-avatar.jpg') }}" alt="Ảnh đại diện" class="img img-thumbnail my-2" style="max-width: 100px; max-height: 100px;">
                             </div>
-                            <input type="file" name="avatar" id="avatar" class="d-none">
+                            <input type="file" name="avatar" id="avatar" class="d-none" required>
+                            <div class="invalid-feedback avatar-error">{{ $errors->first('avatar') }}</div>
                             <label for="avatar" class="btn btn-secondary font-weight-normal mt-2">
                                 Chọn ảnh
                             </label>
                         </div>
                         <div class="form-group">
                             <label for="username">Tên đăng nhập: </label>
-                            <input type="text" name="username" id="username" class="form-control">
+                            <input type="text" name="username" id="username" class="form-control" required>
+                            <div class="invalid-feedback username-error">{{ $errors->first('username') }}</div>
                         </div>
                         <div class="form-group">
                             <label for="password">Mật khẩu: </label>
-                            <input type="password" name="password" id="password" class="form-control">
+                            <input type="password" name="password" id="password" class="form-control" required>
+                            <div class="invalid-feedback password-error">{{ $errors->first('password') }}</div>
                         </div>
                         <div class="form-group">
                             <label for="name">Họ tên: </label>
-                            <input type="text" name="name" id="name" class="form-control">
+                            <input type="text" name="name" id="name" class="form-control" required>
+                            <div class="invalid-feedback name-error">{{ $errors->first('name') }}</div>
                         </div>
                         <div class="form-group">
                             <label for="phone">Điện thoại: </label>
-                            <input type="text" name="phone" id="phone" class="form-control">
+                            <input type="text" name="phone" id="phone" class="form-control" required>
+                            <div class="invalid-feedback phone-error">{{ $errors->first('phone') }}</div>
                         </div>
                         <div class="form-group">
                             <label for="email">Email: </label>
-                            <input type="text" name="email" id="email" class="form-control">
+                            <input type="text" name="email" id="email" class="form-control" required>
+                            <div class="invalid-feedback email-error">{{ $errors->first('email') }}</div>
                         </div>
                         <div class="form-group">
                             <label for="address">Địa chỉ: </label>
-                            <input type="text" name="address" id="address" class="form-control">
+                            <input type="text" name="address" id="address" class="form-control" required>
+                            <div class="invalid-feedback address-error">{{ $errors->first('address') }}</div>
                         </div>
                     </div>
                 </div>
@@ -242,6 +249,7 @@
 
         $('#btn-create').click(function() {
             id = null;
+            resetForm();
             $('#id').val(null);
             $('#form-store').trigger('reset');
             $('#avatar-preview').attr('src', 'img/default-avatar.jpg');
@@ -252,12 +260,14 @@
 
         $('#data-table').on('click', '.btn-edit', async function() {
             try {
+                resetForm();
                 id = $(this).data('id');
                 var response = await axios.get("{{ route('admin.show', ['id' => '_id_']) }}".replace('_id_', id));
                 var res = response.data;
 
                 $('#id').val(res.data.id);
                 $('#username').val(res.data.username);
+                $('#password').val('');
                 $('#name').val(res.data.name);
                 $('#phone').val(res.data.phone);
                 $('#email').val(res.data.email);
@@ -285,6 +295,12 @@
 
                 reader.readAsDataURL(input.files[0]);
             }
+
+            if ($(this).hasClass('is-invalid')) {
+                $(this).removeClass('is-invalid');
+                var errorClassName = $(this).attr('name') + '-error';
+                $('.' + errorClassName).text('');
+            }
         });
 
         $('#btn-store').click(async function() {
@@ -305,7 +321,18 @@
                 dataTable.draw();
                 handleSuccess(res);
             } catch (error) {
-                handleError(error);
+                console.log(res);
+
+                if (error.response.status === 422) {
+                    var errors = error.response.data.errors;
+
+                    Object.keys(errors).forEach(function(key) {
+                        $('#' + key).addClass('is-invalid');
+                        $('.' + key + '-error').text(errors[key][0]);
+                    });
+                } else {
+                    handleError(error);
+                }
             }
         });
 

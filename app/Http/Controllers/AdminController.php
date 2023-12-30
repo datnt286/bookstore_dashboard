@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateAdminRequest;
+use App\Http\Requests\UpdateAdminRequest;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -26,6 +28,14 @@ class AdminController extends Controller
 
     public function handleLogin(Request $request)
     {
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ], [
+            'username.required' => 'Vui lòng nhập tên đăng nhập.',
+            'password.required' => 'Vui lòng nhập mật khẩu.',
+        ]);
+
         $credentials = $request->only('username', 'password');
 
         if (auth()->attempt($credentials)) {
@@ -72,7 +82,7 @@ class AdminController extends Controller
         return view('admins.index', compact('admins'));
     }
 
-    public function store(Request $request)
+    public function store(CreateAdminRequest $request)
     {
         $data = [
             'username' => $request->username,
@@ -101,7 +111,7 @@ class AdminController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateAdminRequest $request, $id)
     {
         $data = [
             'name' => $request->name,

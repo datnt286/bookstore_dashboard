@@ -23,23 +23,29 @@
                 <span class="h1">Đăng nhập</span>
             </div>
             <div class="card-body">
-                <form method="POST" action="{{ route('handle-login') }}">
+                <form id="form-login" method="POST" action="{{ route('handle-login') }}">
                     @csrf
                     <div class="input-group mb-3">
-                        <input type="text" name="username" class="form-control" placeholder="Username" required>
+                        <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" placeholder="Tên đăng nhập">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-user"></span>
                             </div>
                         </div>
+                        @error('username')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+                        <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" placeholder="Mật khẩu">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
+                        @error('password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     @if (session('message'))
                     <div class="alert alert-danger" role="alert">
@@ -84,6 +90,14 @@
                     $('#password').attr('type', 'text');
                 } else {
                     $('#password').attr('type', 'password');
+                }
+            });
+
+            $('#form-login input').on('input', function() {
+                if ($(this).hasClass('is-invalid')) {
+                    $(this).removeClass('is-invalid');
+                    var errorClassName = $(this).attr('name') + '-error';
+                    $('.' + errorClassName).text('');
                 }
             });
         });
