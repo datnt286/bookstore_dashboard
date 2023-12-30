@@ -150,12 +150,10 @@
 
         $('#btn-create').click(async function() {
             try {
+                resetForm();
                 $('#id').val(null);
                 $('#form-store').trigger('reset');
                 $('#book-ids').empty();
-
-                $('#name').removeClass('is-invalid');
-                $('.name-error').text('');
 
                 var response = await axios.get("{{ route('author.create') }}");
                 var res = response.data;
@@ -173,6 +171,7 @@
 
         $('#data-table').on('click', '.btn-edit', async function() {
             try {
+                resetForm();
                 id = $(this).data('id');
                 var response = await axios.get("{{ route('author.show', ['id' => '_id_']) }}".replace('_id_', id));
                 var res = response.data;
@@ -205,7 +204,7 @@
                 dataTable.draw();
                 handleSuccess(res);
             } catch (error) {
-                console.log(res)
+                console.log(res);
 
                 if (error.response.status === 422) {
                     var errors = error.response.data.errors;
@@ -217,14 +216,6 @@
                 } else {
                     handleError(error);
                 }
-            }
-        });
-
-        $('#form-store input').on('input', function() {
-            if ($(this).hasClass('is-invalid')) {
-                $(this).removeClass('is-invalid');
-                var errorClassName = $(this).attr('name') + '-error';
-                $('.' + errorClassName).text('');
             }
         });
 

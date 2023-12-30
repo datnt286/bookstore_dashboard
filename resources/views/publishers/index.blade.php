@@ -46,6 +46,7 @@
                         <div class="form-group">
                             <label for="name">Tên nhà xuất bản: </label>
                             <input type="text" name="name" id="name" class="form-control">
+                            <div class="invalid-feedback name-error">{{ $errors->first('name') }}</div>
                         </div>
                     </div>
                 </div>
@@ -141,6 +142,7 @@
         var id = null;
 
         $('#btn-create').click(function() {
+            resetForm();
             $('#id').val(null);
             $('#form-store').trigger('reset');
             $('#modal-title').text('Thêm nhà xuất bản');
@@ -149,6 +151,7 @@
 
         $('#data-table').on('click', '.btn-edit', async function() {
             try {
+                resetForm();
                 id = $(this).data('id');
                 var response = await axios.get("{{ route('publisher.show', ['id' => '_id_']) }}".replace('_id_', id));
                 var res = response.data;
@@ -173,13 +176,19 @@
                 dataTable.draw();
                 handleSuccess(res);
             } catch (error) {
-                handleError(error);
-            }
-        });
+                console.log(res);
 
-        $('#data-table').on('click', '.btn-delete', function() {
-            id = $(this).data('id');
-            $('#modal-delete').modal('show');
+                if (error.response.status === 422) {
+                    var errors = error.response.data.errors;
+
+                    Object.keys(errors).forEach(function(key) {
+                        $('#' + key).addClass('is-invalid');
+                        $('.' + key + '-error').text(errors[key][0]);
+                    });
+                } else {
+                    handleError(error);
+                }
+            }
         });
 
         $('#btn-confirm-delete').click(async function() {

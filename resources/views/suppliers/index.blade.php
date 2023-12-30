@@ -49,18 +49,22 @@
                         <div class="form-group">
                             <label for="name">Tên nhà cung cấp: </label>
                             <input type="text" name="name" id="name" class="form-control">
+                            <div class="invalid-feedback name-error">{{ $errors->first('name') }}</div>
                         </div>
                         <div class="form-group">
                             <label for="phone">Điện thoại: </label>
                             <input type="text" name="phone" id="phone" class="form-control">
+                            <div class="invalid-feedback phone-error">{{ $errors->first('phone') }}</div>
                         </div>
                         <div class="form-group">
                             <label for="email">Email: </label>
                             <input type="text" name="email" id="email" class="form-control">
+                            <div class="invalid-feedback email-error">{{ $errors->first('email') }}</div>
                         </div>
                         <div class="form-group">
                             <label for="address">Địa chỉ: </label>
                             <input type="text" name="address" id="address" class="form-control">
+                            <div class="invalid-feedback address-error">{{ $errors->first('address') }}</div>
                         </div>
                     </div>
                 </div>
@@ -199,6 +203,7 @@
         var id = null;
 
         $('#btn-create').click(function() {
+            resetForm();
             $('#id').val(null);
             $('#form-store').trigger('reset');
             $('#modal-title').text('Thêm nhà cung cấp');
@@ -207,6 +212,7 @@
 
         $('#data-table').on('click', '.btn-edit', async function() {
             try {
+                resetForm();
                 id = $(this).data('id');
                 var response = await axios.get("{{ route('supplier.show', ['id' => '_id_']) }}".replace('_id_', id));
                 var res = response.data;
@@ -234,7 +240,18 @@
                 dataTable.draw();
                 handleSuccess(res);
             } catch (error) {
-                handleError(error);
+                console.log(res);
+
+                if (error.response.status === 422) {
+                    var errors = error.response.data.errors;
+
+                    Object.keys(errors).forEach(function(key) {
+                        $('#' + key).addClass('is-invalid');
+                        $('.' + key + '-error').text(errors[key][0]);
+                    });
+                } else {
+                    handleError(error);
+                }
             }
         });
 

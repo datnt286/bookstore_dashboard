@@ -76,4 +76,26 @@
         });
         console.log('Error: ', error);
     }
+
+    function resetForm() {
+        $('#form-store input').removeClass('is-invalid');
+        $('#form-store select').val('').removeClass('is-invalid');
+        $('#form-store .invalid-feedback').text('');
+    }
+
+    $('#form-store input').on('input', function() {
+        if ($(this).hasClass('is-invalid')) {
+            $(this).removeClass('is-invalid');
+            var errorClassName = $(this).attr('name') + '-error';
+            $('.' + errorClassName).text('');
+        }
+    });
+
+    $('#form-store select').on('change', function() {
+        if ($(this).hasClass('is-invalid')) {
+            $(this).removeClass('is-invalid');
+            var errorClassName = $(this).attr('name') + '-error';
+            $('.' + errorClassName).text('');
+        }
+    });
 </script>

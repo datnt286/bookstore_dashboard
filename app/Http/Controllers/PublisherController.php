@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PublisherRequest;
 use App\Models\Publisher;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -26,7 +27,7 @@ class PublisherController extends Controller
         return view('publishers.index', compact('publishers'));
     }
 
-    public function store(Request $request)
+    public function store(PublisherRequest $request)
     {
         Publisher::updateOrCreate(
             ['id' => $request->id],

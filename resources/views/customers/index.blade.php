@@ -50,26 +50,32 @@
                         <div class="form-group">
                             <label for="username">Tên đăng nhập:</label>
                             <input type="text" name="username" id="username" class="form-control">
+                            <div class="invalid-feedback username-error">{{ $errors->first('username') }}</div>
                         </div>
                         <div class="form-group">
                             <label for="password">Mật khẩu:</label>
                             <input type="password" name="password" id="password" class="form-control">
+                            <div class="invalid-feedback password-error">{{ $errors->first('password') }}</div>
                         </div>
                         <div class="form-group">
                             <label for="name">Tên khách hàng:</label>
                             <input type="text" name="name" id="name" class="form-control">
+                            <div class="invalid-feedback name-error">{{ $errors->first('name') }}</div>
                         </div>
                         <div class="form-group">
                             <label for="phone">Điện thoại:</label>
                             <input type="text" name="phone" id="phone" class="form-control">
+                            <div class="invalid-feedback phone-error">{{ $errors->first('phone') }}</div>
                         </div>
                         <div class="form-group">
                             <label for="email">Email:</label>
                             <input type="text" name="email" id="email" class="form-control">
+                            <div class="invalid-feedback email-error">{{ $errors->first('email') }}</div>
                         </div>
                         <div class="form-group">
                             <label for="address">Địa chỉ:</label>
                             <input type="text" name="address" id="address" class="form-control">
+                            <div class="invalid-feedback address-error">{{ $errors->first('address') }}</div>
                         </div>
                     </div>
                 </div>
@@ -215,6 +221,7 @@
         var id = null;
 
         $('#btn-create').click(function() {
+            resetForm();
             $('#id').val(null);
             $('#form-store').trigger('reset');
             $('#username').prop('readonly', false);
@@ -224,12 +231,14 @@
 
         $('#data-table').on('click', '.btn-edit', async function() {
             try {
+                resetForm();
                 id = $(this).data('id');
                 var response = await axios.get("{{ route('customer.show', ['id' => '_id_']) }}".replace('_id_', id));
                 var res = response.data;
 
                 $('#id').val(res.data.id);
                 $('#username').val(res.data.username);
+                $('#password').val('');
                 $('#name').val(res.data.name);
                 $('#phone').val(res.data.phone);
                 $('#email').val(res.data.email);
@@ -260,7 +269,18 @@
                 dataTable.draw();
                 handleSuccess(res);
             } catch (error) {
-                handleError(error);
+                console.log(res);
+
+                if (error.response.status === 422) {
+                    var errors = error.response.data.errors;
+
+                    Object.keys(errors).forEach(function(key) {
+                        $('#' + key).addClass('is-invalid');
+                        $('.' + key + '-error').text(errors[key][0]);
+                    });
+                } else {
+                    handleError(error);
+                }
             }
         });
 

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateCustomerRequest;
+use App\Http\Requests\CustomerRequest;
+use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -28,7 +31,7 @@ class CustomerController extends Controller
         return view('customers.index', compact('customers'));
     }
 
-    public function store(Request $request)
+    public function store(CreateCustomerRequest $request)
     {
         $data = [
             'username' => $request->username,
@@ -47,7 +50,7 @@ class CustomerController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateCustomerRequest $request, $id)
     {
         $data = [
             'name' => $request->name,

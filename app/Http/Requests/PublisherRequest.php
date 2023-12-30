@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class PublisherRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,20 +24,18 @@ class CategoryRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                'unique:categories,name,' . $this->request->get('id'),
-                'regex:/^[\p{L}\s]+$/u',
+                'unique:publishers,name,' . $this->request->get('id'),
+                'regex:/^[\p{L}\s\d]+$/u',
             ],
-            'image' => 'image',
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Vui lòng nhập tên thể loại.',
-            'name.unique' => 'Tên thể loại đã tồn tại.',
-            'name.regex' => 'Tên thể loại không được chứa số và ký tự đặc biệt.',
-            'image.image' => 'File phải là hình ảnh.',
+            'name.required' => 'Vui lòng nhập tên nhà xuất bản.',
+            'name.unique' => 'Tên nhà xuất bản đã tồn tại.',
+            'name.regex' => 'Tên nhà xuất bản không được chứa ký tự đặc biệt.',
         ];
     }
 }

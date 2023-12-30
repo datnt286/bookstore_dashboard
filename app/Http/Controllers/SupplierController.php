@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SupplierRequest;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -27,7 +28,7 @@ class SupplierController extends Controller
         return view('suppliers.index', compact('suppliers'));
     }
 
-    public function store(Request $request)
+    public function store(SupplierRequest $request)
     {
         Supplier::updateOrCreate(
             ['id' => $request->id],

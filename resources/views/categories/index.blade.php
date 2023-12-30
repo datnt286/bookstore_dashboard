@@ -162,6 +162,7 @@
         var formData = new FormData($('#form-store')[0]);
 
         $('#btn-create').click(function() {
+            resetForm();
             $('#id').val(null);
             $('#form-store').trigger('reset');
             $('#image-preview').attr('src', 'img/default-image.jpg');
@@ -171,6 +172,7 @@
 
         $('#data-table').on('click', '.btn-edit', async function() {
             try {
+                resetForm();
                 id = $(this).data('id');
                 var response = await axios.get("{{ route('category.show', ['id' => '_id_']) }}".replace('_id_', id));
                 var res = response.data;
@@ -207,14 +209,6 @@
             }
         });
 
-        $('#form-store input').on('input', function() {
-            if ($(this).hasClass('is-invalid')) {
-                $(this).removeClass('is-invalid');
-                var errorClassName = $(this).attr('name') + '-error';
-                $('.' + errorClassName).text('');
-            }
-        });
-
         $('#btn-store').click(async function() {
             try {
                 var formData = new FormData($('#form-store')[0]);
@@ -226,7 +220,7 @@
                 dataTable.draw();
                 handleSuccess(res);
             } catch (error) {
-                console.log(res)
+                console.log(res);
 
                 if (error.response.status === 422) {
                     var errors = error.response.data.errors;
