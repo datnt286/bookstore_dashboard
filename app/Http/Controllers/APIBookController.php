@@ -92,7 +92,7 @@ class APIBookController extends Controller
         ]);
     }
 
-    public function searchProduct($slug)
+    public function search($slug)
     {
         $books = Book::with('images')->where('slug', 'LIKE', '%' . $slug . '%')->get()->toArray();
         $combos = Combo::where('slug', 'LIKE', '%' . $slug . '%')->get()->toArray();

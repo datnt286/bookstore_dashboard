@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateAdminRequest;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Models\Admin;
 use Illuminate\Http\Request;
@@ -26,16 +27,8 @@ class AdminController extends Controller
         return view('admins.login');
     }
 
-    public function handleLogin(Request $request)
+    public function handleLogin(LoginRequest $request)
     {
-        $request->validate([
-            'username' => 'required',
-            'password' => 'required',
-        ], [
-            'username.required' => 'Vui lòng nhập tên đăng nhập.',
-            'password.required' => 'Vui lòng nhập mật khẩu.',
-        ]);
-
         $credentials = $request->only('username', 'password');
 
         if (auth()->attempt($credentials)) {

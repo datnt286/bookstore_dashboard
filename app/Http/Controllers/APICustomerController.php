@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -25,18 +26,23 @@ class APICustomerController extends Controller
         ]);
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         $credentials = $request->only(['username', 'password']);
 
         if (!$token = Auth('api')->attempt($credentials)) {
-            return response()->json(['error' => 'Sai tên đăng nhập hoặc mật khẩu!'], 401);
+            return response()->json([
+                'success' => false,
+                'message' => 'Sai tên đăng nhập hoặc mật khẩu!'
+            ], 401);
         }
 
         return response()->json([
+            'success' => true,
+            'message' => 'Đăng nhập thành công!',
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60
+            'expires_in' => auth('api')->factory()->getTTL() * 60,
         ]);
     }
 
