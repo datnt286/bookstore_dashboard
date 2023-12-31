@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\UpdateAccountRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -11,8 +14,15 @@ use Illuminate\Support\Str;
 
 class APICustomerController extends Controller
 {
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
+        if ($request->password !== $request->re_enter_password) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nhập lại mật khẩu không khớp!'
+            ], 401);
+        }
+
         Customer::create([
             'username' => $request->username,
             'password' => Hash::make($request->password),
@@ -51,7 +61,7 @@ class APICustomerController extends Controller
         return response()->json(auth()->user());
     }
 
-    public function update(Request $request)
+    public function update(UpdateAccountRequest $request)
     {
         $customer = Customer::find($request->id);
 
@@ -68,9 +78,31 @@ class APICustomerController extends Controller
         ]);
     }
 
-    public function changePassword(Request $request)
+    public function changePassword(ChangePasswordRequest $request)
     {
         $customer = Customer::find($request->id);
+
+        if (empty($customer)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Không tìm thấy khách hàng.'
+            ], 401);
+        }
+
+        if (!Hash::check($request->old_password, $customer->password)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nhập sai mật khẩu cũ.'
+            ], 401);
+        }
+
+        if ($request->new_password !== $request->re_enter_password) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nhập lại mật khẩu không trùng khớp.'
+            ], 401);
+        }
+
         $customer->update(['password' => Hash::make($request->new_password)]);
 
         return response()->json([
