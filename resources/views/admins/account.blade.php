@@ -29,9 +29,9 @@
             <div class="card-body align-middle">
                 <div class="tab-content">
                     <div id="account" class="active tab-pane">
-                        <form id="form-account" method="POST" action="{{ route('update-account') }}" enctype="multipart/form-data">
+                        <form id="form-account" enctype="multipart/form-data">
                             @csrf
-                            <input type="hidden" name="admin_id" id="admin-id" value="{{ $admin->id }}">
+                            <input type="hidden" name="id" id="id" value="{{ $admin->id }}">
                             <input type="file" name="avatar" id="avatar" class="d-none">
                             <div class="row d-flex justify-content-center my-4">
                                 <label for="username" class="col-md-2">Tên đăng nhập: </label>
@@ -40,21 +40,26 @@
                             <div class="row d-flex justify-content-center my-4">
                                 <label for="name" class="col-md-2">Họ tên: </label>
                                 <input type="text" name="name" id="name" value="{{ $admin->name }}" class="form-control col-md-5">
+                                <div class="invalid-feedback name-error">{{ $errors->first('name') }}</div>
                             </div>
                             <div class="row d-flex justify-content-center my-4">
                                 <label for="phone" class="col-md-2">Điện thoại: </label>
                                 <input type="text" name="phone" id="phone" value="{{ $admin->phone }}" class="form-control col-md-5">
+                                <div class="invalid-feedback phone-error">{{ $errors->first('phone') }}</div>
                             </div>
                             <div class="row d-flex justify-content-center my-4">
                                 <label for="email" class="col-md-2">Email: </label>
                                 <input type="text" name="email" id="email" value="{{ $admin->email }}" class="form-control col-md-5">
+                                <div class="invalid-feedback email-error">{{ $errors->first('email') }}</div>
                             </div>
                             <div class="row d-flex justify-content-center my-2">
                                 <label for="address" class="col-md-2">Địa chỉ: </label>
                                 <input type="text" name="address" id="address" value="{{ $admin->address }}" class="form-control col-md-5">
+                                <div class="invalid-feedback address-error">{{ $errors->first('address') }}</div>
                             </div>
+
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary mt-3">
+                                <button type="button" id="btn-update-account" class="btn btn-primary mt-3">
                                     <i class="fas fa-check"></i> Lưu
                                 </button>
                             </div>
@@ -62,26 +67,33 @@
                     </div>
 
                     <div id="change-password" class="tab-pane">
-                        <form id="form-change-password" method="POST" action="{{ route('change-password') }}">
+                        <form id="form-change-password">
                             @csrf
                             <div class="row d-flex justify-content-center my-4">
                                 <label for="old-password" class="col-md-2">Mật khẩu cũ: </label>
                                 <input type="password" name="old_password" id="old-password" class="form-control col-md-5">
+                                <div class="invalid-feedback old-password-error">{{ $errors->first('old_password') }}</div>
                             </div>
                             <div class="row d-flex justify-content-center my-4">
                                 <label for="new-password" class="col-md-2">Mật khẩu mới: </label>
                                 <input type="password" name="new_password" id="new-password" class="form-control col-md-5">
+                                <div class="invalid-feedback new-password-error">{{ $errors->first('new_password') }}</div>
                             </div>
                             <div class="row d-flex justify-content-center my-2">
                                 <label for="re-enter-password" class="col-md-2">Nhập lại mật khẩu: </label>
                                 <input type="password" name="re_enter_password" id="re-enter-password" class="form-control col-md-5">
+                                <div class="invalid-feedback re-enter-password-error">{{ $errors->first('re_enter_password') }}</div>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <div id="alert-message" class="col-md-7">
+                                </div>
                             </div>
                             <div class="custom-control custom-checkbox text-center my-2">
                                 <input type="checkbox" id="show-password" class="custom-control-input">
                                 <label for="show-password" class="custom-control-label">Hiện mật khẩu</label>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary mt-3">
+                                <button type="button" id="btn-change-password" class="btn btn-primary mt-3">
                                     <i class="fas fa-check"></i> Lưu
                                 </button>
                             </div>
@@ -121,19 +133,69 @@
                 $('#re-enter-password').attr('type', 'password');
             }
         });
+
+        $('#btn-update-account').click(async function() {
+            try {
+                var formData = new FormData();
+
+                formData.append('id', $('#id').val());
+                formData.append('avatar', $('#avatar')[0].files[0]);
+                formData.append('name', $('#name').val());
+                formData.append('phone', $('#phone').val());
+                formData.append('email', $('#email').val());
+                formData.append('address', $('#address').val());
+
+                var response = await axios.post("{{ route('update-account') }}", formData);
+                var res = response.data;
+
+                handleSuccess(res);
+            } catch (error) {
+                if (error.response.status === 422) {
+                    var errors = error.response.data.errors;
+
+                    $.each(errors, function(key, value) {
+                        var formattedKey = key.replace(/_/g, '-');
+
+                        $('#' + formattedKey).addClass('is-invalid');
+                        $('.' + formattedKey + '-error').text(value[0]);
+                    });
+                } else {
+                    handleError(error);
+                }
+            }
+        });
+
+        $('#btn-change-password').click(async function() {
+            try {
+                var formData = new FormData();
+
+                formData.append('old_password', $('#old-password').val());
+                formData.append('new_password', $('#new-password').val());
+                formData.append('re_enter_password', $('#re-enter-password').val());
+
+                var response = await axios.post("{{ route('change-password') }}", formData);
+                var res = response.data;
+
+                handleSuccess(res);
+            } catch (error) {
+                if (error.response.status === 422) {
+                    var errors = error.response.data.errors;
+
+                    $.each(errors, function(key, value) {
+                        var formattedKey = key.replace(/_/g, '-');
+
+                        $('#' + formattedKey).addClass('is-invalid');
+                        $('.' + formattedKey + '-error').text(value[0]);
+                    });
+                } else if (error.response.status === 401) {
+                    var errorMessage = error.response.data.message;
+                    var alertElement = $('<div class="alert alert-danger" role="alert"></div>').text(errorMessage);
+                    $('#alert-message').html(alertElement);
+                } else {
+                    handleError(error);
+                }
+            }
+        });
     })
 </script>
-
-@if(session('message'))
-<script>
-    $(document).ready(function() {
-        setTimeout(function() {
-            Toast.fire({
-                icon: 'success',
-                title: "{{ session('message') }}"
-            });
-        }, 600);
-    });
-</script>
-@endif
 @endsection

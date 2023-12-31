@@ -321,8 +321,6 @@
                 dataTable.draw();
                 handleSuccess(res);
             } catch (error) {
-                console.log(res);
-
                 if (error.response.status === 422) {
                     var errors = error.response.data.errors;
 

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\CreateAdminRequest;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\UpdateAdminAccountRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Models\Admin;
 use Illuminate\Http\Request;
@@ -47,6 +49,72 @@ class AdminController extends Controller
         }
 
         return 'Chưa đăng nhập!';
+    }
+
+    public function updateAccount(UpdateAdminAccountRequest $request)
+    {
+        $data = [
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'address' => $request->address,
+        ];
+
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '_' . $request->input('username') . '.' . $extension;
+
+            $file->move(public_path('uploads/admins/'), $fileName);
+
+            $data['avatar'] = $fileName;
+
+            $admin = Admin::find(auth()->id());
+            if ($admin->avatar && Storage::exists($admin->avatar)) {
+                Storage::delete($admin->avatar);
+            }
+        }
+
+        $admin = Admin::find(auth()->id());
+        $admin->update($data);
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Cập nhật thông tin thành công!'
+        ]);
+    }
+
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        $admin = Admin::find(auth()->id());
+
+        if (empty($admin)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Không tìm thấy admin.'
+            ], 401);
+        }
+
+        if (!Hash::check($request->old_password, $admin->password)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nhập sai mật khẩu cũ.'
+            ], 401);
+        }
+
+        if ($request->new_password !== $request->re_enter_password) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nhập lại mật khẩu không trùng khớp.'
+            ], 401);
+        }
+
+        $admin->update(['password' => Hash::make($request->new_password)]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Đổi mật khẩu thành công!'
+        ]);
     }
 
     public function logout()
@@ -139,36 +207,6 @@ class AdminController extends Controller
         ]);
     }
 
-    public function updateAccount(Request $request)
-    {
-        $data = [
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'address' => $request->address,
-        ];
-
-        if ($request->hasFile('avatar')) {
-            $file = $request->file('avatar');
-            $extension = $file->getClientOriginalExtension();
-            $fileName = time() . '_' . $request->input('username') . '.' . $extension;
-
-            $file->move(public_path('uploads/admins/'), $fileName);
-
-            $data['avatar'] = $fileName;
-
-            $admin = Admin::find(auth()->id());
-            if ($admin->avatar && Storage::exists($admin->avatar)) {
-                Storage::delete($admin->avatar);
-            }
-        }
-
-        $admin = Admin::find(auth()->id());
-        $admin->update($data);
-
-        return redirect()->route('account')->with(['message' => 'Cập nhật thông tin thành công!']);
-    }
-
     public function show($id)
     {
         $admin = Admin::find($id);
@@ -188,11 +226,5 @@ class AdminController extends Controller
             'success' => true,
             'message' => 'Xoá admin thành công!',
         ]);
-    }
-
-    public function changePassword(Request $request)
-    {
-        $admin = Admin::find(auth()->id());
-        $admin->update(['password' => Hash::make($request->new_password)]);
     }
 }
