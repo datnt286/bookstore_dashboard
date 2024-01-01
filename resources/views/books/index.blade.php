@@ -63,11 +63,13 @@
                             <div class="col-md-12 form-group">
                                 <label for="name">Tựa sách: </label>
                                 <input type="text" name="name" id="name" class="form-control">
+                                <div class="invalid-feedback name-error">{{ $errors->first('name') }}</div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="category_id">Thể loại: </label>
                                 <select name="category_id" id="category-id" class="form-control select2" style="width: 100%;" required>
                                 </select>
+                                <div class="invalid-feedback category-id-error">{{ $errors->first('category_id') }}</div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Tác giả:</label>
@@ -78,23 +80,28 @@
                                 <label for="publisher_id">Nhà xuất bản: </label>
                                 <select name="publisher_id" id="publisher-id" class="form-control select2" style="width: 100%;" required>
                                 </select>
+                                <div class="invalid-feedback publisher-id-error">{{ $errors->first('publisher_id') }}</div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="supplier_id">Nhà cung cấp: </label>
                                 <select name="supplier_id" id="supplier-id" class="form-control select2" style="width: 100%;" required>
                                 </select>
+                                <div class="invalid-feedback supplier-id-error">{{ $errors->first('supplier_id') }}</div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="price">Giá bán: </label>
                                 <input type="text" name="price" id="price" class="form-control">
+                                <div class="invalid-feedback price-error">{{ $errors->first('price') }}</div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="quantity">Số lượng: </label>
                                 <input type="text" name="quantity" id="quantity" class="form-control">
+                                <div class="invalid-feedback quantity-error">{{ $errors->first('quantity') }}</div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="e-book-price">Giá e-book: </label>
                                 <input type="text" name="e_book_price" id="e-book-price" class="form-control">
+                                <div class="invalid-feedback e-book-price-error">{{ $errors->first('e_book_price') }}</div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="language">Ngôn ngữ: </label>
@@ -111,6 +118,7 @@
                             <div class="col-md-6 form-group">
                                 <label for="num-pages">Số trang: </label>
                                 <input type="text" name="num_pages" id="num-pages" class="form-control">
+                                <div class="invalid-feedback num-pages-error">{{ $errors->first('num_pages') }}</div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="release-date">Ngày xuất bản: </label>
@@ -474,7 +482,14 @@
         $('#btn-store').click(async function() {
             try {
                 var formData = new FormData($('#form-store')[0]);
-                var response = await axios.post("{{ route('book.store') }}", formData);
+
+                if (id) {
+                    var url = `{{ route('book.update', ['id' => '_id_']) }}`.replace('_id_', id);
+                } else {
+                    var url = "{{ route('book.store') }}";
+                }
+
+                var response = await axios.post(url, formData);
                 var res = response.data;
 
                 $('#modal-store').modal('hide');

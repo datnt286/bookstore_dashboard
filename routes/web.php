@@ -51,9 +51,10 @@ Route::middleware('auth')->group(function () {
             Route::get('create', [BookController::class, 'create'])->name('create');
             Route::post('store', [BookController::class, 'store'])->name('store');
             Route::get('edit/{id}', [BookController::class, 'edit'])->name('edit');
+            Route::post('update/{id}', [BookController::class, 'update'])->name('update');
             Route::get('destroy/{id}', [BookController::class, 'destroy'])->name('destroy');
-            Route::get('{id}', [BookController::class, 'show'])->name('show');
             Route::get('get-books-by-supplier/{supplier_id}', [BookController::class, 'getBooksBySupplier'])->name('get-books-by-supplier');
+            Route::get('{id}', [BookController::class, 'show'])->name('show');
         });
     });
 
@@ -65,8 +66,8 @@ Route::middleware('auth')->group(function () {
             Route::get('edit/{id}', [ComboController::class, 'edit'])->name('edit');
             Route::post('update/{id}', [ComboController::class, 'update'])->name('update');
             Route::get('destroy/{id}', [ComboController::class, 'destroy'])->name('destroy');
-            Route::get('{id}', [ComboController::class, 'show'])->name('show');
             Route::get('get-combos-by-supplier/{supplier_id}', [ComboController::class, 'getCombosBySupplier'])->name('get-combos-by-supplier');
+            Route::get('{id}', [ComboController::class, 'show'])->name('show');
         });
     });
 

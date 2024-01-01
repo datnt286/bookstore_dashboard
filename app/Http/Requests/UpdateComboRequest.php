@@ -39,7 +39,7 @@ class UpdateComboRequest extends FormRequest
         return [
             'name.required' => 'Vui lòng nhập tên combo.',
             'name.unique' => 'Tên combo đã tồn tại.',
-            'name.regex' => 'Tên combo không được chứa số và ký tự đặc biệt.',
+            'name.regex' => 'Tên combo không được chứa ký tự đặc biệt.',
             'supplier_id.required' => 'Vui lòng chọn nhà cung cấp.',
             'price.required' => 'Vui lòng nhập giá combo.',
             'price.numeric' => 'Giá combo phải là số.',
@@ -48,5 +48,4 @@ class UpdateComboRequest extends FormRequest
             'image.image' => 'File phải là hình ảnh.',
         ];
     }
-
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateBookRequest;
+use App\Http\Requests\UpdateBookRequest;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
@@ -68,7 +70,7 @@ class BookController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(CreateBookRequest $request)
     {
         $data = [
             'name' => $request->name,
@@ -87,10 +89,7 @@ class BookController extends Controller
             'slug' => Str::slug($request->name),
         ];
 
-        $book = Book::updateOrCreate(
-            ['id' => $request->id],
-            $data,
-        );
+        $book = Book::create($data);
 
         $book->authors()->sync($request->author_ids);
         $book->combos()->sync($request->combo_ids);
@@ -108,11 +107,53 @@ class BookController extends Controller
             }
         }
 
-        $message = $request->id ? 'Cập nhật' : 'Thêm mới';
+        return response()->json([
+            'success' => true,
+            'message' => 'Thêm mới sách thành công!',
+        ]);
+    }
+
+    public function update(UpdateBookRequest $request)
+    {
+        $data = [
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+            'publisher_id' => $request->publisher_id,
+            'supplier_id' => $request->supplier_id,
+            'price' => $request->price,
+            'quantity' => $request->quantity,
+            'e_book_price' => $request->e_book_price,
+            'language' => $request->language,
+            'size' => $request->size,
+            'weight' => $request->weight,
+            'num_pages' => $request->num_pages,
+            'release_date' => $request->release_date,
+            'description' => $request->description,
+            'slug' => Str::slug($request->name),
+        ];
+
+        $book = Book::find($request->id);
+        $book->update($data);
+
+        $book->authors()->sync($request->author_ids);
+        $book->combos()->sync($request->combo_ids);
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $key => $file) {
+                $extension = $file->getClientOriginalExtension();
+                $fileName = time() . '_' . Str::slug($request->name) . '_' . $key . '.' . $extension;
+                $file->move(public_path('uploads/images/'), $fileName);
+
+                Image::create([
+                    'book_id' => $book->id,
+                    'name' => $fileName,
+                ]);
+            }
+        }
 
         return response()->json([
             'success' => true,
-            'message' => $message . ' sách thành công!',
+            'message' => 'Cập nhật sách thành công!',
         ]);
     }
 
