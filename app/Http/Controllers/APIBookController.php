@@ -10,13 +10,11 @@ class APIBookController extends Controller
 {
     public function index()
     {
-        $books = Book::with('images')->get()->toArray();
-        $combos = Combo::all()->toArray();
-        $products = array_merge($books, $combos);
+        $books = Book::with('images')->get();
 
         return response()->json([
             'success' => true,
-            'data' => $products,
+            'data' => $books,
         ]);
     }
 

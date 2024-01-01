@@ -199,7 +199,14 @@
 
                 handleSuccess(res);
             } catch (error) {
-                handleError(error);
+                if (error.response.status === 401) {
+                    var errorMessage = error.response.data.message;
+                    var alertElement = $('<div class="alert alert-danger" role="alert"></div>').text(errorMessage);
+                    $('#alert-message').html(alertElement);
+                } else {
+                    $('#alert-message').empty();
+                    handleError(error);
+                }
             }
         });
     })
