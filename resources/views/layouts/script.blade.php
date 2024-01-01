@@ -70,11 +70,28 @@
     }
 
     function handleError(error) {
-        Toast.fire({
-            icon: 'error',
-            title: 'Có lỗi xảy ra!'
-        });
-        console.log('Error: ', error);
+        if (error.response.status === 422) {
+            var errors = error.response.data.errors;
+
+            $.each(errors, function(key, value) {
+                var formattedKey = key.replace(/_/g, '-');
+
+                $('#' + formattedKey).addClass('is-invalid');
+                $('.' + formattedKey + '-error').text(value[0]);
+            });
+
+            $('#alert-message').empty();
+        } else if (error.response.status === 401) {
+            var errorMessage = error.response.data.message;
+            var alertElement = $('<div class="alert alert-danger" role="alert"></div>').text(errorMessage);
+            $('#alert-message').html(alertElement);
+        } else {
+            console.error('Lỗi: ', error);
+            Toast.fire({
+                icon: 'error',
+                title: 'Có lỗi xảy ra!'
+            });
+        }
     }
 
     function resetForm() {

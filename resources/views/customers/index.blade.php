@@ -269,18 +269,7 @@
                 dataTable.draw();
                 handleSuccess(res);
             } catch (error) {
-                console.log(res);
-
-                if (error.response.status === 422) {
-                    var errors = error.response.data.errors;
-
-                    Object.keys(errors).forEach(function(key) {
-                        $('#' + key).addClass('is-invalid');
-                        $('.' + key + '-error').text(errors[key][0]);
-                    });
-                } else {
-                    handleError(error);
-                }
+                handleError(error);
             }
         });
 
