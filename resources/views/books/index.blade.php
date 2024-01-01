@@ -343,9 +343,8 @@
 
         $('#btn-create').click(async function() {
             try {
-                var response = await axios.get("{{ route('book.create') }}");
-                var res = response.data;
-
+                resetValidationForm();
+                id = null;
                 $('#id').val(null);
                 $('#form-store').trigger('reset');
                 $('#category-id').empty();
@@ -355,6 +354,9 @@
                 $('#combo-ids').empty();
                 $('#images-preview').empty();
                 $('#images-preview').append('<img src="{{ asset("img/default-image.jpg") }}" alt="Hình ảnh" class="img img-thumbnail mb-3" style="max-width: 100px; max-height: 100px;">');
+
+                var response = await axios.get("{{ route('book.create') }}");
+                var res = response.data;
 
                 $('#category-id').append('<option value="" selected disabled>-- Chọn thể loại --</option>');
                 res.data.categories.forEach(function(category) {
@@ -388,6 +390,7 @@
 
         $('#data-table').on('click', '.btn-edit', async function() {
             try {
+                resetValidationForm();
                 var id = $(this).data('id');
                 var response = await axios.get("{{ route('book.edit', ['id' => '_id_']) }}".replace('_id_', id));
                 var res = response.data;

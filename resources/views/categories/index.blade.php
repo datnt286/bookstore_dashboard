@@ -50,7 +50,7 @@
                                 <img id="image-preview" src="{{ asset('img/default-image.jpg') }}" alt="Hình ảnh" class="img img-thumbnail my-2" style="max-width: 100px; max-height: 100px;">
                             </div>
                             <div class="invalid-feedback image-error">{{ $errors->first('image') }}</div>
-                            <input type="file" name="image" id="image" class="d-none" required>
+                            <input type="file" name="image" id="image" class="d-none">
                             <label for="image" class="btn btn-secondary font-weight-normal mt-2">
                                 Chọn ảnh
                             </label>
@@ -162,7 +162,8 @@
         var formData = new FormData($('#form-store')[0]);
 
         $('#btn-create').click(function() {
-            resetForm();
+            resetValidationForm();
+            id = null;
             $('#id').val(null);
             $('#form-store').trigger('reset');
             $('#image-preview').attr('src', 'img/default-image.jpg');
@@ -172,7 +173,7 @@
 
         $('#data-table').on('click', '.btn-edit', async function() {
             try {
-                resetForm();
+                resetValidationForm();
                 id = $(this).data('id');
                 var response = await axios.get("{{ route('category.show', ['id' => '_id_']) }}".replace('_id_', id));
                 var res = response.data;
@@ -189,6 +190,10 @@
 
         $('#image').change(function(event) {
             var input = event.target;
+
+            $(this).removeClass('is-invalid');
+            $('.image-error').text('');
+
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
 
@@ -212,7 +217,14 @@
         $('#btn-store').click(async function() {
             try {
                 var formData = new FormData($('#form-store')[0]);
-                var response = await axios.post("{{ route('category.store') }}", formData);
+
+                if (id) {
+                    var url = `{{ route('category.update', ['id' => '_id_']) }}`.replace('_id_', id);
+                } else {
+                    var url = "{{ route('category.store') }}";
+                }
+
+                var response = await axios.post(url, formData);
                 var res = response.data;
 
                 $('#modal-store').modal('hide');

@@ -52,6 +52,7 @@
                                 <img id="image-preview" src="{{ asset('img/default-image.jpg') }}" alt="Hình ảnh" class="img img-thumbnail my-2" style="max-width: 100px; max-height: 100px;">
                             </div>
                             <input type="file" name="image" id="image" class="d-none">
+                            <div class="invalid-feedback image-error">{{ $errors->first('image') }}</div>
                             <label for="image" class="btn btn-secondary font-weight-normal mt-2">
                                 Chọn ảnh
                             </label>
@@ -60,11 +61,13 @@
                             <div class="col-md-6 form-group">
                                 <label for="name">Tên combo: </label>
                                 <input type="text" name="name" id="name" class="form-control">
+                                <div class="invalid-feedback name-error">{{ $errors->first('name') }}</div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="supplier-id">Nhà cung cấp: </label>
                                 <select name="supplier_id" id="supplier-id" class="form-control select2" style="width: 100%;" required>
                                 </select>
+                                <div class="invalid-feedback supplier-id-error">{{ $errors->first('supplier_id') }}</div>
                             </div>
                             <div class="col-md-12 form-group">
                                 <label>Sách:</label>
@@ -74,10 +77,12 @@
                             <div class="col-md-6 form-group">
                                 <label for="price">Giá bán: </label>
                                 <input type="text" name="price" id="price" class="form-control">
+                                <div class="invalid-feedback price-error">{{ $errors->first('price') }}</div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="quantity">Số lượng: </label>
                                 <input type="text" name="quantity" id="quantity" class="form-control">
+                                <div class="invalid-feedback quantity-error">{{ $errors->first('quantity') }}</div>
                             </div>
                             <div class="col-md-12 form-group">
                                 <label for="description">Mô tả: </label>
@@ -245,15 +250,16 @@
 
         $('#btn-create').click(async function() {
             try {
-                var response = await axios.get("{{ route('combo.create') }}");
-                var res = response.data;
-
+                resetValidationForm();
                 id = null;
                 $('#id').val(null);
                 $('#form-store').trigger('reset');
                 $('#supplier-id').empty();
                 $('#book-ids').empty();
                 $('#image-preview').attr('src', 'img/default-image.jpg');
+
+                var response = await axios.get("{{ route('combo.create') }}");
+                var res = response.data;
 
                 $('#supplier-id').append('<option value="" selected disabled>-- Chọn nhà cung cấp --</option>');
                 res.data.suppliers.forEach(function(supplier) {
@@ -273,6 +279,7 @@
 
         $('#data-table').on('click', '.btn-edit', async function() {
             try {
+                resetValidationForm();
                 var id = $(this).data('id');
                 var response = await axios.get("{{ route('combo.edit', ['id' => '_id_']) }}".replace('_id_', id));
                 var res = response.data;
@@ -341,7 +348,14 @@
         $('#btn-store').click(async function() {
             try {
                 var formData = new FormData($('#form-store')[0]);
-                var response = await axios.post("{{ route('combo.store') }}", formData);
+
+                if (id) {
+                    var url = `{{ route('combo.update', ['id' => '_id_']) }}`.replace('_id_', id);
+                } else {
+                    var url = "{{ route('combo.store') }}";
+                }
+
+                var response = await axios.post(url, formData);
                 var res = response.data;
 
                 $('#modal-store').modal('hide');

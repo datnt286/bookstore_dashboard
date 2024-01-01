@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
             Route::get('create', [ComboController::class, 'create'])->name('create');
             Route::post('store', [ComboController::class, 'store'])->name('store');
             Route::get('edit/{id}', [ComboController::class, 'edit'])->name('edit');
+            Route::post('update/{id}', [ComboController::class, 'update'])->name('update');
             Route::get('destroy/{id}', [ComboController::class, 'destroy'])->name('destroy');
             Route::get('{id}', [ComboController::class, 'show'])->name('show');
             Route::get('get-combos-by-supplier/{supplier_id}', [ComboController::class, 'getCombosBySupplier'])->name('get-combos-by-supplier');
@@ -73,6 +74,7 @@ Route::middleware('auth')->group(function () {
         Route::name('category.')->group(function () {
             Route::get('/', [CategoryController::class, 'index'])->name('index');
             Route::post('store', [CategoryController::class, 'store'])->name('store');
+            Route::post('update/{id}', [CategoryController::class, 'update'])->name('update');
             Route::get('destroy/{id}', [CategoryController::class, 'destroy'])->name('destroy');
             Route::get('{id}', [CategoryController::class, 'show'])->name('show');
         });

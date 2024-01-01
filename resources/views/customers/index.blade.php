@@ -221,7 +221,8 @@
         var id = null;
 
         $('#btn-create').click(function() {
-            resetForm();
+            resetValidationForm();
+            id = null;
             $('#id').val(null);
             $('#form-store').trigger('reset');
             $('#username').prop('readonly', false);
@@ -231,7 +232,7 @@
 
         $('#data-table').on('click', '.btn-edit', async function() {
             try {
-                resetForm();
+                resetValidationForm();
                 id = $(this).data('id');
                 var response = await axios.get("{{ route('customer.show', ['id' => '_id_']) }}".replace('_id_', id));
                 var res = response.data;

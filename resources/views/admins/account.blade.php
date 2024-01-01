@@ -182,18 +182,7 @@
 
                 handleSuccess(res);
             } catch (error) {
-                if (error.response.status === 422) {
-                    var errors = error.response.data.errors;
-
-                    $.each(errors, function(key, value) {
-                        var formattedKey = key.replace(/_/g, '-');
-
-                        $('#' + formattedKey).addClass('is-invalid');
-                        $('.' + formattedKey + '-error').text(value[0]);
-                    });
-                } else {
-                    handleError(error);
-                }
+                handleError(error);
             }
         });
 

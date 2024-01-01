@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -29,10 +30,9 @@ class CategoryController extends Controller
         return view('categories.index', compact('categories'));
     }
 
-    public function store(CategoryRequest $request)
+    public function store(CreateCategoryRequest $request)
     {
-        $category = Category::updateOrCreate(
-            ['id' => $request->id],
+        $category = Category::create(
             [
                 'name' => $request->name,
                 'slug' => Str::slug($request->name),
@@ -54,13 +54,44 @@ class CategoryController extends Controller
             $category->save();
         }
 
-        $message = $request->id ? 'Cập nhật' : 'Thêm mới';
+        return response()->json([
+            'success' => true,
+            'message' => 'Thêm mới thể loại thành công!',
+        ]);
+    }
+
+    public function update(UpdateCategoryRequest $request)
+    {
+        $category = Category::find($request->id);
+
+        $category->update(
+            [
+                'name' => $request->name,
+                'slug' => Str::slug($request->name),
+            ],
+        );
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '_' . Str::slug($request->name) . '.' . $extension;
+
+            $file->move(public_path('uploads/categories/'), $fileName);
+
+            // if ($category->image && Storage::exists('uploads/categories/' . $category->image)) {
+            //     Storage::delete('uploads/categories/' . $category->image);
+            // }
+
+            $category->image = $fileName;
+            $category->save();
+        }
 
         return response()->json([
             'success' => true,
-            'message' => $message . ' thể loại thành công!',
+            'message' => 'Cập nhật thể loại thành công!',
         ]);
     }
+
 
     public function show($id)
     {

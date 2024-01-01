@@ -150,7 +150,7 @@
 
         $('#btn-create').click(async function() {
             try {
-                resetForm();
+                resetValidationForm();
                 $('#id').val(null);
                 $('#form-store').trigger('reset');
                 $('#book-ids').empty();
@@ -171,7 +171,7 @@
 
         $('#data-table').on('click', '.btn-edit', async function() {
             try {
-                resetForm();
+                resetValidationForm();
                 id = $(this).data('id');
                 var response = await axios.get("{{ route('author.show', ['id' => '_id_']) }}".replace('_id_', id));
                 var res = response.data;

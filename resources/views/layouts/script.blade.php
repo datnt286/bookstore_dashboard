@@ -94,7 +94,7 @@
         }
     }
 
-    function resetForm() {
+    function resetValidationForm() {
         $('#form-store input').removeClass('is-invalid');
         $('#form-store select').val('').removeClass('is-invalid');
         $('#form-store .invalid-feedback').text('');

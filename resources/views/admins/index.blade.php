@@ -248,8 +248,8 @@
         var formData = new FormData($('#form-store')[0]);
 
         $('#btn-create').click(function() {
+            resetValidationForm();
             id = null;
-            resetForm();
             $('#id').val(null);
             $('#form-store').trigger('reset');
             $('#avatar-preview').attr('src', 'img/default-avatar.jpg');
@@ -260,7 +260,7 @@
 
         $('#data-table').on('click', '.btn-edit', async function() {
             try {
-                resetForm();
+                resetValidationForm();
                 id = $(this).data('id');
                 var response = await axios.get("{{ route('admin.show', ['id' => '_id_']) }}".replace('_id_', id));
                 var res = response.data;

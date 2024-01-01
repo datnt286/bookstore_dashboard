@@ -142,7 +142,7 @@
         var id = null;
 
         $('#btn-create').click(function() {
-            resetForm();
+            resetValidationForm();
             $('#id').val(null);
             $('#form-store').trigger('reset');
             $('#modal-title').text('Thêm nhà xuất bản');
@@ -151,7 +151,7 @@
 
         $('#data-table').on('click', '.btn-edit', async function() {
             try {
-                resetForm();
+                resetValidationForm();
                 id = $(this).data('id');
                 var response = await axios.get("{{ route('publisher.show', ['id' => '_id_']) }}".replace('_id_', id));
                 var res = response.data;

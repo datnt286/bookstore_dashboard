@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateComboRequest;
+use App\Http\Requests\UpdateComboRequest;
 use App\Models\Book;
 use App\Models\Combo;
 use App\Models\Supplier;
@@ -45,10 +47,9 @@ class ComboController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(CreateComboRequest $request)
     {
-        $combo = Combo::updateOrCreate(
-            ['id' => $request->id],
+        $combo = Combo::create(
             [
                 'name' => $request->name,
                 'supplier_id' => $request->supplier_id,
@@ -76,11 +77,47 @@ class ComboController extends Controller
             $combo->save();
         }
 
-        $message = $request->id ? 'Cập nhật' : 'Thêm mới';
+        return response()->json([
+            'success' => true,
+            'message' => 'Thêm mới combo thành công!',
+        ]);
+    }
+
+    public function update(UpdateComboRequest $request)
+    {
+        $combo = Combo::find($request->id);
+
+        $combo->update(
+            [
+                'name' => $request->name,
+                'supplier_id' => $request->supplier_id,
+                'price' => $request->price,
+                'quantity' => $request->quantity,
+                'description' => $request->description,
+                'slug' => Str::slug($request->name),
+            ],
+        );
+
+        $combo->books()->sync($request->book_ids);
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '_' . Str::slug($request->name) . '.' . $extension;
+
+            $file->move(public_path('uploads/combos/'), $fileName);
+
+            // if ($combo->image && Storage::exists('uploads/combos/' . $combo->image)) {
+            //     Storage::delete('uploads/combos/' . $combo->image);
+            // }
+
+            $combo->image = $fileName;
+            $combo->save();
+        }
 
         return response()->json([
             'success' => true,
-            'message' => $message . ' combo thành công!',
+            'message' => 'Cập nhật combo thành công!',
         ]);
     }
 
