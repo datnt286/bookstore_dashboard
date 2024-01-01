@@ -25,7 +25,7 @@ class UpdateComboRequest extends FormRequest
             'name' => [
                 'required',
                 'unique:combos,name,' . $this->request->get('id'),
-                'regex:/^[\p{L}\s]+$/u',
+                'regex:/^[\p{L}\s\d]+$/u',
             ],
             'supplier_id' => 'required',
             'price' => 'required|numeric',

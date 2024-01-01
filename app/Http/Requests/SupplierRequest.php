@@ -45,9 +45,9 @@ class SupplierRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Vui lòng nhập tên nhà xuất bản.',
-            'name.unique' => 'Tên nhà xuất bản đã tồn tại.',
-            'name.regex' => 'Tên nhà xuất bản không được chứa ký tự đặc biệt.',
+            'name.required' => 'Vui lòng nhập tên nhà cung cấp.',
+            'name.unique' => 'Tên nhà cung cấp đã tồn tại.',
+            'name.regex' => 'Tên nhà cung cấp không được chứa ký tự đặc biệt.',
             'phone.required' => 'Vui lòng nhập số điện thoại.',
             'phone.unique' => 'Số điện thoại đã tồn tại.',
             'phone.regex' => 'Số điện thoại chỉ được chứa ký tự số và bắt đầu bằng số 0.',

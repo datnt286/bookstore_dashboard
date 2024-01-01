@@ -167,6 +167,7 @@
 
         $('#btn-store').click(async function() {
             try {
+                id = $('#id').val();
                 var formData = new FormData($('#form-store')[0]);
                 var response = await axios.post("{{ route('publisher.store') }}", formData);
                 var res = response.data;

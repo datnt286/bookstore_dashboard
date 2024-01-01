@@ -216,6 +216,7 @@
 
         $('#btn-store').click(async function() {
             try {
+                id = $('#id').val();
                 var formData = new FormData($('#form-store')[0]);
 
                 if (id) {

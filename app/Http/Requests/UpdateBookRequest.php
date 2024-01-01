@@ -25,7 +25,7 @@ class UpdateBookRequest extends FormRequest
             'name' => [
                 'required',
                 'unique:books,name,' . $this->request->get('id'),
-                'regex:/^[\p{L}\d\sáàảãạăắằẳẵặâấầẩẫậéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵÁÀẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỴĐđA-Za-z0-9\s]+$/u',
+                'regex:/^[\p{L}\s\d]+$/u',
             ],
             'category_id' => 'required',
             'publisher_id' => 'required',

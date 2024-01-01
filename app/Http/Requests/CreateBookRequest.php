@@ -25,7 +25,7 @@ class CreateBookRequest extends FormRequest
             'name' => [
                 'required',
                 'unique:books,name,' . $this->request->get('id'),
-                'regex:/^[\p{L}\s]+$/u',
+                'regex:/^[\p{L}\s\d]+$/u',
             ],
             'category_id' => 'required',
             'publisher_id' => 'required',
