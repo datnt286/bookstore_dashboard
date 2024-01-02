@@ -8,9 +8,10 @@ use Illuminate\Http\Request;
 
 class APIBookController extends Controller
 {
-    public function index()
+    public function index($page = 1, $perPage = 20)
     {
         $books = Book::with('images')->get();
+        //$books = Book::with('images')->paginate($perPage, ['*'], 'page', $page);
 
         return response()->json([
             'success' => true,
