@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Combo;
-use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -31,18 +29,12 @@ class OrderController extends Controller
     {
         $total = 0;
 
-        $customer = Customer::firstOrCreate(
-            ['phone' => $request->phone],
-            [
-                'name' => $request->name,
-            ],
-        );
-
         $order = Order::create([
-            'admin_id' => Auth::user()->id,
-            'customer_id' => $customer->id,
-            'phone' => $customer->phone,
+            'admin_id' => auth()->id(),
+            'name' => $request->name,
+            'phone' => $request->phone,
             'total' => $total,
+            'status' => 4,
         ]);
 
         for ($i = 0; $i < count($request->book_id); $i++) {
@@ -100,7 +92,7 @@ class OrderController extends Controller
             ]);
         }
 
-        $order->update(['status' => $status]);
+        $order->update(['admin_id' => auth()->id(), 'status' => $status]);
 
         $messages = [
             2 => 'Duyệt đơn thành công!',

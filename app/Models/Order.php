@@ -9,7 +9,7 @@ class Order extends Model
 {
     use HasFactory;
     protected $table = 'orders';
-    protected $fillable = ['customer_id', 'phone', 'address', 'total', 'shipping_fee', 'total_payment', 'note', 'status'];
+    protected $fillable = ['customer_id', 'admin_id', 'name', 'phone', 'address', 'total', 'shipping_fee', 'total_payment', 'note', 'status'];
     protected $appends = ['customer_name'];
 
     public function customer()

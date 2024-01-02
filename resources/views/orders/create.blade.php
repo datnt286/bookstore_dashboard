@@ -27,10 +27,12 @@
                 <div class="form-group">
                     <label for="name">Tên khách hàng:</label>
                     <input type="text" name="customer_name" id="customer-name" class="form-control">
+                    <div class="invalid-feedback customer-name-error"></div>
                 </div>
                 <div class="form-group">
                     <label for="phone">Số điện thoại:</label>
                     <input type="text" name="customer_phone" id="customer-phone" class="form-control">
+                    <div class="invalid-feedback customer-phone-error"></div>
                 </div>
                 <div class="form-group">
                     <label for="total">Tổng tiền:</label>
@@ -58,6 +60,7 @@
                         <option value="{{ $combo->id }}" data-combo-id="{{ $combo->id }}" data-price="{{ $combo->price }}">{{ $combo->name }}</option>
                         @endforeach
                     </select>
+                    <div class="invalid-feedback product-error"></div>
                 </div>
                 <div class="form-group">
                     <label for="price">Giá bán:</label>
@@ -66,6 +69,7 @@
                 <div class="form-group">
                     <label for="quantity">Số lượng:</label>
                     <input type="text" id="quantity" class="form-control" placeholder="0">
+                    <div class="invalid-feedback quantity-error"></div>
                 </div>
                 <div class="text-center">
                     <button type="button" id="btn-add" class="btn btn-sm btn-primary">Thêm</button>
@@ -126,6 +130,43 @@
         })
 
         $('#btn-add').click(function() {
+            $('#customer-name, #customer-phone, #product, #quantity').removeClass('is-invalid');
+            $('.customer-name-error, .customer-phone-error, .product-error, .quantity-error').text('');
+
+            var customerName = $('#customer-name').val();
+            var customerPhone = $('#customer-phone').val();
+            var selectedProduct = $('#product').val();
+            var quantity = $('#quantity').val();
+            var hasError = false;           
+
+            if (!customerName) {
+                $('#customer-name').addClass('is-invalid');
+                $('.customer-name-error').text('Vui lòng nhập tên khách hàng.');
+                hasError = true;
+            }
+
+            if (!customerPhone) {
+                $('#customer-phone').addClass('is-invalid');
+                $('.customer-phone-error').text('Vui lòng nhập số điện thoại khách hàng.');
+                hasError = true;
+            }
+
+            if (!selectedProduct) {
+                $('#product').addClass('is-invalid');
+                $('.product-error').text('Vui lòng chọn sản phẩm.');
+                hasError = true;
+            }
+
+            if (!quantity || isNaN(quantity) || quantity <= 0) {
+                $('#quantity').addClass('is-invalid');
+                $('.quantity-error').text('Vui lòng nhập số lượng hợp lệ.');
+                hasError = true;
+            }
+
+            if (hasError) {
+                return;
+            }
+
             var order = $('#data-table tbody tr').length + 1;
             var bookId = $('#product option:selected').data('book-id');
             var comboId = $('#product option:selected').data('combo-id');

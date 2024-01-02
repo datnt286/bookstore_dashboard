@@ -32,6 +32,7 @@
                         <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
                         @endforeach
                     </select>
+                    <div class="invalid-feedback supplier-error"></div>
                 </div>
                 <div class="form-group">
                     <label for="total">Tổng tiền:</label>
@@ -59,18 +60,22 @@
                         <option data-combo-id="{{ $combo->id }}" data-supplier-id="{{ $combo->supplier_id }}" data-name="{{ $combo->name }}">{{ $combo->name }}</option>
                         @endforeach
                     </select>
+                    <div class="invalid-feedback product-error"></div>
                 </div>
                 <div class="form-group">
                     <label for="import-price">Giá nhập:</label>
                     <input type="text" id="import-price" class="form-control" placeholder="0">
+                    <div class="invalid-feedback import-price-error"></div>
                 </div>
                 <div class="form-group">
                     <label for="price">Giá bán:</label>
                     <input type="text" id="price" class="form-control" placeholder="0">
+                    <div class="invalid-feedback price-error"></div>
                 </div>
                 <div class="form-group">
                     <label for="quantity">Số lượng:</label>
                     <input type="text" id="quantity" class="form-control" placeholder="0">
+                    <div class="invalid-feedback quantity-error"></div>
                 </div>
                 <div class="text-center">
                     <button type="button" id="btn-add" class="btn btn-sm btn-primary">Thêm</button>
@@ -160,6 +165,50 @@
         });
 
         $('#btn-add').click(function() {
+            $('#supplier, #product, #import-price, #price, #quantity').removeClass('is-invalid');
+            $('.supplier-error, .product-error, .import-price-error, .price-error, .quantity-error').text('');
+
+            var supplierId = $('#supplier').val();
+            var importPrice = $('#import-price').val();
+            var price = $('#price').val();
+            var quantity = $('#quantity').val();
+            var selectedProduct = $('#product').val();
+            var hasError = false;
+
+            if (!supplierId) {
+                $('#supplier').addClass('is-invalid');
+                $('.supplier-error').text('Vui lòng chọn nhà cung cấp.');
+                hasError = true;
+            }
+
+            if (!selectedProduct) {
+                $('#product').addClass('is-invalid');
+                $('.product-error').text('Vui lòng chọn sản phẩm.');
+                hasError = true;
+            }
+
+            if (!importPrice || isNaN(importPrice) || importPrice <= 0) {
+                $('#import-price').addClass('is-invalid');
+                $('.import-price-error').text('Vui lòng nhập giá nhập hợp lệ.');
+                hasError = true;
+            }
+
+            if (!price || isNaN(price) || price <= 0) {
+                $('#price').addClass('is-invalid');
+                $('.price-error').text('Vui lòng nhập giá bán hợp lệ.');
+                hasError = true;
+            }
+
+            if (!quantity || isNaN(quantity) || quantity <= 0) {
+                $('#quantity').addClass('is-invalid');
+                $('.quantity-error').text('Vui lòng nhập số lượng hợp lệ.');
+                hasError = true;
+            }
+
+            if (hasError) {
+                return;
+            }
+
             var order = $('#data-table tbody tr').length + 1;
             var bookId = $('#product option:selected').data('book-id');
             var comboId = $('#product option:selected').data('combo-id');

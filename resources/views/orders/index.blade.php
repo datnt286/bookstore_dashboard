@@ -31,7 +31,7 @@
                 @forelse($orders as $order)
                 <tr>
                     <td>{{ $order->id }}</td>
-                    <td>{{ $order->customer_name }}</td>
+                    <td>{{ $order->name }}</td>
                     <td>{{ $order->phone }}</td>
                     <td>{{ $order->address }}</td>
                     <td>{{ $order->total }}</td>
@@ -55,15 +55,8 @@
                     <td>
                         <div class="project-actions d-flex justify-content-between">
                             <button data-id="{{ $order->id }}" class="btn btn-info btn-sm btn-detail mx-1"><i class="fas fa-info-circle"></i> Chi tiết</button>
-                            @if ($order->status === 1)
                             <button data-id="{{ $order->id }}" data-status="2" class="btn btn-success btn-sm mx-1 btn-update-status">Duyệt đơn</button>
-                            @elseif ($order->status === 2)
-                            <button data-id="{{ $order->id }}" data-status="3" class="btn btn-warning btn-sm mx-1 btn-update-status">Chuyển cho đơn vị vận chuyển</button>
-                            @endif
-
-                            @if (!($order->status == 3 || $order->status == 4 || $order->status == 5))
                             <button data-id="{{ $order->id }}" data-status="5" class="btn btn-danger btn-sm mx-1 btn-update-status">Huỷ đơn</button>
-                            @endif
                         </div>
                     </td>
                 </tr>
@@ -202,6 +195,7 @@
                 switch (status) {
                     case 2:
                         $(this).closest('tr').find('td:eq(5)').text('Đã xác nhận');
+                        $(this).data('status', 3).removeClass('btn-success').addClass('btn-warning').text('Vận chuyển');
                         break;
                     case 3:
                         $(this).closest('tr').find('td:eq(5)').text('Đang giao');
@@ -213,7 +207,10 @@
                         break;
                 }
 
-                // $('#data-table').DataTable().draw();
+                if (status === 3 || status === 5) {
+                    $(this).addClass('disabled').attr('disabled', 'disabled');
+                }
+
                 handleSuccess(res);
             } catch (error) {
                 handleError(error);
