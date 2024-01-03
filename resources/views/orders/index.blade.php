@@ -54,6 +54,7 @@
                     @endswitch
                     <td>
                         <div class="project-actions d-flex justify-content-between">
+                            <input type="hidden" class="order-status" value="{{ $order->status }}">
                             <button data-id="{{ $order->id }}" class="btn btn-info btn-sm btn-detail mx-1"><i class="fas fa-info-circle"></i> Chi tiết</button>
                             <button data-id="{{ $order->id }}" data-status="2" class="btn btn-success btn-sm mx-1 btn-update-status">Duyệt đơn</button>
                             <button data-id="{{ $order->id }}" data-status="5" class="btn btn-danger btn-sm mx-1 btn-update-status">Huỷ đơn</button>
@@ -154,6 +155,27 @@
                 },
             },
         }).buttons().container().appendTo('#data-table_wrapper .col-md-6:eq(0)');
+
+        $('.btn-update-status').each(function() {
+            var status = $(this).data('status');
+            var orderStatus = $(this).closest('tr').find('.order-status').val();
+
+            switch (orderStatus) {
+                case '1':
+                    $(this).text('Duyệt đơn').data('status', 1);
+                    break;
+                case '2':
+                    $(this).text('Vận chuyển').data('status', 2).removeClass('btn-success').addClass('btn-warning');
+                    break;
+                case '3':
+                case '4':
+                case '5':
+                    $(this).text('Đã ' + (orderStatus === '3' ? 'giao' : 'hủy')).addClass('disabled').attr('disabled', 'disabled');
+                    break;
+                default:
+                    break;
+            }
+        });
 
         $('#data-table').on('click', '.btn-detail', async function() {
             try {

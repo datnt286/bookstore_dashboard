@@ -57,4 +57,48 @@ class APIOrderController extends Controller
             'message' => 'Đặt hàng thành công!'
         ]);
     }
+
+    public function index()
+    {
+        $orders = Order::with('order_detail')->get();
+        $ordered = Order::where('status', 1)->with('order_detail')->get();
+        $confirmed = Order::where('status', 2)->with('order_detail')->get();
+        $delivering = Order::where('status', 3)->with('order_detail')->get();
+        $delivered = Order::where('status', 4)->with('order_detail')->get();
+        $canceled = Order::where('status', 5)->with('order_detail')->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'orders' => $orders,
+                'ordered' => $ordered,
+                'confirmed' => $confirmed,
+                'delivering' =>  $delivering,
+                'delivered' => $delivered,
+                'canceled' =>  $canceled,
+            ],
+        ]);
+    }
+
+    public function confirm($id)
+    {
+        $order = Order::find($id);
+        $order->update(['status' => 4]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Xác nhận đơn hàng thành công!'
+        ]);
+    }
+
+    public function cancel($id)
+    {
+        $order = Order::find($id);
+        $order->update(['status' => 5]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Huỷ đơn thành công!'
+        ]);
+    }
 }

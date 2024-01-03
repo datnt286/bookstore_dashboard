@@ -46,7 +46,14 @@ Route::prefix('author')->group(function () {
     });
 });
 
-Route::post('order/create', [APIOrderController::class, 'create'])->name('order.create');
+Route::prefix('order')->group(function () {
+    Route::name('order.')->group(function () {
+        Route::get('/', [APIOrderController::class, 'index'])->name('index');
+        Route::post('create', [APIOrderController::class, 'create'])->name('create');
+        Route::get('confirm/{id}', [APIOrderController::class, 'confirm'])->name('confirm');
+        Route::get('cancel/{id}', [APIOrderController::class, 'cancel'])->name('cancel');
+    });
+});
 
 Route::get('index', [APIBookController::class, 'index'])->name('index');
 Route::get('get-newbooks-and-combos', [APIBookController::class, 'getNewBooksAndCombos'])->name('get-newbooks-and-combos');
