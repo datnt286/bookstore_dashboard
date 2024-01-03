@@ -289,7 +289,6 @@
                 reader.onload = function(e) {
                     $('#avatar-preview').attr('src', e.target.result);
 
-                    var formData = new FormData($('#form-store')[0]);
                     formData.set('avatar', input.files[0]);
                 }
 

@@ -337,7 +337,6 @@
                 reader.onload = function(e) {
                     $('#image-preview').attr('src', e.target.result);
 
-                    var formData = new FormData($('#form-store')[0]);
                     formData.set('image', input.files[0]);
                 }
 

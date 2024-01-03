@@ -16,6 +16,7 @@ class APIOrderController extends Controller
 
         $order = Order::create([
             'customer_id' => $request->user['customer_id'],
+            'name' => $request->user['name'],
             'phone' => $request->user['phone'],
             'address' => $request->user['address'],
             'total' => $total,
