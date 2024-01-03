@@ -80,6 +80,16 @@ class APIOrderController extends Controller
         ]);
     }
 
+    public function details($id)
+    {
+        $orderDetails = OrderDetail::where('order_id', $id)->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $orderDetails
+        ]);
+    }
+
     public function confirm($id)
     {
         $order = Order::find($id);
