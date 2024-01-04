@@ -106,6 +106,22 @@ class APIOrderController extends Controller
         $order = Order::find($id);
         $order->update(['status' => 5]);
 
+        $orderDetails = OrderDetail::where('order_id', $id)->get();
+
+        foreach ($orderDetails as $orderDetail) {
+            if ($orderDetail->book_id) {
+                $book = Book::find($orderDetail->book_id);
+                $book->quantity += $orderDetail->quantity;
+                $book->save();
+            }
+
+            if ($orderDetail->combo_id) {
+                $combo = Combo::find($orderDetail->combo_id);
+                $combo->quantity += $orderDetail->quantity;
+                $combo->save();
+            }
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Huỷ đơn thành công!'

@@ -94,6 +94,22 @@ class OrderController extends Controller
 
         $order->update(['admin_id' => auth()->id(), 'status' => $status]);
 
+        $orderDetails = OrderDetail::where('order_id', $id)->get();
+
+        foreach ($orderDetails as $orderDetail) {
+            if ($orderDetail->book_id) {
+                $book = Book::find($orderDetail->book_id);
+                $book->quantity += $orderDetail->quantity;
+                $book->save();
+            }
+
+            if ($orderDetail->combo_id) {
+                $combo = Combo::find($orderDetail->combo_id);
+                $combo->quantity += $orderDetail->quantity;
+                $combo->save();
+            }
+        }
+
         $messages = [
             2 => 'Duyệt đơn thành công!',
             3 => 'Chuyển sang bộ phận vận chuyển thành công!',
