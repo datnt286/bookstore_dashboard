@@ -31,10 +31,6 @@ class CreateOrderRequest extends FormRequest
                 'regex:/^\d+$/',
                 'size:10',
             ],
-            'email' => [
-                'required',
-                'email:rfc,dns',
-            ],
             'address' => 'required',
         ];
     }
@@ -48,8 +44,6 @@ class CreateOrderRequest extends FormRequest
             'phone.unique' => 'Số điện thoại đã tồn tại.',
             'phone.regex' => 'Số điện thoại chỉ được chứa ký tự số và bắt đầu bằng số 0.',
             'phone.size' => 'Số điện thoại phải đủ 10 ký tự.',
-            'email.required' => 'Vui lòng nhập email.',
-            'email.email' => 'Sai định dạng email.',
             'address.required' => 'Vui lòng nhập địa chỉ.',
         ];
     }
