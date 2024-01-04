@@ -86,7 +86,7 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Tên sản phẩm</th>
+                                <th>Sản phẩm</th>
                                 <th>Giá bán</th>
                                 <th>Số lượng</th>
                                 <th>Thành tiền</th>
@@ -208,11 +208,18 @@
                     res.data.forEach(detail => {
                         $('.details-table tbody').append(`
                         <tr>
-                            <td>${detail.id}</td>
-                            <td>${detail.product_name}</td>
-                            <td>${detail.price}</td>
-                            <td>${detail.quantity}</td>
-                            <td>${detail.price * detail.quantity}</td>
+                            <td class="align-middle">${detail.id}</td>
+                            <td class="align-middle">
+                                <div style="display: flex; align-items: center;">
+                                    <img src="${detail.product_image}" alt="Hình ảnh" style="max-width: 80px; max-height: 120px; margin-right: 10px;" />
+                                    <span style="max-height: 60px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                        ${detail.product_name}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="align-middle">${detail.price}</td>
+                            <td class="align-middle">${detail.quantity}</td>
+                            <td class="align-middle">${detail.price * detail.quantity}</td>
                         </tr>
                     `);
                     });

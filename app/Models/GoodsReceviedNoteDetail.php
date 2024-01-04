@@ -10,7 +10,7 @@ class GoodsReceviedNoteDetail extends Model
     use HasFactory;
     protected $table = 'goods_recevied_note_details';
     protected $fillable = ['goods_recevied_note_id', 'book_id', 'combo_id', 'import_price', 'price', 'quantity'];
-    protected $appends = ['product_name'];
+    protected $appends = ['product_name', 'product_image'];
 
     public function book()
     {
@@ -31,5 +31,16 @@ class GoodsReceviedNoteDetail extends Model
         }
 
         return 'Không có sản phẩm';
+    }
+
+    public function getProductImageAttribute()
+    {
+        if ($this->book_id) {
+            return $this->book->images->first()->absolute_path;
+        } elseif ($this->combo_id) {
+            return $this->combo->absolute_path;
+        }
+
+        return null;
     }
 }
