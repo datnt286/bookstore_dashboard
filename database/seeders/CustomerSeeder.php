@@ -22,6 +22,7 @@ class CustomerSeeder extends Seeder
                 'phone' => '0123456789',
                 'email' => 'ntdz2003@gmail.com',
                 'address' => 'Q. Bình Thạnh, TP. HCM',
+                'avatar' => 'dat.jpg',
             ],
             [
                 'username' => 'dang',
@@ -30,6 +31,7 @@ class CustomerSeeder extends Seeder
                 'phone' => '0987654321',
                 'email' => 'dang@gmail.com',
                 'address' => 'Q. 7, TP. HCM',
+                'avatar' => 'default-avatar.jpg',
             ],
             [
                 'username' => 'lien',
@@ -38,6 +40,7 @@ class CustomerSeeder extends Seeder
                 'phone' => '0123498765',
                 'email' => 'lien@gmail.com',
                 'address' => 'Q. 4, TP. HCM',
+                'avatar' => 'default-avatar.jpg',
             ],
         ]);
     }

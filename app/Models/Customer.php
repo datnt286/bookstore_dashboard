@@ -15,7 +15,8 @@ class Customer extends Authenticatable implements JWTSubject
     use SoftDeletes;
     use Notifiable;
     protected $table = 'customers';
-    protected $fillable = ['id', 'username', 'password', 'name', 'phone', 'email', 'address'];
+    protected $fillable = ['id', 'username', 'password', 'name', 'phone', 'email', 'address', 'avatar'];
+    protected $appends = ['avatar_image'];
 
     public function getJWTIdentifier()
     {
@@ -25,5 +26,10 @@ class Customer extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function getAvatarImageAttribute()
+    {
+        return env('APP_URL') . "/uploads/customers/{$this->avatar}";
     }
 }

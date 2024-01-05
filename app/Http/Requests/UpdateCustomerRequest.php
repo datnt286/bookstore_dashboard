@@ -39,6 +39,7 @@ class UpdateCustomerRequest extends FormRequest
                 'email:rfc,dns',
             ],
             'address' => 'required',
+            'avatar' => 'image',
         ];
     }
 
@@ -55,6 +56,7 @@ class UpdateCustomerRequest extends FormRequest
             'email.unique' => 'Email đã tồn tại.',
             'email.email' => 'Sai định dạng email.',
             'address.required' => 'Vui lòng nhập địa chỉ.',
+            'avatar.image' => 'File phải là hình ảnh.',
         ];
     }
 }

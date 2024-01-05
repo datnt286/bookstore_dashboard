@@ -19,6 +19,7 @@
             <thead>
                 <tr>
                     <th>Id</th>
+                    <th>Ảnh đại diện</th>
                     <th>Tên đăng nhập</th>
                     <th>Tên khách hàng</th>
                     <th>Điện thoại</th>
@@ -34,7 +35,7 @@
 </div>
 
 <div class="modal fade" id="modal-store">
-    <form id="form-store">
+    <form id="form-store" enctype="multipart/form-data">
         @csrf
         <div class="modal-dialog">
             <div class="modal-content">
@@ -47,6 +48,17 @@
                 <div class="modal-body">
                     <div class="card-body">
                         <input type="hidden" name="id" id="id">
+                        <div class="form-group text-center">
+                            <label for="avatar" class="form-label d-block">Ảnh đại diện:</label>
+                            <div>
+                                <img id="avatar-preview" src="{{ asset('img/default-avatar.jpg') }}" alt="Ảnh đại diện" class="img img-thumbnail my-2" style="max-width: 100px; max-height: 100px;">
+                            </div>
+                            <input type="file" name="avatar" id="avatar" class="d-none" required>
+                            <div class="invalid-feedback avatar-error">{{ $errors->first('avatar') }}</div>
+                            <label for="avatar" class="btn btn-secondary font-weight-normal mt-2">
+                                Chọn ảnh
+                            </label>
+                        </div>
                         <div class="form-group">
                             <label for="username">Tên đăng nhập:</label>
                             <input type="text" name="username" id="username" class="form-control">
@@ -105,6 +117,14 @@
             </div>
             <div class="modal-body">
                 <div class="card-body">
+                    <div class="text-center">
+                        <div class="form-group">
+                            <span class="text-lg font-weight-bold">Ảnh đại diện:</span>
+                        </div>
+                        <div class="form-group">
+                            <img id="avatar-detail-preview" src="{{ asset('img/default-avatar.jpg') }}" alt="Ảnh đại diện" class="img img-thumbnail mb-3" style="max-width: 100px; max-height: 100px;">
+                        </div>
+                    </div>
                     <div class="form-group">
                         <span class="text-lg font-weight-bold">Tên đăng nhập: </span>
                         <span id="username-detail" class="text-lg"></span>
@@ -190,6 +210,12 @@
                     data: 'id'
                 },
                 {
+                    data: 'avatar',
+                    render: function(data, type, row) {
+                        return '<img src="uploads/customers/' + row.avatar + '" alt="Ảnh đại diện" class="img img-thumbnail" style="max-width: 100px; max-height: 100px;">';
+                    }
+                },
+                {
                     data: 'username'
                 },
                 {
@@ -219,12 +245,15 @@
         });
 
         var id = null;
+        var avatar = null;
+        var formData = new FormData($('#form-store')[0]);
 
         $('#btn-create').click(function() {
             resetValidationForm();
             id = null;
             $('#id').val(null);
             $('#form-store').trigger('reset');
+            $('#avatar-preview').attr('src', 'img/default-avatar.jpg');
             $('#username').prop('readonly', false);
             $('#modal-title').text('Thêm khách hàng');
             $('#modal-store').modal('show');
@@ -244,11 +273,33 @@
                 $('#phone').val(res.data.phone);
                 $('#email').val(res.data.email);
                 $('#address').val(res.data.address);
+                $('#avatar-preview').attr('src', 'uploads/customers/' + res.data.avatar);
                 $('#username').prop('readonly', true);
                 $('#modal-title').text('Cập nhật khách hàng');
                 $('#modal-store').modal('show');
             } catch (error) {
                 handleError(error);
+            }
+        });
+
+        $('#avatar').change(function(event) {
+            var input = event.target;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#avatar-preview').attr('src', e.target.result);
+
+                    formData.set('avatar', input.files[0]);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+
+            if ($(this).hasClass('is-invalid')) {
+                $(this).removeClass('is-invalid');
+                var errorClassName = $(this).attr('name') + '-error';
+                $('.' + errorClassName).text('');
             }
         });
 
@@ -286,6 +337,7 @@
                 $('#phone-detail').text(res.data.phone);
                 $('#email-detail').text(res.data.email);
                 $('#address-detail').text(res.data.address);
+                $('#avatar-detail-preview').attr('src', 'uploads/customers/' + res.data.avatar);
                 $('#modal-detail').modal('show');
             } catch (error) {
                 handleError(error);

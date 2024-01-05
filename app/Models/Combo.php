@@ -14,11 +14,6 @@ class Combo extends Model
     protected $fillable = ['id', 'name', 'supplier_id', 'price', 'quantity', 'description', 'slug', 'image'];
     protected $appends = ['absolute_path'];
 
-    public function getAbsolutePathAttribute()
-    {
-        return env('APP_URL') . "/uploads/combos/{$this->image}";
-    }
-
     public function supplier()
     {
         return $this->belongsTo(Supplier::class);
@@ -27,5 +22,10 @@ class Combo extends Model
     public function books()
     {
         return $this->belongsToMany(Book::class);
+    }
+
+    public function getAbsolutePathAttribute()
+    {
+        return env('APP_URL') . "/uploads/combos/{$this->image}";
     }
 }

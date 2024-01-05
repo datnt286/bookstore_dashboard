@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('phone', 10);
             $table->string('email')->unique();
             $table->string('address')->nullable();
+            $table->string('avatar')->default('default-avatar.jpg');
             $table->timestamps();
             $table->softDeletes();
         });

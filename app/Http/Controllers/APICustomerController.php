@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
-use App\Http\Requests\UpdateAccountRequest;
+use App\Http\Requests\UpdateCustomerAccountRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class APICustomerController extends Controller
@@ -61,16 +62,32 @@ class APICustomerController extends Controller
         return response()->json(auth()->user());
     }
 
-    public function update(UpdateAccountRequest $request)
+    public function update(UpdateCustomerAccountRequest $request)
     {
-        $customer = Customer::find($request->id);
-
-        $customer->update([
+        $data = [
             'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,
-            'address' => $request->address
-        ]);
+            'address' => $request->address,
+        ];
+
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '_' . $request->username . '.' . $extension;
+
+            $file->move(public_path('uploads/customers/'), $fileName);
+
+            $data['avatar'] = $fileName;
+
+            // $customer = Customer::find($request->id);
+            // if ($customer->avatar && Customer::exists($customer->avatar)) {
+            //     Storage::delete($customer->avatar);
+            // }
+        }
+
+        $customer = Customer::find($request->id);
+        $customer->update($data);
 
         return response()->json([
             'success' => true,

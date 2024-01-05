@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
 class CustomerController extends Controller
@@ -42,6 +43,16 @@ class CustomerController extends Controller
             'address' => $request->address,
         ];
 
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '_' . $request->username . '.' . $extension;
+
+            $file->move(public_path('uploads/customers/'), $fileName);
+
+            $data['avatar'] = $fileName;
+        }
+
         Customer::create($data);
 
         return response()->json([
@@ -60,6 +71,21 @@ class CustomerController extends Controller
         ];
 
         $password = $request->filled('password') ? ['password' => Hash::make($request->password)] : [];
+
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '_' . $request->username . '.' . $extension;
+
+            $file->move(public_path('uploads/customers/'), $fileName);
+
+            $data['avatar'] = $fileName;
+
+            // $customer = Customer::find($id);
+            // if ($customer->avatar && Storage::exists('uploads/customers/' . $customer->avatar)) {
+            //     Storage::delete('uploads/customers/' . $customer->avatar);
+            // }
+        }
 
         $customer = Customer::find($id);
         $customer->update(array_merge($data, $password));

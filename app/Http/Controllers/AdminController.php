@@ -63,16 +63,16 @@ class AdminController extends Controller
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $extension = $file->getClientOriginalExtension();
-            $fileName = time() . '_' . $request->input('username') . '.' . $extension;
+            $fileName = time() . '_' . $request->username . '.' . $extension;
 
             $file->move(public_path('uploads/admins/'), $fileName);
 
             $data['avatar'] = $fileName;
 
-            $admin = Admin::find(auth()->id());
-            if ($admin->avatar && Storage::exists($admin->avatar)) {
-                Storage::delete($admin->avatar);
-            }
+            // $admin = Admin::find(auth()->id());
+            // if ($admin->avatar && Storage::exists($admin->avatar)) {
+            //     Storage::delete($admin->avatar);
+            // }
         }
 
         $admin = Admin::find(auth()->id());
@@ -157,7 +157,7 @@ class AdminController extends Controller
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $extension = $file->getClientOriginalExtension();
-            $fileName = time() . '_' . $request->input('username') . '.' . $extension;
+            $fileName = time() . '_' . $request->username . '.' . $extension;
 
             $file->move(public_path('uploads/admins/'), $fileName);
 
@@ -186,7 +186,7 @@ class AdminController extends Controller
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $extension = $file->getClientOriginalExtension();
-            $fileName = time() . '_' . $request->input('username') . '.' . $extension;
+            $fileName = time() . '_' . $request->username . '.' . $extension;
 
             $file->move(public_path('uploads/admins/'), $fileName);
 

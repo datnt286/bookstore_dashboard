@@ -43,6 +43,8 @@ class CreateCustomerRequest extends FormRequest
                 'email:rfc,dns',
             ],
             'address' => 'required',
+            'avatar' => 'required',
+            'avatar' => 'image',
         ];
     }
 
@@ -62,6 +64,8 @@ class CreateCustomerRequest extends FormRequest
             'email.unique' => 'Email đã tồn tại.',
             'email.email' => 'Sai định dạng email.',
             'address.required' => 'Vui lòng nhập địa chỉ.',
+            'avatar.required' => 'Vui lòng chọn hình ảnh.',
+            'avatar.image' => 'File phải là hình ảnh.',
         ];
     }
 }

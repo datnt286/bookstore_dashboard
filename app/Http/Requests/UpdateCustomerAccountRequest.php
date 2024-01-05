@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateAccountRequest extends FormRequest
+class UpdateCustomerAccountRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -35,6 +35,7 @@ class UpdateAccountRequest extends FormRequest
                 'email:rfc,dns',
             ],
             'address' => 'required',
+            'avatar' => 'image',
         ];
     }
 
@@ -50,6 +51,7 @@ class UpdateAccountRequest extends FormRequest
             'email.unique' => 'Email đã tồn tại.',
             'email.email' => 'Sai định dạng email.',
             'address.required' => 'Vui lòng nhập địa chỉ.',
+            'avatar.image' => 'File phải là hình ảnh.',
         ];
     }
 }
