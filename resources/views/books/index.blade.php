@@ -327,7 +327,10 @@
                     data: 'supplier_name'
                 },
                 {
-                    data: 'price'
+                    data: 'price',
+                    render: function(data, type, row) {
+                        return data.toLocaleString() + ' ₫';
+                    }
                 },
                 {
                     data: 'quantity'
@@ -512,9 +515,9 @@
                 $('#category-detail').text(res.data.category);
                 $('#publisher-detail').text(res.data.publisher);
                 $('#supplier-detail').text(res.data.supplier);
-                $('#price-detail').text(res.data.price);
+                $('#price-detail').text(res.data.price.toLocaleString() + ' ₫');
                 $('#quantity-detail').text(res.data.quantity);
-                $('#e-book-price-detail').text(res.data.e_book_price);
+                $('#e-book-price-detail').text(res.data.e_book_price.toLocaleString() + ' ₫');
                 $('#language-detail').text(res.data.language);
                 $('#size-detail').text(res.data.size);
                 $('#weight-detail').text(res.data.weight);
