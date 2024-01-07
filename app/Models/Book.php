@@ -44,6 +44,11 @@ class Book extends Model
         return $this->belongsToMany(Combo::class);
     }
 
+    public function reviews()
+    {
+        return $this->hasManyThrough(Review::class, OrderDetail::class);
+    }
+
     public function getCategoryNameAttribute()
     {
         return $this->category->name;

@@ -27,6 +27,6 @@ class Order extends Model
     {
         return Carbon::parse($this->attributes['created_at'])
             ->setTimezone('Asia/Ho_Chi_Minh')
-            ->format('d/m/Y H:i:s');
+            ->format('d/m/Y H:i');
     }
 }

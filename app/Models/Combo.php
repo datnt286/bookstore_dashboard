@@ -24,6 +24,11 @@ class Combo extends Model
         return $this->belongsToMany(Book::class);
     }
 
+    public function reviews()
+    {
+        return $this->hasManyThrough(Review::class, OrderDetail::class);
+    }
+
     public function getAbsolutePathAttribute()
     {
         return env('APP_URL') . "/uploads/combos/{$this->image}";

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('order_detail_id');
             $table->tinyInteger('rating')->nullable();
+            $table->float('average')->nullable();
             $table->string('content')->nullable();
             $table->timestamps();
 

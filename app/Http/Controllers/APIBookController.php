@@ -8,10 +8,9 @@ use Illuminate\Http\Request;
 
 class APIBookController extends Controller
 {
-    public function index($page = 1, $perPage = 20)
+    public function index()
     {
         $books = Book::with('images')->get();
-        //$books = Book::with('images')->paginate($perPage, ['*'], 'page', $page);
 
         return response()->json([
             'success' => true,
@@ -55,8 +54,10 @@ class APIBookController extends Controller
 
     public function getProductBySlug($slug)
     {
-        $book = Book::with('images')->with('combos')->with('category')->with('authors')->where('slug', $slug)->first();
-        $combo = Combo::where('slug', $slug)->first();
+        $book = Book::with(['reviews.customer', 'authors', 'images', 'combos'])
+            ->where('slug', $slug)
+            ->first();
+        $combo = Combo::with('reviews.customer')->where('slug', $slug)->first();
         $product = $book ? $book : $combo;
 
         if (empty($product)) {
@@ -102,4 +103,30 @@ class APIBookController extends Controller
             'data' => $products,
         ]);
     }
+
+    // public function index2(Request $request)
+    // {
+    //     $perPage = 3; // Số lượng mục trên mỗi trang, mặc định là 10
+    //     $page = $request->input('page', 1); // Trang hiện tại, mặc định là 1
+
+    //     $query = Book::query();
+
+    //     // Thêm bất kỳ điều kiện tìm kiếm nào nếu cần
+
+    //     $total = $query->count();
+    //     $totalPages = ceil($total / $perPage);
+
+    //     $data = $query->skip(($page - 1) * $perPage)
+    //                 ->take($perPage)->with('categories','authors','images')
+    //                 ->get();
+
+
+    //     return response()->json([
+    //         'page' => $page,
+    //         'per_page' => $perPage,
+    //         'total' => $total,
+    //         'total_pages' => $totalPages,
+    //         'data' => $data,
+    //     ]);
+    // }
 }

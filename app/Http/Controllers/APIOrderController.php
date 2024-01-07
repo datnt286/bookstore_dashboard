@@ -12,6 +12,28 @@ class APIOrderController extends Controller
 {
     public function create(Request $request)
     {
+        foreach ($request->products as $product) {
+            if ($product['book_id']) {
+                $book = Book::find($product['book_id']);
+                if ($product['quantity'] > $book->quantity) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Số lượng sản phẩm hiện tại không đủ!'
+                    ]);
+                }
+            }
+
+            if ($product['combo_id']) {
+                $combo = Combo::find($product['combo_id']);
+                if ($combo['quantity'] > $combo->quantity) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Số lượng sản phẩm hiện tại không đủ!'
+                    ]);
+                }
+            }
+        }
+
         $total = 0;
 
         $order = Order::create([

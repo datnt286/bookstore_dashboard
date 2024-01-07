@@ -5,6 +5,7 @@ use App\Http\Controllers\APIBookController;
 use App\Http\Controllers\APICategoryController;
 use App\Http\Controllers\APICustomerController;
 use App\Http\Controllers\APIOrderController;
+use App\Http\Controllers\APIReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +56,8 @@ Route::prefix('order')->group(function () {
         Route::get('cancel/{id}', [APIOrderController::class, 'cancel'])->name('cancel');
     });
 });
+
+Route::post('review/create', [APIReviewController::class, 'create'])->name('review.create');
 
 Route::get('index', [APIBookController::class, 'index'])->name('index');
 Route::get('get-newbooks-and-combos', [APIBookController::class, 'getNewBooksAndCombos'])->name('get-newbooks-and-combos');
