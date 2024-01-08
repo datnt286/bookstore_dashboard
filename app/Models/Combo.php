@@ -26,7 +26,12 @@ class Combo extends Model
 
     public function reviews()
     {
-        return $this->hasManyThrough(Review::class, OrderDetail::class);
+        return $this->hasManyThrough(Review::class, OrderDetail::class)->latest();
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->latest();
     }
 
     public function getAbsolutePathAttribute()

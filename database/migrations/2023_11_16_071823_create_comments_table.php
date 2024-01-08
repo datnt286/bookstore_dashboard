@@ -16,12 +16,15 @@ return new class extends Migration
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('book_id')->nullable();
             $table->unsignedBigInteger('combo_id')->nullable();
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('content');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->foreign('book_id')->references('id')->on('books');
             $table->foreign('combo_id')->references('id')->on('combos');
+            $table->foreign('parent_id')->references('id')->on('comments');
         });
     }
 
