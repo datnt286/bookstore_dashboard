@@ -51,7 +51,7 @@ class Book extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class)->latest();
+        return $this->hasMany(Comment::class)->whereNull('parent_id')->latest();
     }
 
     public function getCategoryNameAttribute()

@@ -22,7 +22,7 @@ class Comment extends Model
 
     public function replys()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class, 'parent_id', 'id');
     }
 
     public function getCommentDateAttribute()
