@@ -12,12 +12,17 @@ class Comment extends Model
     use HasFactory;
     use SoftDeletes;
     protected $table = 'comments';
-    protected $fillable = ['customer_id', 'book_id', 'combo_id', 'content'];
+    protected $fillable = ['customer_id', 'book_id', 'combo_id', 'parent_id', 'content'];
     protected $appends = ['comment_date'];
 
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function replys()
+    {
+        return $this->hasMany(Comment::class);
     }
 
     public function getCommentDateAttribute()

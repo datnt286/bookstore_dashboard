@@ -13,6 +13,7 @@ class APICommentController extends Controller
             'customer_id' => $request->customer_id,
             'book_id' => $request->book_id,
             'combo_id' => $request->combo_id,
+            'parent_id' => $request->parent_id,
             'content' => $request->content,
         ]);
 
@@ -44,9 +45,9 @@ class APICommentController extends Controller
         $comboId = $request->input('combo_id');
 
         if ($bookId) {
-            $comments = Comment::with('customer')->where('book_id', $bookId)->get();
+            $comments = Comment::with('customer', 'replys')->where('book_id', $bookId)->latest()->get();
         } else if ($comboId) {
-            $comments = Comment::with('customer')->where('combo_id', $comboId)->get();
+            $comments = Comment::with('customer', 'replys')->where('combo_id', $comboId)->latest()->get();
         } else {
             $comments = [];
         }
