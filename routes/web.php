@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ComboController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GoodsReceviedNoteController;
 use App\Http\Controllers\OrderController;
@@ -135,6 +136,14 @@ Route::middleware('auth')->group(function () {
             Route::post('store', [OrderController::class, 'store'])->name('store');
             Route::post('update-status/{id}/{status}', [OrderController::class, 'updateStatus'])->name('update-status');
             Route::get('{id}', [OrderController::class, 'show'])->name('show');
+        });
+    });
+
+    Route::prefix('comment')->group(function () {
+        Route::name('comment.')->group(function () {
+            Route::get('/', [CommentController::class, 'index'])->name('index');
+            Route::get('reply/{id}', [CommentController::class, 'reply'])->name('reply');
+            Route::get('destroy/{id}', [CommentController::class, 'destroy'])->name('destroy');
         });
     });
 });
