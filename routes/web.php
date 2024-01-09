@@ -115,6 +115,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [CustomerController::class, 'index'])->name('index');
             Route::post('store', [CustomerController::class, 'store'])->name('store');
             Route::post('update/{id}', [CustomerController::class, 'update'])->name('update');
+            Route::get('update-status/{id}', [CustomerController::class, 'updateStatus'])->name('update-status');
             Route::get('destroy/{id}', [CustomerController::class, 'destroy'])->name('destroy');
             Route::get('{id}', [CustomerController::class, 'show'])->name('show');
         });
@@ -134,7 +135,6 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [OrderController::class, 'index'])->name('index');
             Route::get('create', [OrderController::class, 'create'])->name('create');
             Route::post('store', [OrderController::class, 'store'])->name('store');
-            Route::post('update-status/{id}/{status}', [OrderController::class, 'updateStatus'])->name('update-status');
             Route::get('{id}', [OrderController::class, 'show'])->name('show');
         });
     });

@@ -3,28 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class APICommentController extends Controller
 {
     public function create(Request $request)
     {
-        Comment::create([
-            'customer_id' => $request->customer_id,
-            'book_id' => $request->book_id,
-            'combo_id' => $request->combo_id,
-            'parent_id' => $request->parent_id,
-            'content' => $request->content,
-        ]);
+        $customer = Customer::find($request->customer_id);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Bình luận thành công',
-        ]);
-    }
+        if ($customer->status === 0) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Tài khoản của bạn đã bị khoá bình luận!',
+            ], 403);
+        }
 
-    public function reply(Request $request)
-    {
         Comment::create([
             'customer_id' => $request->customer_id,
             'book_id' => $request->book_id,

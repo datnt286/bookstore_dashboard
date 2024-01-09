@@ -116,4 +116,23 @@ class CustomerController extends Controller
             'message' => 'Xoá khách hàng thành công!',
         ]);
     }
+
+    public function updateStatus($id)
+    {
+        $customer = Customer::find($id)->first();
+
+        if ($customer->status == 1) {
+            $customer->update(['status' => 0]);
+            $message = 'Khoá bình luận tài khoản thành công!';
+        } else if ($customer->status == 0) {
+            $customer->update(['status' => 1]);
+            $message = 'Mở khoá bình luận tài khoản thành công!';
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $message,
+            'data' => $customer,
+        ]);
+    }
 }

@@ -61,7 +61,6 @@ Route::prefix('order')->group(function () {
 Route::post('review/create', [APIReviewController::class, 'create'])->name('review.create');
 
 Route::post('comment/create', [APICommentController::class, 'create'])->name('comment.create');
-Route::post('comment/reply', [APICommentController::class, 'reply'])->name('comment.reply');
 Route::get('comment/get-comments-by-product-id', [APICommentController::class, 'getCommentsByProductId'])->name('comment.get-comments-by-product-id');
 
 Route::get('index', [APIBookController::class, 'index'])->name('index');

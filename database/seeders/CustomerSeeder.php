@@ -26,7 +26,7 @@ class CustomerSeeder extends Seeder
             ],
             [
                 'username' => 'dang',
-                'password' => Hash::make('abc123'),
+                'password' => Hash::make('123456'),
                 'name' => 'Đào Hải Đăng',
                 'phone' => '0987654321',
                 'email' => 'dang@gmail.com',
@@ -35,7 +35,7 @@ class CustomerSeeder extends Seeder
             ],
             [
                 'username' => 'lien',
-                'password' => Hash::make('abcXYZ123#'),
+                'password' => Hash::make('abc123'),
                 'name' => 'Trần Thị Mai Liên',
                 'phone' => '0123498765',
                 'email' => 'lien@gmail.com',

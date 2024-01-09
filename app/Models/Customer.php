@@ -15,7 +15,7 @@ class Customer extends Authenticatable implements JWTSubject
     use SoftDeletes;
     use Notifiable;
     protected $table = 'customers';
-    protected $fillable = ['id', 'username', 'password', 'name', 'phone', 'email', 'address', 'avatar'];
+    protected $fillable = ['id', 'username', 'password', 'name', 'phone', 'email', 'address', 'avatar', 'status'];
     protected $appends = ['avatar_image'];
 
     public function getJWTIdentifier()

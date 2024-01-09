@@ -55,7 +55,7 @@
             </div>
             <div class="modal-body">
                 <div class="card-body">
-                    <table class="table table-bordered replys-table">
+                    <table id="replys-table" class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>Id</th>
@@ -145,44 +145,28 @@
                     data: null,
                     orderable: false,
                     render: function(data, type, row) {
+                        var statusText = row.customer.status === 1 ? 'Khoá bình luận' : 'Mở khoá';
+                        var statusClass = row.customer.status === 1 ? 'btn-warning' : 'btn-success';
+                        var statusIcon = row.customer.status === 1 ? '<i class="fas fa-comment-slash"></i>' : '<i class="fas fa-comment"></i>';
+
                         return '<div class="project-actions text-right">' +
                             '<button class="btn btn-info btn-sm btn-reply" data-id="' + row.id + '"><i class="fas fa-info-circle"></i> Xem phản hồi</button>' +
-                            '<button class="btn btn-warning btn-sm mx-1" data-id="' + row.customer_id + '"><i class="fas fa-comment-slash"></i> Khoá bình luận</button>' +
+                            '<button class="btn ' + statusClass + ' btn-sm mx-1 btn-update-status" data-id="' + row.customer_id + '">' + statusIcon + ' ' + statusText + '</button>' +
                             '<button class="btn btn-danger btn-sm btn-delete mx-1" data-id="' + row.id + '"><i class="fas fa-trash-alt"></i> Xoá</button>' +
                             '</div>';
                     }
-                }
+                },
             ]
         });
 
-        $('#data-table').on('click', '.btn-reply', async function() {
+        $('#data-table').on('click', '.btn-update-status', async function() {
             try {
-                var id = $(this).data('id');
-                var response = await axios.get("{{ route('comment.reply', ['id' => '_id_']) }}".replace('_id_', id));
+                id = $(this).data('id');
+                var response = await axios.get("{{ route('customer.update-status', ['id' => '_id_']) }}".replace('_id_', id));
                 var res = response.data;
 
-                $('.replys-table tbody').empty();
-
-                if (res.success && res.data.length > 0) {
-                    res.data.forEach(reply => {
-                        $('.replys-table tbody').append(`
-                        <tr>
-                            <td class="align-middle">${reply.id}</td>
-                            <td class="align-middle">${reply.customer_name}</td>
-                            <td class="align-middle">${reply.product_name}</td>
-                            <td class="align-middle">${reply.content}</td>
-                            <td class="align-middle">
-                                <button data-id="${reply.customer_id}" class="btn btn-warning btn-sm btn-reply mx-1"><i class="fas fa-comment-slash"></i> Khoá bình luận</button>
-                                <button data-id="${reply.id}" class="btn btn-danger btn-sm mx-1 btn-delete"><i class="fas fa-trash-alt"></i> Xoá</button>
-                            </td>
-                        </tr>
-                        `);
-                    });
-                } else {
-                    $('.replys-table tbody').append('<tr><td colspan="5">Không có dữ liệu chi tiết!</td></tr>');
-                }
-
-                $('#modal-reply').modal('show');
+                dataTable.draw();
+                handleSuccess(res);
             } catch (error) {
                 handleError(error);
             }
@@ -200,6 +184,86 @@
 
                 $('#modal-delete').modal('hide');
                 dataTable.draw();
+                handleSuccess(res);
+            } catch (error) {
+                handleError(error);
+            }
+        });
+
+        $('#data-table').on('click', '.btn-reply', async function() {
+            try {
+                var id = $(this).data('id');
+                var response = await axios.get("{{ route('comment.reply', ['id' => '_id_']) }}".replace('_id_', id));
+                var res = response.data;
+
+                $('#replys-table tbody').empty();
+
+                if (res.success && res.data.length > 0) {
+                    res.data.forEach(reply => {
+                        var statusText = reply.customer.status === 1 ? 'Khoá bình luận' : 'Mở khoá';
+                        var statusClass = reply.customer.status === 1 ? 'btn-warning' : 'btn-success';
+                        var statusIcon = reply.customer.status === 1 ? '<i class="fas fa-comment-slash"></i>' : '<i class="fas fa-comment"></i>';
+
+                        $('#replys-table tbody').append(`
+                            <tr>
+                                <td class="align-middle">${reply.id}</td>
+                                <td class="align-middle">${reply.customer_name}</td>
+                                <td class="align-middle">${reply.product_name}</td>
+                                <td class="align-middle">${reply.content}</td>
+                                <td class="align-middle">
+                                    <button data-id="${reply.customer_id}" class="btn ${statusClass} btn-sm mx-1 btn-update-status">${statusIcon} ${statusText}</button>
+                                    <button data-id="${reply.id}" class="btn btn-danger btn-sm mx-1 btn-delete"><i class="fas fa-trash-alt"></i> Xoá</button>
+                                </td>
+                            </tr>
+                        `);
+                    });
+                } else {
+                    $('#replys-table tbody').append('<tr><td colspan="5">Không có dữ liệu chi tiết!</td></tr>');
+                }
+
+                $('#modal-reply').modal('show');
+            } catch (error) {
+                handleError(error);
+            }
+        });
+
+        $('#replys-table').on('click', '.btn-update-status', async function() {
+            try {
+                var id = $(this).data('id');
+                var response = await axios.get("{{ route('customer.update-status', ['id' => '_id_']) }}".replace('_id_', id));
+                var res = response.data;
+
+                var statusText = res.data.status === 1 ? 'Khoá bình luận' : 'Mở khoá';
+                var statusClass = res.data.status === 1 ? 'btn-warning' : 'btn-success';
+                var statusIcon = res.data.status === 1 ? '<i class="fas fa-comment-slash"></i>' : '<i class="fas fa-comment"></i>';
+
+                $(this).html(`${statusIcon} ${statusText}`).removeClass('btn-warning btn-success').addClass(statusClass);
+
+                var rows = $(`#replys-table tbody tr[data-id="${id}"] .btn-update-status`);
+                rows.each(function() {
+                    $(this).html(`${statusIcon} ${statusText}`).removeClass('btn-warning btn-success').addClass(statusClass);
+                });
+
+                dataTable.draw()
+                handleSuccess(res);
+            } catch (error) {
+                handleError(error);
+            }
+        });
+
+        $('#replys-table').on('click', '.btn-delete', async function() {
+            try {
+                id = $(this).data('id');
+                var response = await axios.get("{{ route('comment.destroy', ['id' => '_id_']) }}".replace('_id_', id));
+                var res = response.data;
+
+                $(this).closest('tr').remove();
+
+                var rowCount = $('#replys-table tbody tr').length;
+                if (rowCount === 0) {
+                    $('#replys-table tbody').append('<tr><td colspan="5">Không có dữ liệu chi tiết!</td></tr>');
+                }
+
                 handleSuccess(res);
             } catch (error) {
                 handleError(error);

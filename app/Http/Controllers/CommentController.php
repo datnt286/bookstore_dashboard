@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
-use App\Models\Customer;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -46,17 +45,6 @@ class CommentController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Xoá bình luận thành công!',
-        ]);
-    }
-
-    public function lockComment($id)
-    {
-        $customer = Customer::find($id)->first();
-        $customer->update(['status' => 0]);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Khoá bình luận tài khoản thành công!',
         ]);
     }
 }
