@@ -8,13 +8,21 @@ use Illuminate\Http\Request;
 
 class APIBookController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $books = Book::with('images')->get();
+        $page = $request->input('page', 1);
+        $perPage = 16;
+        $skip = ($page - 1) * $perPage;
+
+        $books = Book::with('images')->skip($skip)->take($perPage)->get();
+
+        $total = Book::count();
 
         return response()->json([
             'success' => true,
             'data' => $books,
+            'total' => $total,
+            'per_page' => $perPage,
         ]);
     }
 
@@ -32,23 +40,40 @@ class APIBookController extends Controller
         ]);
     }
 
-    public function getNewBooks()
+    public function getNewBooks(Request $request)
     {
-        $newBooks = Book::with('images')->latest()->get();
+        $page = $request->input('page', 1);
+        $perPage = 16;
+        $skip = ($page - 1) * $perPage;
+
+        $newBooks = Book::with('images')->latest()
+            ->skip($skip)->take($perPage)->get();
+
+        $total = Book::count();
 
         return response()->json([
             'success' => true,
             'data' => $newBooks,
+            'total' => $total,
+            'per_page' => $perPage,
         ]);
     }
 
-    public function getCombos()
+    public function getCombos(Request $request)
     {
-        $combos = Combo::all();
+        $page = $request->input('page', 1);
+        $perPage = 16;
+        $skip = ($page - 1) * $perPage;
+
+        $combos = Combo::skip($skip)->take($perPage)->get();
+
+        $total = Combo::count();
 
         return response()->json([
             'success' => true,
             'data' => $combos,
+            'total' => $total,
+            'per_page' => $perPage,
         ]);
     }
 
@@ -92,41 +117,34 @@ class APIBookController extends Controller
         ]);
     }
 
-    public function search($slug)
+    public function search(Request $request, $keyword)
     {
-        $books = Book::with('images')->where('slug', 'LIKE', '%' . $slug . '%')->get()->toArray();
-        $combos = Combo::where('slug', 'LIKE', '%' . $slug . '%')->get()->toArray();
-        $products = array_merge($books, $combos);
+        $page = $request->input('page', 1);
+        $perPage = 16;
+        $skip = ($page - 1) * $perPage;
+
+        $books = Book::with('images')
+            ->where('slug', 'LIKE', '%' . $keyword . '%')
+            ->skip($skip)
+            ->take($perPage)
+            ->get();
+
+        $combos = Combo::where('slug', 'LIKE', '%' . $keyword . '%')
+            ->skip($skip)
+            ->take($perPage)
+            ->get();
+
+        $products = array_merge($books->toArray(), $combos->toArray());
+
+        $totalBooks = Book::where('slug', 'LIKE', '%' . $keyword . '%')->count();
+        $totalCombos = Combo::where('slug', 'LIKE', '%' . $keyword . '%')->count();
+        $totalProducts = $totalBooks + $totalCombos;
 
         return response()->json([
             'success' => true,
             'data' => $products,
+            'total' => $totalProducts,
+            'per_page' => $perPage,
         ]);
     }
-
-    // public function index2(Request $request)
-    // {
-    //     $perPage = 3; // Số lượng mục trên mỗi trang, mặc định là 10
-    //     $page = $request->input('page', 1); // Trang hiện tại, mặc định là 1
-
-    //     $query = Book::query();
-
-    //     // Thêm bất kỳ điều kiện tìm kiếm nào nếu cần
-
-    //     $total = $query->count();
-    //     $totalPages = ceil($total / $perPage);
-
-    //     $data = $query->skip(($page - 1) * $perPage)
-    //                 ->take($perPage)->with('categories','authors','images')
-    //                 ->get();
-
-
-    //     return response()->json([
-    //         'page' => $page,
-    //         'per_page' => $perPage,
-    //         'total' => $total,
-    //         'total_pages' => $totalPages,
-    //         'data' => $data,
-    //     ]);
-    // }
 }

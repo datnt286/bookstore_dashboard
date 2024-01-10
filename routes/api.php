@@ -73,5 +73,5 @@ Route::get('get-newbooks-and-combos', [APIBookController::class, 'getNewBooksAnd
 Route::get('get-newbooks', [APIBookController::class, 'getNewBooks'])->name('get-newbooks');
 Route::get('get-combos', [APIBookController::class, 'getCombos'])->name('get-combos');
 Route::get('get-books-by-category/{category_id}', [APIBookController::class, 'getBooksByCategory'])->name('get-books-by-category');
-Route::get('search/{slug}', [APIBookController::class, 'search'])->name('search-product');
+Route::get('search/{keyword}', [APIBookController::class, 'search'])->name('search-product');
 Route::get('{slug}', [APIBookController::class, 'getProductBySlug'])->name('get-product-by-slug');
