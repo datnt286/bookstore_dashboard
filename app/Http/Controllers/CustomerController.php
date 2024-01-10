@@ -119,7 +119,7 @@ class CustomerController extends Controller
 
     public function updateStatus($id)
     {
-        $customer = Customer::find($id)->first();
+        $customer = Customer::find($id);
 
         if ($customer->status == 1) {
             $customer->update(['status' => 0]);

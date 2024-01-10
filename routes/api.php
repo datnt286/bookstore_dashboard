@@ -60,8 +60,13 @@ Route::prefix('order')->group(function () {
 
 Route::post('review/create', [APIReviewController::class, 'create'])->name('review.create');
 
-Route::post('comment/create', [APICommentController::class, 'create'])->name('comment.create');
-Route::get('comment/get-comments-by-product-id', [APICommentController::class, 'getCommentsByProductId'])->name('comment.get-comments-by-product-id');
+Route::prefix('comment')->group(function () {
+    Route::name('comment.')->group(function () {
+        Route::post('create', [APICommentController::class, 'create'])->name('create');
+        Route::get('get-comments-by-product-id', [APICommentController::class, 'getCommentsByProductId'])->name('get-comments-by-product-id');
+        Route::get('destroy/{id}', [APICommentController::class, 'destroy'])->name('destroy');
+    });
+});
 
 Route::get('index', [APIBookController::class, 'index'])->name('index');
 Route::get('get-newbooks-and-combos', [APIBookController::class, 'getNewBooksAndCombos'])->name('get-newbooks-and-combos');

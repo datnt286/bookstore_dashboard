@@ -10,6 +10,11 @@ class APICommentController extends Controller
 {
     public function create(Request $request)
     {
+        $request->validate(
+            ['content' => 'required'],
+            ['content.required' => 'Vui lòng nhập bình luận.']
+        );
+
         $customer = Customer::find($request->customer_id);
 
         if ($customer->status === 0) {
@@ -29,7 +34,7 @@ class APICommentController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Bình luận thành công',
+            'message' => 'Bình luận thành công!',
         ]);
     }
 
@@ -57,6 +62,25 @@ class APICommentController extends Controller
         return response()->json([
             'success' => true,
             'data' => $comments,
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $comment = Comment::find($id);
+
+        if (!$comment) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Bình luận không tồn tại!',
+            ]);
+        }
+
+        $comment->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Xoá bình luận thành công!',
         ]);
     }
 }

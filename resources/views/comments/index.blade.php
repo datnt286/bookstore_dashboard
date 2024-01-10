@@ -20,25 +20,6 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($comments as $comment)
-                <tr>
-                    <td>{{ $comment->id }}</td>
-                    <td>{{ $comment->customer->name }}</td>
-                    <td>{{ $comment->product_name }}</td>
-                    <td>{{ $comment->content }}</td>
-                    <td>
-                        <div class="project-actions d-flex justify-content-between">
-                            <button data-id="{{ $comment->id }}" class="btn btn-info btn-sm btn-reply mx-1"><i class="fas fa-info-circle"></i> Xem phản hồi</button>
-                            <button data-id="{{ $comment->customer_id }}" class="btn btn-warning btn-sm btn-reply mx-1"><i class="fas fa-comment-slash"></i> Khoá bình luận</button>
-                            <button data-id="{{ $comment->id }}" class="btn btn-danger btn-sm mx-1 btn-delete"><i class="fas fa-trash-alt"></i> Xoá</button>
-                        </div>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan=5>Không có dữ liệu!</td>
-                </tr>
-                @endforelse
             </tbody>
         </table>
     </div>
@@ -239,8 +220,7 @@
 
                 $(this).html(`${statusIcon} ${statusText}`).removeClass('btn-warning btn-success').addClass(statusClass);
 
-                var rows = $(`#replys-table tbody tr[data-id="${id}"] .btn-update-status`);
-                rows.each(function() {
+                $(`#replys-table button[data-id="${id}"]`).closest('tr').find('.btn-update-status').each(function() {
                     $(this).html(`${statusIcon} ${statusText}`).removeClass('btn-warning btn-success').addClass(statusClass);
                 });
 
