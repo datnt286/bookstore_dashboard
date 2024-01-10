@@ -10,19 +10,16 @@ class APIBookController extends Controller
 {
     public function index(Request $request)
     {
-        $page = $request->input('page', 1);
-        $perPage = 16;
-        $skip = ($page - 1) * $perPage;
+        $perPage = $request->input('per_page', 16);
 
-        $books = Book::with('images')->skip($skip)->take($perPage)->get();
-
-        $total = Book::count();
+        $books = Book::with('images')->paginate($perPage);
 
         return response()->json([
             'success' => true,
-            'data' => $books,
-            'total' => $total,
-            'per_page' => $perPage,
+            'data' => $books->items(),
+            'per_page' => $books->perPage(),
+            'total' => $books->total(),
+            'total_pages' => $books->lastPage(),
         ]);
     }
 
@@ -42,38 +39,31 @@ class APIBookController extends Controller
 
     public function getNewBooks(Request $request)
     {
-        $page = $request->input('page', 1);
-        $perPage = 16;
-        $skip = ($page - 1) * $perPage;
+        $perPage = $request->input('per_page', 16);
 
-        $newBooks = Book::with('images')->latest()
-            ->skip($skip)->take($perPage)->get();
-
-        $total = Book::count();
+        $newBooks = Book::with('images')->latest()->paginate($perPage);
 
         return response()->json([
             'success' => true,
-            'data' => $newBooks,
-            'total' => $total,
-            'per_page' => $perPage,
+            'data' => $newBooks->items(),
+            'per_page' => $newBooks->perPage(),
+            'total' => $newBooks->total(),
+            'total_pages' => $newBooks->lastPage(),
         ]);
     }
 
     public function getCombos(Request $request)
     {
-        $page = $request->input('page', 1);
-        $perPage = 16;
-        $skip = ($page - 1) * $perPage;
+        $perPage = $request->input('per_page', 16);
 
-        $combos = Combo::skip($skip)->take($perPage)->get();
-
-        $total = Combo::count();
+        $combos = Combo::paginate($perPage);
 
         return response()->json([
             'success' => true,
-            'data' => $combos,
-            'total' => $total,
-            'per_page' => $perPage,
+            'data' => $combos->items(),
+            'per_page' => $combos->perPage(),
+            'total' => $combos->total(),
+            'total_pages' => $combos->lastPage(),
         ]);
     }
 
@@ -82,7 +72,8 @@ class APIBookController extends Controller
         $book = Book::with(['authors', 'images', 'combos', 'reviews.customer', 'comments.customer', 'comments.replys'])
             ->where('slug', $slug)
             ->first();
-        $combo = Combo::with('reviews.customer', 'comments.customer')->where('slug', $slug)->first();
+        $combo = Combo::with('reviews.customer', 'comments.customer')
+            ->where('slug', $slug)->first();
         $product = $book ? $book : $combo;
 
         if (empty($product)) {
@@ -119,32 +110,28 @@ class APIBookController extends Controller
 
     public function search(Request $request, $keyword)
     {
-        $page = $request->input('page', 1);
-        $perPage = 16;
-        $skip = ($page - 1) * $perPage;
+        $perPage = $request->input('per_page', 16);
 
         $books = Book::with('images')
             ->where('slug', 'LIKE', '%' . $keyword . '%')
-            ->skip($skip)
-            ->take($perPage)
-            ->get();
+            ->paginate($perPage);
 
         $combos = Combo::where('slug', 'LIKE', '%' . $keyword . '%')
-            ->skip($skip)
-            ->take($perPage)
-            ->get();
+            ->paginate($perPage);
 
-        $products = array_merge($books->toArray(), $combos->toArray());
+        $products = array_merge($books->items(), $combos->items());
 
         $totalBooks = Book::where('slug', 'LIKE', '%' . $keyword . '%')->count();
         $totalCombos = Combo::where('slug', 'LIKE', '%' . $keyword . '%')->count();
         $totalProducts = $totalBooks + $totalCombos;
+        $total_pages = max($books->lastPage(), $combos->lastPage());
 
         return response()->json([
             'success' => true,
             'data' => $products,
             'total' => $totalProducts,
             'per_page' => $perPage,
+            'total_pages' => $total_pages,
         ]);
     }
 }
