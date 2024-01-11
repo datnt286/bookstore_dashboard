@@ -18,10 +18,10 @@ class CategoryController extends Controller
 
         if ($request->ajax()) {
             return Datatables::of($categories)
-                ->addColumn('action', function ($categories) {
+                ->addColumn('action', function ($category) {
                     return '<div class="project-actions text-right">' .
-                        '<button class="btn btn-primary btn-sm btn-edit mx-1" data-id="' . $categories->id . '" data-toggle="modal" data-target="#modal-store"><i class="fas fa-edit"></i> Cập nhật</button>' .
-                        '<button class="btn btn-danger btn-sm btn-delete" data-id="' . $categories->id . '" data-toggle="modal" data-target="#modal-delete"><i class="fas fa-trash-alt"></i> Xoá</button>' .
+                        '<button class="btn btn-primary btn-sm btn-edit mx-1" data-id="' . $category->id . '" data-toggle="modal" data-target="#modal-store"><i class="fas fa-edit"></i> Cập nhật</button>' .
+                        '<button class="btn btn-danger btn-sm btn-delete" data-id="' . $category->id . '" data-toggle="modal" data-target="#modal-delete"><i class="fas fa-trash-alt"></i> Xoá</button>' .
                         '</div>';
                 })
                 ->make(true);

@@ -15,11 +15,11 @@ class SupplierController extends Controller
 
         if ($request->ajax()) {
             return DataTables::of($suppliers)
-                ->addColumn('action', function ($suppliers) {
+                ->addColumn('action', function ($supplier) {
                     return '<div class="project-actions text-right">' .
-                        '<button class="btn btn-info btn-sm btn-detail" data-id="' . $suppliers->id . '" data-toggle="modal" data-target="#modal-detail"><i class="fas fa-info-circle"></i> Chi tiết</button>' .
-                        '<button class="btn btn-primary btn-sm btn-edit mx-1" data-id="' . $suppliers->id . '" data-toggle="modal" data-target="#modal-edit"><i class="fas fa-edit"></i> Cập nhật</button>' .
-                        '<button class="btn btn-danger btn-sm btn-delete" data-id="' . $suppliers->id . '" data-toggle="modal" data-target="#modal-delete"><i class="fas fa-trash-alt"></i> Xoá</button>' .
+                        '<button class="btn btn-info btn-sm btn-detail" data-id="' . $supplier->id . '" data-toggle="modal" data-target="#modal-detail"><i class="fas fa-info-circle"></i> Chi tiết</button>' .
+                        '<button class="btn btn-primary btn-sm btn-edit mx-1" data-id="' . $supplier->id . '" data-toggle="modal" data-target="#modal-edit"><i class="fas fa-edit"></i> Cập nhật</button>' .
+                        '<button class="btn btn-danger btn-sm btn-delete" data-id="' . $supplier->id . '" data-toggle="modal" data-target="#modal-delete"><i class="fas fa-trash-alt"></i> Xoá</button>' .
                         '</div>';
                 })
                 ->make(true);

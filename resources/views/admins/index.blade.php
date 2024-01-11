@@ -209,36 +209,39 @@
                 dataType: 'json',
             },
             columns: [{
-                    data: 'id'
+                    data: 'id',
+                    name: 'id',
                 },
                 {
                     data: 'avatar',
+                    name: 'avatar',
+                    orderable: false,
+                    searchable: false,
                     render: function(data, type, row) {
                         return '<img src="uploads/admins/' + row.avatar + '" alt="Ảnh đại diện" class="img img-thumbnail" style="max-width: 100px; max-height: 100px;">';
                     }
                 },
                 {
-                    data: 'username'
+                    data: 'username',
+                    name: 'username',
                 },
                 {
-                    data: 'name'
+                    data: 'name',
+                    name: 'name',
                 },
                 {
-                    data: 'phone'
+                    data: 'phone',
+                    name: 'phone',
                 },
                 {
-                    data: 'email'
+                    data: 'email',
+                    name: 'email',
                 },
                 {
-                    data: null,
+                    data: 'action',
+                    name: 'action',
                     orderable: false,
-                    render: function(data, type, row) {
-                        return '<div class="project-actions text-right">' +
-                            '<button class="btn btn-info btn-sm btn-detail" data-id="' + row.id + '" data-toggle="modal" data-target="#modal-detail"><i class="fas fa-info-circle"></i> Chi tiết</button>' +
-                            '<button class="btn btn-primary btn-sm btn-edit mx-1" data-id="' + row.id + '" data-toggle="modal" data-target="#modal-edit"><i class="fas fa-edit"></i> Cập nhật</button>' +
-                            '<button class="btn btn-danger btn-sm btn-delete" data-id="' + row.id + '" data-toggle="modal" data-target="#modal-delete"><i class="fas fa-trash-alt"></i> Xoá</button>' +
-                            '</div>';
-                    }
+                    searchable: false,
                 }
             ]
         });

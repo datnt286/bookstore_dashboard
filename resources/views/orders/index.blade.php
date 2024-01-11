@@ -120,19 +120,19 @@
             },
             columns: [{
                     data: 'id',
-                    name: 'id'
+                    name: 'id',
                 },
                 {
                     data: 'name',
-                    name: 'name'
+                    name: 'name',
                 },
                 {
                     data: 'phone',
-                    name: 'phone'
+                    name: 'phone',
                 },
                 {
                     data: 'address',
-                    name: 'address'
+                    name: 'address',
                 },
                 {
                     data: 'total',

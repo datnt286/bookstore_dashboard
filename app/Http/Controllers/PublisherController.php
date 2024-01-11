@@ -15,10 +15,10 @@ class PublisherController extends Controller
 
         if ($request->ajax()) {
             return DataTables::of($publishers)
-                ->addColumn('action', function ($publishers) {
+                ->addColumn('action', function ($publisher) {
                     return '<div class="project-actions text-right">' .
-                        '<button class="btn btn-primary btn-sm btn-edit mx-1" data-id="' . $publishers->id . '" data-toggle="modal" data-target="#modal-edit"><i class="fas fa-edit"></i> Cập nhật</button>' .
-                        '<button class="btn btn-danger btn-sm btn-delete" data-id="' . $publishers->id . '" data-toggle="modal" data-target="#modal-delete"><i class="fas fa-trash-alt"></i> Xoá</button>' .
+                        '<button class="btn btn-primary btn-sm btn-edit mx-1" data-id="' . $publisher->id . '" data-toggle="modal" data-target="#modal-edit"><i class="fas fa-edit"></i> Cập nhật</button>' .
+                        '<button class="btn btn-danger btn-sm btn-delete" data-id="' . $publisher->id . '" data-toggle="modal" data-target="#modal-delete"><i class="fas fa-trash-alt"></i> Xoá</button>' .
                         '</div>';
                 })
                 ->make(true);

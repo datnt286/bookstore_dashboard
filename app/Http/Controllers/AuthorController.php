@@ -16,10 +16,10 @@ class AuthorController extends Controller
 
         if ($request->ajax()) {
             return DataTables::of($authors)
-                ->addColumn('action', function ($authors) {
+                ->addColumn('action', function ($author) {
                     return '<div class="project-actions text-right">' .
-                        '<button class="btn btn-primary btn-sm btn-edit mx-1" data-id="' . $authors->id . '" data-toggle="modal" data-target="#modal-edit"><i class="fas fa-edit"></i> Cập nhật</button>' .
-                        '<button class="btn btn-danger btn-sm btn-delete" data-id="' . $authors->id . '" data-toggle="modal" data-target="#modal-delete"><i class="fas fa-trash-alt"></i> Xoá</button>' .
+                        '<button class="btn btn-primary btn-sm btn-edit mx-1" data-id="' . $author->id . '" data-toggle="modal" data-target="#modal-edit"><i class="fas fa-edit"></i> Cập nhật</button>' .
+                        '<button class="btn btn-danger btn-sm btn-delete" data-id="' . $author->id . '" data-toggle="modal" data-target="#modal-delete"><i class="fas fa-trash-alt"></i> Xoá</button>' .
                         '</div>';
                 })
                 ->make(true);

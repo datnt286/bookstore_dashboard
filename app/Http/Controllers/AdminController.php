@@ -130,11 +130,11 @@ class AdminController extends Controller
 
         if ($request->ajax()) {
             return DataTables::of($admins)
-                ->addColumn('action', function ($admins) {
+                ->addColumn('action', function ($admin) {
                     return '<div class="project-actions text-right">' .
-                        '<button class="btn btn-info btn-sm btn-detail" data-id="' . $admins->id . '" data-toggle="modal" data-target="#modal-detail"><i class="fas fa-info-circle"></i> Chi tiết</button>' .
-                        '<button class="btn btn-primary btn-sm btn-edit mx-1" data-id="' . $admins->id . '" data-toggle="modal" data-target="#modal-edit"><i class="fas fa-edit"></i> Cập nhật</button>' .
-                        '<button class="btn btn-danger btn-sm btn-delete" data-id="' . $admins->id . '" data-toggle="modal" data-target="#modal-delete"><i class="fas fa-trash-alt"></i> Xoá</button>' .
+                        '<button class="btn btn-info btn-sm btn-detail" data-id="' . $admin->id . '" data-toggle="modal" data-target="#modal-detail"><i class="fas fa-info-circle"></i> Chi tiết</button>' .
+                        '<button class="btn btn-primary btn-sm btn-edit mx-1" data-id="' . $admin->id . '" data-toggle="modal" data-target="#modal-edit"><i class="fas fa-edit"></i> Cập nhật</button>' .
+                        '<button class="btn btn-danger btn-sm btn-delete" data-id="' . $admin->id . '" data-toggle="modal" data-target="#modal-delete"><i class="fas fa-trash-alt"></i> Xoá</button>' .
                         '</div>';
                 })
                 ->make(true);

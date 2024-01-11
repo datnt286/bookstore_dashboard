@@ -113,16 +113,20 @@
                 dataType: 'json',
             },
             columns: [{
-                    data: 'id'
+                    data: 'id',
+                    name: 'id',
                 },
                 {
-                    data: 'customer_name'
+                    data: 'customer_name',
+                    name: 'customer_name',
                 },
                 {
-                    data: 'product_name'
+                    data: 'product_name',
+                    name: 'product_name',
                 },
                 {
-                    data: 'content'
+                    data: 'content',
+                    name: 'content',
                 },
                 {
                     data: 'status',
@@ -136,8 +140,10 @@
                     }
                 },
                 {
-                    data: null,
+                    data: 'action',
+                    name: 'action',
                     orderable: false,
+                    searchable: false,
                     render: function(data, type, row) {
                         var statusText = row.customer.status === 1 ? 'Khoá bình luận' : 'Mở khoá';
                         var statusClass = row.customer.status === 1 ? 'btn-warning' : 'btn-success';
