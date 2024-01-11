@@ -30,9 +30,9 @@ class UpdateBookRequest extends FormRequest
             'category_id' => 'required',
             'publisher_id' => 'required',
             'supplier_id' => 'required',
-            'num_pages' => 'numeric',
+            'num_pages' => $this->input('num_pages') ? 'numeric' : '',
             'price' => 'required|numeric',
-            'e_book_price' => 'numeric',
+            'e_book_price' => $this->input('e_book_price') ? 'numeric' : '',
             'quantity' => 'required|numeric',
         ];
     }

@@ -250,7 +250,7 @@
             try {
                 var id = $(this).data('id');
                 var status = $(this).data('status');
-                var response = await axios.post("{{ route('order.update-status', ['id' => '_id_', 'status' => '_status_']) }}".replace('_id_', id).replace('_status_', status));
+                var response = await axios.get("{{ route('order.update-status', ['id' => '_id_', 'status' => '_status_']) }}".replace('_id_', id).replace('_status_', status));
                 var res = response.data;
 
                 switch (status) {

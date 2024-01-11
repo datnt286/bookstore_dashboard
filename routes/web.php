@@ -135,6 +135,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [OrderController::class, 'index'])->name('index');
             Route::get('create', [OrderController::class, 'create'])->name('create');
             Route::post('store', [OrderController::class, 'store'])->name('store');
+            Route::get('update-status/{id}/{status}', [OrderController::class, 'updateStatus'])->name('update-status');
             Route::get('{id}', [OrderController::class, 'show'])->name('show');
         });
     });
