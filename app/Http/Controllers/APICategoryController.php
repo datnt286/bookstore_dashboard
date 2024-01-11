@@ -34,8 +34,10 @@ class APICategoryController extends Controller
         ]);
     }
 
-    public function getCategoryBySlug($slug)
+    public function getCategoryBySlug(Request $request, $slug)
     {
+        $perPage = $request->input('per_page', 16);
+
         $category = Category::with('books.images')->where('slug', $slug)->first();
 
         if (empty($category)) {
@@ -45,9 +47,17 @@ class APICategoryController extends Controller
             ]);
         }
 
+        $books = $category->books()->with('images')->paginate($perPage);
+
         return response()->json([
             'success' => true,
-            'data' => $category,
+            'data' => [
+                'category' => $category,
+                'books' => $books->items(),
+                'per_page' => $books->perPage(),
+                'total' => $books->total(),
+                'total_pages' => $books->lastPage(),
+            ],
         ]);
     }
 }

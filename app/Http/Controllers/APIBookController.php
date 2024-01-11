@@ -16,10 +16,12 @@ class APIBookController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $books->items(),
-            'per_page' => $books->perPage(),
-            'total' => $books->total(),
-            'total_pages' => $books->lastPage(),
+            'data' => [
+                'books' => $books->items(),
+                'per_page' => $books->perPage(),
+                'total' => $books->total(),
+                'total_pages' => $books->lastPage(),
+            ],
         ]);
     }
 
@@ -45,10 +47,12 @@ class APIBookController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $newBooks->items(),
-            'per_page' => $newBooks->perPage(),
-            'total' => $newBooks->total(),
-            'total_pages' => $newBooks->lastPage(),
+            'data' => [
+                'new_books' => $newBooks->items(),
+                'per_page' => $newBooks->perPage(),
+                'total' => $newBooks->total(),
+                'total_pages' => $newBooks->lastPage(),
+            ],
         ]);
     }
 
@@ -60,10 +64,12 @@ class APIBookController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $combos->items(),
-            'per_page' => $combos->perPage(),
-            'total' => $combos->total(),
-            'total_pages' => $combos->lastPage(),
+            'data' => [
+                'combos' => $combos->items(),
+                'per_page' => $combos->perPage(),
+                'total' => $combos->total(),
+                'total_pages' => $combos->lastPage(),
+            ],
         ]);
     }
 
@@ -128,10 +134,12 @@ class APIBookController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $products,
-            'total' => $totalProducts,
-            'per_page' => $perPage,
-            'total_pages' => $total_pages,
+            'data' => [
+                'products' => $products,
+                'total' => $totalProducts,
+                'per_page' => $perPage,
+                'total_pages' => $total_pages,
+            ],
         ]);
     }
 }
