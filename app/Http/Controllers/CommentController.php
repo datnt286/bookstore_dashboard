@@ -14,11 +14,14 @@ class CommentController extends Controller
 
         if ($request->ajax()) {
             return DataTables::of($comments)
-                ->addColumn('action', function ($comments) {
+                ->addColumn('status', function ($comment) {
+                    return $comment->customer->status;
+                })
+                ->addColumn('action', function ($comment) {
                     return '<div class="project-actions text-right">' .
-                        '<button class="btn btn-info btn-sm btn-reply" data-id="' . $comments->id . '"><i class="fas fa-info-circle"></i> Xem phản hồi</button>' .
-                        '<button class="btn btn-warning btn-sm mx-1" data-id="' . $comments->customer_id . '"><i class="fas fa-comment-slash"></i> Khoá bình luận</button>' .
-                        '<button class="btn btn-danger btn-sm btn-delete mx-1" data-id="' . $comments->id . '"><i class="fas fa-trash-alt"></i> Xoá</button>' .
+                        '<button class="btn btn-info btn-sm btn-reply" data-id="' . $comment->id . '"><i class="fas fa-info-circle"></i> Xem phản hồi</button>' .
+                        '<button class="btn btn-warning btn-sm mx-1" data-id="' . $comment->customer_id . '"><i class="fas fa-comment-slash"></i> Khoá bình luận</button>' .
+                        '<button class="btn btn-danger btn-sm btn-delete mx-1" data-id="' . $comment->id . '"><i class="fas fa-trash-alt"></i> Xoá</button>' .
                         '</div>';
                 })
                 ->make(true);

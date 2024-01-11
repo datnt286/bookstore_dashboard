@@ -7,12 +7,24 @@ use App\Models\Combo;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $orders = Order::all();
+
+        if ($request->ajax()) {
+            return DataTables::of($orders)
+                ->addColumn('status', function ($order) {
+                    return $order->status;
+                })
+                ->addColumn('action', function ($order) {
+                    return $order->status;
+                })
+                ->make(true);
+        }
 
         return view('orders.index', compact('orders'));
     }
@@ -85,7 +97,7 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
 
-        if (!$order) {
+        if (empty($order)) {
             return response()->json([
                 'success' => false,
                 'message' => 'Đơn hàng không tồn tại!'

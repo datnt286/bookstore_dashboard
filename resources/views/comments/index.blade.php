@@ -16,6 +16,7 @@
                     <th>Tên khách hàng</th>
                     <th>Tên sản phẩm</th>
                     <th>Nội dung</th>
+                    <th>Trạng thái</th>
                     <th></th>
                 </tr>
             </thead>
@@ -43,6 +44,7 @@
                                 <th>Tên khách hàng</th>
                                 <th>Tên sản phẩm</th>
                                 <th>Nội dung</th>
+                                <th>Trạng thái</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -123,6 +125,17 @@
                     data: 'content'
                 },
                 {
+                    data: 'status',
+                    name: 'status',
+                    render: function(data, type, row) {
+                        if (data === 1) {
+                            return '<span class="badge badge-success">Đang hoạt động</span>';
+                        } else {
+                            return '<span class="badge badge-warning">Đã khoá bình luận</span>';
+                        }
+                    }
+                },
+                {
                     data: null,
                     orderable: false,
                     render: function(data, type, row) {
@@ -184,6 +197,7 @@
                         var statusText = reply.customer.status === 1 ? 'Khoá bình luận' : 'Mở khoá';
                         var statusClass = reply.customer.status === 1 ? 'btn-warning' : 'btn-success';
                         var statusIcon = reply.customer.status === 1 ? '<i class="fas fa-comment-slash"></i>' : '<i class="fas fa-comment"></i>';
+                        var statusColumn = reply.customer.status === 1 ? '<span class="badge badge-success">Đang hoạt động</span>' : '<span class="badge badge-warning">Đã khoá bình luận</span>';
 
                         $('#replys-table tbody').append(`
                             <tr>
@@ -191,6 +205,7 @@
                                 <td class="align-middle">${reply.customer_name}</td>
                                 <td class="align-middle">${reply.product_name}</td>
                                 <td class="align-middle">${reply.content}</td>
+                                <td class="align-middle reply-status-column">${statusColumn}</td>
                                 <td class="align-middle">
                                     <button data-id="${reply.customer_id}" class="btn ${statusClass} btn-sm mx-1 btn-update-status">${statusIcon} ${statusText}</button>
                                     <button data-id="${reply.id}" class="btn btn-danger btn-sm mx-1 btn-delete"><i class="fas fa-trash-alt"></i> Xoá</button>
@@ -217,12 +232,15 @@
                 var statusText = res.data.status === 1 ? 'Khoá bình luận' : 'Mở khoá';
                 var statusClass = res.data.status === 1 ? 'btn-warning' : 'btn-success';
                 var statusIcon = res.data.status === 1 ? '<i class="fas fa-comment-slash"></i>' : '<i class="fas fa-comment"></i>';
+                var statusColumn = res.data.status === 1 ? '<span class="badge badge-success">Đang hoạt động</span>' : '<span class="badge badge-warning">Đã khoá bình luận</span>';
 
                 $(this).html(`${statusIcon} ${statusText}`).removeClass('btn-warning btn-success').addClass(statusClass);
 
                 $(`#replys-table button[data-id="${id}"]`).closest('tr').find('.btn-update-status').each(function() {
                     $(this).html(`${statusIcon} ${statusText}`).removeClass('btn-warning btn-success').addClass(statusClass);
                 });
+
+                $('#replys-table tbody button[data-id="' + id + '"]').closest('tr').find('.reply-status-column').html(statusColumn);
 
                 dataTable.draw()
                 handleSuccess(res);

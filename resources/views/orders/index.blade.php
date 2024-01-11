@@ -22,50 +22,12 @@
                     <th>Tên khách hàng</th>
                     <th>Điện thoại</th>
                     <th>Địa chỉ</th>
-                    <th>Tổng tiền</th>
+                    <th>Tổng thành tiền</th>
                     <th>Trạng thái</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                @forelse($orders as $order)
-                <tr>
-                    <td>{{ $order->id }}</td>
-                    <td>{{ $order->name }}</td>
-                    <td>{{ $order->phone }}</td>
-                    <td>{{ $order->address }}</td>
-                    <td>{{ $order->total }}</td>
-                    @switch($order->status)
-                    @case(1)
-                    <td>Chờ xác nhận</td>
-                    @break
-                    @case(2)
-                    <td>Đã xác nhận</td>
-                    @break
-                    @case(3)
-                    <td>Đang giao</td>
-                    @break
-                    @case(4)
-                    <td>Đã giao</td>
-                    @break
-                    @case(5)
-                    <td>Đã huỷ</td>
-                    @break
-                    @endswitch
-                    <td>
-                        <div class="project-actions d-flex justify-content-between">
-                            <input type="hidden" class="order-status" value="{{ $order->status }}">
-                            <button data-id="{{ $order->id }}" class="btn btn-info btn-sm btn-detail mx-1"><i class="fas fa-info-circle"></i> Chi tiết</button>
-                            <button data-id="{{ $order->id }}" data-status="2" class="btn btn-success btn-sm mx-1 btn-update-status btn-confirm">Duyệt đơn</button>
-                            <button data-id="{{ $order->id }}" data-status="5" class="btn btn-danger btn-sm mx-1 btn-update-status btn-cancel">Huỷ đơn</button>
-                        </div>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan=6>Không có dữ liệu!</td>
-                </tr>
-                @endforelse
             </tbody>
         </table>
     </div>
@@ -109,7 +71,8 @@
             responsive: true,
             lengthChange: false,
             autoWidth: false,
-            searching: true,
+            processing: true,
+            serverSide: true,
             dom: 'Bfrtip',
             buttons: [{
                     extend: 'copy',
@@ -136,23 +99,6 @@
                     text: 'Số dòng trên trang'
                 }
             ],
-            columns: [
-                null,
-                null,
-                null,
-                null,
-                {
-                    data: 'total',
-                    render: function(data, type, row) {
-                        return parseFloat(data).toLocaleString() + ' ₫';
-                    }
-                },
-                null
-            ],
-            columnDefs: [{
-                targets: [6],
-                orderable: false
-            }],
             language: {
                 search: "Tìm kiếm:",
                 processing: "Đang xử lý...",
@@ -167,47 +113,95 @@
                     last: 'Trang cuối'
                 },
             },
-            drawCallback: function() {
-                updateButtonStatus();
-            }
-        }).buttons().container().appendTo('#data-table_wrapper .col-md-6:eq(0)');
+            ajax: {
+                type: 'GET',
+                url: "{{ route('order.index') }}",
+                dataType: 'json',
+            },
+            columns: [{
+                    data: 'id',
+                    name: 'id'
+                },
+                {
+                    data: 'name',
+                    name: 'name'
+                },
+                {
+                    data: 'phone',
+                    name: 'phone'
+                },
+                {
+                    data: 'address',
+                    name: 'address'
+                },
+                {
+                    data: 'total',
+                    name: 'total',
+                    render: function(data, type, row) {
+                        return data.toLocaleString() + ' ₫';
+                    }
+                },
+                {
+                    data: 'status',
+                    name: 'status',
+                    render: function(data, type, row) {
+                        switch (data) {
+                            case 1:
+                                return '<span class="badge badge-warning">Chờ xác nhận</span>';
+                            case 2:
+                                return '<span class="badge badge-primary">Đã xác nhận</span>';
+                            case 3:
+                                return '<span class="badge badge-info">Đang giao</span>';
+                            case 4:
+                                return '<span class="badge badge-success">Đã giao</span>';
+                            case 5:
+                                return '<span class="badge badge-danger">Đã huỷ</span>';
+                            default:
+                                return '';
+                        }
+                    }
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false,
+                    render: function(data, type, row) {
+                        var buttons = '<div class="project-actions text-right">' +
+                            '<button class="btn btn-secondary btn-sm btn-detail" data-id="' + row.id + '"><i class="fas fa-info-circle"></i> Chi tiết</button>';
 
-        function updateButtonStatus() {
-            $('.btn-confirm').each(function() {
-                var status = $(this).data('status');
-                var orderStatus = $(this).closest('tr').find('.order-status').val();
+                        switch (row.status) {
+                            case 1:
+                                buttons += '<button class="btn btn-warning btn-sm btn-update-status mx-1" data-id="' + row.id + '" data-status="2"><i class="fas fa-edit"></i> Xác nhận</button>';
+                                buttons += '<button class="btn btn-danger btn-sm btn-update-status" data-id="' + row.id + '" data-status="5"><i class="fas fa-trash-alt"></i> Huỷ đơn</button>';
+                                break;
+                            case 2:
+                                buttons += '<button class="btn btn-primary btn-sm btn-update-status mx-1" data-id="' + row.id + '" data-status="3"><i class="fas fa-truck"></i> Giao hàng</button>';
+                                buttons += '<button class="btn btn-danger btn-sm btn-update-status" data-id="' + row.id + '" data-status="5"><i class="fas fa-trash-alt"></i> Huỷ đơn</button>';
+                                break;
+                            case 3:
+                                buttons += '<button class="btn btn-info btn-sm btn-update-status mx-1" data-id="' + row.id + '" data-status="4" disabled><i class="fas fa-spinner"></i> Đang giao</button>';
+                                buttons += '<button class="btn btn-danger btn-sm btn-update-status" data-id="' + row.id + '" data-status="5"><i class="fas fa-trash-alt"></i> Huỷ đơn</button>';
+                                break;
+                            case 4:
+                                buttons += '<button class="btn btn-success btn-sm btn-update-status mx-1" data-id="' + row.id + '" data-status="4" disabled><i class="fas fa-check-circle"></i> Đã giao</button>';
+                                buttons += '<button class="btn btn-danger btn-sm btn-update-status" data-id="' + row.id + '" data-status="5" disabled><i class="fas fa-trash-alt"></i> Huỷ đơn</button>';
+                                break;
+                            case 5:
+                                buttons += '<button class="btn btn-danger btn-sm btn-update-status mx-1" data-id="' + row.id + '" data-status="5" disabled><i class="fas fa-trash-alt"></i> Đã huỷ</button>';
+                                buttons += '<button class="btn btn-danger btn-sm btn-update-status" data-id="' + row.id + '" data-status="5" disabled><i class="fas fa-trash-alt"></i> Huỷ đơn</button>';
+                                break;
+                            default:
+                                break;
+                        }
 
-                switch (orderStatus) {
-                    case '1':
-                        $(this).text('Duyệt đơn').data('status', 2);
-                        break;
-                    case '2':
-                        $(this).text('Vận chuyển').data('status', 3).removeClass('btn-success').addClass('btn-warning');
-                        break;
-                    case '3':
-                        $(this).text('Đang giao').addClass('disabled').attr('disabled', 'disabled');
-                        break;
-                    case '4':
-                        $(this).text('Đã giao').addClass('disabled').attr('disabled', 'disabled');
-                        break;
-                    case '5':
-                        $(this).text('Đã hủy').addClass('disabled').attr('disabled', 'disabled');
-                        break;
-                    default:
-                        break;
-                }
-            });
+                        buttons += '</div>';
 
-            $('.btn-cancel').each(function() {
-                var orderStatus = $(this).closest('tr').find('.order-status').val();
-
-                if (orderStatus == 4 || orderStatus == 5) {
-                    $(this).addClass('disabled').attr('disabled', 'disabled');
-                }
-            });
-        }
-
-        updateButtonStatus();
+                        return buttons;
+                    }
+                },
+            ],
+        });
 
         $('#data-table').on('click', '.btn-detail', async function() {
             try {
@@ -253,25 +247,7 @@
                 var response = await axios.get("{{ route('order.update-status', ['id' => '_id_', 'status' => '_status_']) }}".replace('_id_', id).replace('_status_', status));
                 var res = response.data;
 
-                switch (status) {
-                    case 2:
-                        $(this).closest('tr').find('td:eq(5)').text('Đã xác nhận');
-                        $(this).data('status', 3).removeClass('btn-success').addClass('btn-warning').text('Vận chuyển');
-                        break;
-                    case 3:
-                        $(this).closest('tr').find('td:eq(5)').text('Đang giao');
-                        break;
-                    case 5:
-                        $(this).closest('tr').find('td:eq(5)').text('Đã huỷ');
-                        break;
-                    default:
-                        break;
-                }
-
-                if (status === 3 || status === 5) {
-                    $(this).addClass('disabled').attr('disabled', 'disabled');
-                }
-
+                dataTable.draw();
                 handleSuccess(res);
             } catch (error) {
                 handleError(error);
