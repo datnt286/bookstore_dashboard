@@ -11,8 +11,40 @@ class APIBookController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 16);
+        $query = Book::with('images');
 
-        $books = Book::with('images')->paginate($perPage);
+        if ($request->has('category_id')) {
+            $categoryIds = explode(',', $request->input('category_id'));
+            $query->whereIn('category_id', $categoryIds);
+        }
+
+        if ($request->has('price_range')) {
+            $priceRange = $request->input('price_range');
+            switch ($priceRange) {
+                case '1':
+                    $query->where('price', '<=', 100000);
+                    break;
+                case '2':
+                    $query->whereBetween('price', [100000, 300000]);
+                    break;
+                case '3':
+                    $query->whereBetween('price', [200000, 500000]);
+                    break;
+                case '4':
+                    $query->where('price', '>=', 500000);
+                    break;
+                default:
+            }
+        }
+
+        if ($request->has('author_id')) {
+            $authorIds = explode(',', $request->input('author_id'));
+            $query->whereHas('authors', function ($q) use ($authorIds) {
+                $q->whereIn('author_id', $authorIds);
+            });
+        }
+
+        $books = $query->paginate($perPage);
 
         return response()->json([
             'success' => true,
@@ -114,8 +146,9 @@ class APIBookController extends Controller
         ]);
     }
 
-    public function search(Request $request, $keyword)
+    public function search(Request $request)
     {
+        $keyword = $request->input('keyword');
         $perPage = $request->input('per_page', 16);
 
         $books = Book::with('images')

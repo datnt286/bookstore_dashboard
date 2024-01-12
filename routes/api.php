@@ -25,53 +25,46 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('register', [APICustomerController::class, 'register'])->name('register');
-Route::post('login', [APICustomerController::class, 'login'])->name('login');
-Route::post('reset-password', [APICustomerController::class, 'resetPassword'])->name('reset-password');
+Route::post('register', [APICustomerController::class, 'register']);
+Route::post('login', [APICustomerController::class, 'login']);
+Route::post('reset-password', [APICustomerController::class, 'resetPassword']);
 
 Route::middleware('auth:api')->group(function () {
-    Route::get('me', [APICustomerController::class, 'me'])->name('me');
-    Route::post('update', [APICustomerController::class, 'update'])->name('update');
-    Route::post('change-password', [APICustomerController::class, 'changePassword'])->name('change-password');
+    Route::get('me', [APICustomerController::class, 'me']);
+    Route::post('update', [APICustomerController::class, 'update']);
+    Route::post('change-password', [APICustomerController::class, 'changePassword']);
 });
 
 Route::prefix('category')->group(function () {
-    Route::name('category.')->group(function () {
-        Route::get('/', [APICategoryController::class, 'index'])->name('index');
-        Route::get('{slug}', [APICategoryController::class, 'getCategoryBySlug'])->name('get-category-by-slug');
-    });
+    Route::get('/', [APICategoryController::class, 'index']);
+    Route::get('{slug}', [APICategoryController::class, 'getCategoryBySlug']);
 });
 
 Route::prefix('author')->group(function () {
-    Route::name('author.')->group(function () {
-        Route::get('/', [APIAuthorController::class, 'index'])->name('index');
-    });
+    Route::get('/', [APIAuthorController::class, 'index']);
 });
 
 Route::prefix('order')->group(function () {
-    Route::name('order.')->group(function () {
-        Route::get('/', [APIOrderController::class, 'index'])->name('index');
-        Route::post('create', [APIOrderController::class, 'create'])->name('create');
-        Route::get('details/{id}', [APIOrderController::class, 'details'])->name('details');
-        Route::get('confirm/{id}', [APIOrderController::class, 'confirm'])->name('confirm');
-        Route::get('cancel/{id}', [APIOrderController::class, 'cancel'])->name('cancel');
-    });
+    Route::get('/', [APIOrderController::class, 'index']);
+    Route::post('create', [APIOrderController::class, 'create']);
+    Route::get('details/{id}', [APIOrderController::class, 'details']);
+    Route::get('confirm/{id}', [APIOrderController::class, 'confirm']);
+    Route::get('cancel/{id}', [APIOrderController::class, 'cancel']);
+    Route::get('check-delivered', [APIOrderController::class, 'checkDelivered']);
 });
 
-Route::post('review/create', [APIReviewController::class, 'create'])->name('review.create');
+Route::post('review/create', [APIReviewController::class, 'create']);
 
 Route::prefix('comment')->group(function () {
-    Route::name('comment.')->group(function () {
-        Route::post('create', [APICommentController::class, 'create'])->name('create');
-        Route::get('get-comments-by-product-id', [APICommentController::class, 'getCommentsByProductId'])->name('get-comments-by-product-id');
-        Route::get('destroy/{id}', [APICommentController::class, 'destroy'])->name('destroy');
-    });
+    Route::post('create', [APICommentController::class, 'create']);
+    Route::get('get-comments-by-product-id', [APICommentController::class, 'getCommentsByProductId']);
+    Route::get('destroy/{id}', [APICommentController::class, 'destroy']);
 });
 
-Route::get('index', [APIBookController::class, 'index'])->name('index');
-Route::get('get-newbooks-and-combos', [APIBookController::class, 'getNewBooksAndCombos'])->name('get-newbooks-and-combos');
-Route::get('get-newbooks', [APIBookController::class, 'getNewBooks'])->name('get-newbooks');
-Route::get('get-combos', [APIBookController::class, 'getCombos'])->name('get-combos');
-Route::get('get-books-by-category/{category_id}', [APIBookController::class, 'getBooksByCategory'])->name('get-books-by-category');
-Route::get('search/{keyword}', [APIBookController::class, 'search'])->name('search-product');
-Route::get('{slug}', [APIBookController::class, 'getProductBySlug'])->name('get-product-by-slug');
+Route::get('index', [APIBookController::class, 'index']);
+Route::get('get-newbooks-and-combos', [APIBookController::class, 'getNewBooksAndCombos']);
+Route::get('get-newbooks', [APIBookController::class, 'getNewBooks']);
+Route::get('get-combos', [APIBookController::class, 'getCombos']);
+Route::get('get-books-by-category/{category_id}', [APIBookController::class, 'getBooksByCategory']);
+Route::get('search', [APIBookController::class, 'search']);
+Route::get('{slug}', [APIBookController::class, 'getProductBySlug']);

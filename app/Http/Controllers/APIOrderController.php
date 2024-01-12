@@ -149,4 +149,30 @@ class APIOrderController extends Controller
             'message' => 'Huỷ đơn thành công!'
         ]);
     }
+
+    public function checkDelivered(Request $request)
+    {
+        $customer_id = $request->customer_id;
+        $book_id = $request->book_id;
+        $combo_id = $request->combo_id;
+
+        $query = Order::where('customer_id', $customer_id);
+
+        if ($book_id) {
+            $query->whereHas('order_detail', function ($q) use ($book_id) {
+                $q->where('book_id', $book_id);
+            });
+        } elseif ($combo_id) {
+            $query->whereHas('order_detail', function ($q) use ($combo_id) {
+                $q->where('combo_id', $combo_id);
+            });
+        }
+
+        $isDelivered = $query->exists();
+
+        return response()->json([
+            'success' => true,
+            'is_delivered' => $isDelivered,
+        ]);
+    }
 }
