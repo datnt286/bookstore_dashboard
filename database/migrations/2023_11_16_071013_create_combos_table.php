@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->string('image')->default('default-image.jpg');
             $table->string('description', 1000)->nullable();
-            $table->decimal('average', 3, 1)->nullable();
+            $table->decimal('average_rating', 3, 1)->nullable();
             $table->string('slug')->unique();
             $table->tinyInteger('is_combo')->default(1);
             $table->timestamps();

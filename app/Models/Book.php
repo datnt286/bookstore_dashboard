@@ -11,7 +11,7 @@ class Book extends Model
     use HasFactory;
     use SoftDeletes;
     protected $table = 'books';
-    protected $fillable = ['name', 'category_id', 'publisher_id', 'supplier_id', 'size', 'weight', 'num_pages', 'language', 'release_date', 'price', 'e_book_price', 'quantity', 'is_combo', 'combo_id', 'description', 'slug'];
+    protected $fillable = ['name', 'category_id', 'publisher_id', 'supplier_id', 'size', 'weight', 'num_pages', 'language', 'release_date', 'price', 'e_book_price', 'quantity', 'description', 'average_rating', 'slug'];
     protected $appends = ['category_name', 'category_slug'];
 
     public function category()
@@ -46,7 +46,7 @@ class Book extends Model
 
     public function reviews()
     {
-        return $this->hasManyThrough(Review::class, OrderDetail::class)->latest();
+        return $this->hasMany(Review::class)->latest();
     }
 
     public function comments()

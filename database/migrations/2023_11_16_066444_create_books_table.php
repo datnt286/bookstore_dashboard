@@ -27,7 +27,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->string('link_download')->nullable();
             $table->string('description', 1000)->nullable();
-            $table->decimal('average', 3, 1)->nullable();
+            $table->decimal('average_rating', 3, 1)->nullable();
             $table->string('slug')->unique();
             $table->timestamps();
             $table->softDeletes();

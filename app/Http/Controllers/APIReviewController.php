@@ -9,9 +9,13 @@ class APIReviewController extends Controller
 {
     public function create(Request $request)
     {
+        $book_id = $request->book_id;
+        $combo_id = $request->combo_id;
+
         Review::updateOrCreate([
             'customer_id' => $request->customer_id,
-            'order_detail_id' => $request->order_detail_id,
+            'book_id' => $book_id,
+            'combo_id' => $combo_id,
         ], [
             'rating' => $request->rating,
             'content' => $request->content,

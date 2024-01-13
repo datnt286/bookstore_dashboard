@@ -11,7 +11,7 @@ class Combo extends Model
     use HasFactory;
     use SoftDeletes;
     protected $table = 'combos';
-    protected $fillable = ['id', 'name', 'supplier_id', 'price', 'quantity', 'description', 'slug', 'image'];
+    protected $fillable = ['id', 'name', 'supplier_id', 'price', 'quantity', 'description', 'average_rating', 'slug', 'image'];
     protected $appends = ['absolute_path'];
 
     public function supplier()
@@ -26,7 +26,7 @@ class Combo extends Model
 
     public function reviews()
     {
-        return $this->hasManyThrough(Review::class, OrderDetail::class)->latest();
+        return $this->hasMany(Review::class)->latest();
     }
 
     public function comments()

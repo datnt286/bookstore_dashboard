@@ -10,7 +10,7 @@ class Review extends Model
 {
     use HasFactory;
     protected $table = 'reviews';
-    protected $fillable = ['customer_id', 'order_detail_id', 'rating', 'average', 'content'];
+    protected $fillable = ['customer_id', 'book_id', 'combo_id', 'rating', 'average', 'content'];
     protected $appends = ['review_date'];
 
     public function customer()

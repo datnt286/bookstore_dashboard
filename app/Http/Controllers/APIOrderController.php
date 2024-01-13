@@ -162,7 +162,7 @@ class APIOrderController extends Controller
             $query->whereHas('order_detail', function ($q) use ($book_id) {
                 $q->where('book_id', $book_id);
             });
-        } elseif ($combo_id) {
+        } else if ($combo_id) {
             $query->whereHas('order_detail', function ($q) use ($combo_id) {
                 $q->where('combo_id', $combo_id);
             });
