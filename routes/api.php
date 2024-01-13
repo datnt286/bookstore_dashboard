@@ -50,10 +50,13 @@ Route::prefix('order')->group(function () {
     Route::get('details/{id}', [APIOrderController::class, 'details']);
     Route::get('confirm/{id}', [APIOrderController::class, 'confirm']);
     Route::get('cancel/{id}', [APIOrderController::class, 'cancel']);
-    Route::get('check-delivered', [APIOrderController::class, 'checkDelivered']);
 });
 
-Route::post('review/create', [APIReviewController::class, 'create']);
+Route::prefix('review')->group(function () {
+    Route::post('create', [APIReviewController::class, 'create']);
+    Route::get('get-reviews-by-product-id', [APIReviewController::class, 'getReviewsByProductId']);
+    Route::get('check-delivered', [APIReviewController::class, 'checkDelivered']);
+});
 
 Route::prefix('comment')->group(function () {
     Route::post('create', [APICommentController::class, 'create']);
@@ -65,6 +68,5 @@ Route::get('index', [APIBookController::class, 'index']);
 Route::get('get-newbooks-and-combos', [APIBookController::class, 'getNewBooksAndCombos']);
 Route::get('get-newbooks', [APIBookController::class, 'getNewBooks']);
 Route::get('get-combos', [APIBookController::class, 'getCombos']);
-Route::get('get-books-by-category/{category_id}', [APIBookController::class, 'getBooksByCategory']);
 Route::get('search', [APIBookController::class, 'search']);
 Route::get('{slug}', [APIBookController::class, 'getProductBySlug']);

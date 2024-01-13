@@ -107,11 +107,12 @@ class APIBookController extends Controller
 
     public function getProductBySlug($slug)
     {
-        $book = Book::with(['authors', 'images', 'combos', 'reviews.customer', 'comments.customer', 'comments.replys'])
+        $book = Book::with(['authors', 'images', 'combos', 'reviews.customer'])
             ->where('slug', $slug)
             ->first();
-        $combo = Combo::with('reviews.customer', 'comments.customer')
-            ->where('slug', $slug)->first();
+        $combo = Combo::with('reviews.customer')
+            ->where('slug', $slug)
+            ->first();
         $product = $book ? $book : $combo;
 
         if (empty($product)) {
@@ -125,24 +126,6 @@ class APIBookController extends Controller
         return response()->json([
             'success' => true,
             'data' => $product,
-        ]);
-    }
-
-    public function getBooksByCategory($category_id)
-    {
-        $books = Book::with('images')->where('category_id', $category_id)->get();
-
-        if (empty($books)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Danh sách trống!',
-                'data' => null,
-            ]);
-        }
-
-        return response()->json([
-            'success' => true,
-            'data' => $books,
         ]);
     }
 
