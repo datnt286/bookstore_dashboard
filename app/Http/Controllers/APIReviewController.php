@@ -12,6 +12,12 @@ class APIReviewController extends Controller
 {
     public function create(Request $request)
     {
+        $request->validate([
+            'rating' => 'required|in:1,2,3,4,5',
+        ], [
+            'rating.required' => 'Bạn chưa chọn số sao.',
+        ]);
+
         $book_id = $request->input('book_id', null);
         $combo_id = $request->input('combo_id', null);
 
@@ -24,12 +30,14 @@ class APIReviewController extends Controller
             'content' => $request->content,
         ]);
 
-        if ($request->input('rating')) {
-            $product = $book_id ? Book::find($book_id) : Combo::find($combo_id);
-
-            $averageRating = $product->average_rating === null ? $request->rating : ($product->average_rating + $request->rating) / 2;
-
-            $product->update(['average_rating' => $averageRating]);
+        if ($book_id) {
+            $book = Book::find($book_id);
+            $averageRating = $book->reviews()->avg('rating');
+            $book->update(['average_rating' => $averageRating]);
+        } else if ($combo_id) {
+            $combo = Combo::find($combo_id);
+            $averageRating = $combo->reviews()->avg('rating');
+            $combo->update(['average_rating' => $averageRating]);
         }
 
         return response()->json([

@@ -22,11 +22,6 @@ class OrderDetail extends Model
         return $this->belongsTo(Combo::class);
     }
 
-    public function review()
-    {
-        return $this->hasOne(Review::class);
-    }
-
     public function getProductNameAttribute()
     {
         if ($this->book_id) {

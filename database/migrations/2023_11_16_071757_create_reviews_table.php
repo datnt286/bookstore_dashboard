@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('book_id')->nullable();
             $table->unsignedBigInteger('combo_id')->nullable();
-            $table->tinyInteger('rating')->nullable();
+            $table->tinyInteger('rating');
             $table->string('content')->nullable();
             $table->timestamps();
 
