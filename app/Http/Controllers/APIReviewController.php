@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
+use App\Models\Combo;
 use App\Models\Order;
 use App\Models\Review;
 use Illuminate\Http\Request;
@@ -21,6 +23,14 @@ class APIReviewController extends Controller
             'rating' => $request->rating,
             'content' => $request->content,
         ]);
+
+        if ($request->input('rating')) {
+            $product = $book_id ? Book::find($book_id) : Combo::find($combo_id);
+
+            $averageRating = $product->average_rating === null ? $request->rating : ($product->average_rating + $request->rating) / 2;
+
+            $product->update(['average_rating' => $averageRating]);
+        }
 
         return response()->json([
             'success' => true,

@@ -129,6 +129,24 @@ class APIBookController extends Controller
         ]);
     }
 
+    public function getBooksByCategoryId($category_id)
+    {
+        $books = Book::with('images')->where('category_id', $category_id)->get();
+
+        if (empty($books)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Danh sách trống!',
+                'data' => null,
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $books,
+        ]);
+    }
+
     public function search(Request $request)
     {
         $keyword = $request->input('keyword');
