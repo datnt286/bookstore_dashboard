@@ -44,13 +44,13 @@ class APICommentController extends Controller
         $comboId = $request->input('combo_id');
 
         if ($bookId) {
-            $comments = Comment::with('customer', 'replys.customer')
+            $comments = Comment::with('customer', 'replies.customer')
                 ->where('book_id', $bookId)
                 ->whereNull('parent_id')
                 ->latest()
                 ->get();
         } else if ($comboId) {
-            $comments = Comment::with('customer', 'replys.customer')
+            $comments = Comment::with('customer', 'replies.customer')
                 ->where('combo_id', $comboId)
                 ->whereNull('parent_id')
                 ->latest()

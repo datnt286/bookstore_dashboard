@@ -147,11 +147,11 @@
                     render: function(data, type, row) {
                         switch (data) {
                             case 1:
-                                return '<span class="badge badge-warning">Chờ xác nhận</span>';
+                                return '<span class="badge badge-info">Chờ xác nhận</span>';
                             case 2:
                                 return '<span class="badge badge-primary">Đã xác nhận</span>';
                             case 3:
-                                return '<span class="badge badge-info">Đang giao</span>';
+                                return '<span class="badge badge-warning">Đang giao</span>';
                             case 4:
                                 return '<span class="badge badge-success">Đã giao</span>';
                             case 5:
@@ -172,7 +172,7 @@
 
                         switch (row.status) {
                             case 1:
-                                buttons += '<button class="btn btn-warning btn-sm btn-update-status mx-1" data-id="' + row.id + '" data-status="2"><i class="fas fa-edit"></i> Xác nhận</button>';
+                                buttons += '<button class="btn btn-info btn-sm btn-update-status mx-1" data-id="' + row.id + '" data-status="2"><i class="fas fa-edit"></i> Xác nhận</button>';
                                 buttons += '<button class="btn btn-danger btn-sm btn-update-status" data-id="' + row.id + '" data-status="5"><i class="fas fa-trash-alt"></i> Huỷ đơn</button>';
                                 break;
                             case 2:
@@ -180,7 +180,7 @@
                                 buttons += '<button class="btn btn-danger btn-sm btn-update-status" data-id="' + row.id + '" data-status="5"><i class="fas fa-trash-alt"></i> Huỷ đơn</button>';
                                 break;
                             case 3:
-                                buttons += '<button class="btn btn-info btn-sm btn-update-status mx-1" data-id="' + row.id + '" data-status="4" disabled><i class="fas fa-spinner"></i> Đang giao</button>';
+                                buttons += '<button class="btn btn-warning btn-sm btn-update-status mx-1" data-id="' + row.id + '" data-status="4" disabled><i class="fas fa-spinner"></i> Đang giao</button>';
                                 buttons += '<button class="btn btn-danger btn-sm btn-update-status" data-id="' + row.id + '" data-status="5"><i class="fas fa-trash-alt"></i> Huỷ đơn</button>';
                                 break;
                             case 4:

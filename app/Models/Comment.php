@@ -20,11 +20,6 @@ class Comment extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    public function replys()
-    {
-        return $this->hasMany(Comment::class, 'parent_id', 'id');
-    }
-
     public function book()
     {
         return $this->belongsTo(Book::class);
@@ -33,6 +28,11 @@ class Comment extends Model
     public function combo()
     {
         return $this->belongsTo(Combo::class);
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Comment::class, 'parent_id', 'id');
     }
 
     public function getCustomerNameAttribute()

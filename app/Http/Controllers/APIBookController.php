@@ -107,12 +107,10 @@ class APIBookController extends Controller
 
     public function getProductBySlug($slug)
     {
-        $book = Book::with(['authors', 'images', 'combos', 'reviews.customer'])
+        $book = Book::with(['authors', 'images', 'combos'])
             ->where('slug', $slug)
             ->first();
-        $combo = Combo::with('reviews.customer')
-            ->where('slug', $slug)
-            ->first();
+        $combo = Combo::where('slug', $slug)->first();
         $product = $book ? $book : $combo;
 
         if (empty($product)) {

@@ -12,7 +12,7 @@ class Combo extends Model
     use SoftDeletes;
     protected $table = 'combos';
     protected $fillable = ['id', 'name', 'supplier_id', 'price', 'quantity', 'description', 'average_rating', 'slug', 'image'];
-    protected $appends = ['absolute_path'];
+    protected $appends = ['absolute_path', 'total_reviews'];
 
     public function supplier()
     {
@@ -37,5 +37,10 @@ class Combo extends Model
     public function getAbsolutePathAttribute()
     {
         return env('APP_URL') . "/uploads/combos/{$this->image}";
+    }
+
+    public function getTotalReviewsAttribute()
+    {
+        return $this->reviews->count();
     }
 }

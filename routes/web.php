@@ -143,7 +143,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('comment')->group(function () {
         Route::name('comment.')->group(function () {
             Route::get('/', [CommentController::class, 'index'])->name('index');
-            Route::get('reply/{id}', [CommentController::class, 'reply'])->name('reply');
+            Route::get('replies/{id}', [CommentController::class, 'replies'])->name('replies');
             Route::get('destroy/{id}', [CommentController::class, 'destroy'])->name('destroy');
         });
     });

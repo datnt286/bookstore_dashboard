@@ -37,7 +37,7 @@
             </div>
             <div class="modal-body">
                 <div class="card-body">
-                    <table id="replys-table" class="table table-bordered">
+                    <table id="replies-table" class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>Id</th>
@@ -150,7 +150,7 @@
                         var statusIcon = row.customer.status === 1 ? '<i class="fas fa-comment-slash"></i>' : '<i class="fas fa-comment"></i>';
 
                         return '<div class="project-actions text-right">' +
-                            '<button class="btn btn-info btn-sm btn-reply" data-id="' + row.id + '"><i class="fas fa-info-circle"></i> Xem phản hồi</button>' +
+                            '<button class="btn btn-secondary btn-sm btn-replies" data-id="' + row.id + '"><i class="fas fa-info-circle"></i> Xem phản hồi</button>' +
                             '<button class="btn ' + statusClass + ' btn-sm mx-1 btn-update-status" data-id="' + row.customer_id + '">' + statusIcon + ' ' + statusText + '</button>' +
                             '<button class="btn btn-danger btn-sm btn-delete mx-1" data-id="' + row.id + '"><i class="fas fa-trash-alt"></i> Xoá</button>' +
                             '</div>';
@@ -190,13 +190,13 @@
             }
         });
 
-        $('#data-table').on('click', '.btn-reply', async function() {
+        $('#data-table').on('click', '.btn-replies', async function() {
             try {
                 var id = $(this).data('id');
-                var response = await axios.get("{{ route('comment.reply', ['id' => '_id_']) }}".replace('_id_', id));
+                var response = await axios.get("{{ route('comment.replies', ['id' => '_id_']) }}".replace('_id_', id));
                 var res = response.data;
 
-                $('#replys-table tbody').empty();
+                $('#replies-table tbody').empty();
 
                 if (res.success && res.data.length > 0) {
                     res.data.forEach(reply => {
@@ -205,7 +205,7 @@
                         var statusIcon = reply.customer.status === 1 ? '<i class="fas fa-comment-slash"></i>' : '<i class="fas fa-comment"></i>';
                         var statusColumn = reply.customer.status === 1 ? '<span class="badge badge-success">Đang hoạt động</span>' : '<span class="badge badge-warning">Đã khoá bình luận</span>';
 
-                        $('#replys-table tbody').append(`
+                        $('#replies-table tbody').append(`
                             <tr>
                                 <td class="align-middle">${reply.id}</td>
                                 <td class="align-middle">${reply.customer_name}</td>
@@ -220,7 +220,7 @@
                         `);
                     });
                 } else {
-                    $('#replys-table tbody').append('<tr><td colspan="5">Không có dữ liệu chi tiết!</td></tr>');
+                    $('#replies-table tbody').append('<tr><td colspan="5">Không có dữ liệu chi tiết!</td></tr>');
                 }
 
                 $('#modal-reply').modal('show');
@@ -229,7 +229,7 @@
             }
         });
 
-        $('#replys-table').on('click', '.btn-update-status', async function() {
+        $('#replies-table').on('click', '.btn-update-status', async function() {
             try {
                 var id = $(this).data('id');
                 var response = await axios.get("{{ route('customer.update-status', ['id' => '_id_']) }}".replace('_id_', id));
@@ -242,11 +242,11 @@
 
                 $(this).html(`${statusIcon} ${statusText}`).removeClass('btn-warning btn-success').addClass(statusClass);
 
-                $(`#replys-table button[data-id="${id}"]`).closest('tr').find('.btn-update-status').each(function() {
+                $(`#replies-table button[data-id="${id}"]`).closest('tr').find('.btn-update-status').each(function() {
                     $(this).html(`${statusIcon} ${statusText}`).removeClass('btn-warning btn-success').addClass(statusClass);
                 });
 
-                $('#replys-table tbody button[data-id="' + id + '"]').closest('tr').find('.reply-status-column').html(statusColumn);
+                $('#replies-table tbody button[data-id="' + id + '"]').closest('tr').find('.reply-status-column').html(statusColumn);
 
                 dataTable.draw()
                 handleSuccess(res);
@@ -255,7 +255,7 @@
             }
         });
 
-        $('#replys-table').on('click', '.btn-delete', async function() {
+        $('#replies-table').on('click', '.btn-delete', async function() {
             try {
                 id = $(this).data('id');
                 var response = await axios.get("{{ route('comment.destroy', ['id' => '_id_']) }}".replace('_id_', id));
@@ -263,9 +263,9 @@
 
                 $(this).closest('tr').remove();
 
-                var rowCount = $('#replys-table tbody tr').length;
+                var rowCount = $('#replies-table tbody tr').length;
                 if (rowCount === 0) {
-                    $('#replys-table tbody').append('<tr><td colspan="5">Không có dữ liệu chi tiết!</td></tr>');
+                    $('#replies-table tbody').append('<tr><td colspan="5">Không có dữ liệu chi tiết!</td></tr>');
                 }
 
                 handleSuccess(res);

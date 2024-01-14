@@ -12,7 +12,7 @@ class Book extends Model
     use SoftDeletes;
     protected $table = 'books';
     protected $fillable = ['name', 'category_id', 'publisher_id', 'supplier_id', 'size', 'weight', 'num_pages', 'language', 'release_date', 'price', 'e_book_price', 'quantity', 'description', 'average_rating', 'slug'];
-    protected $appends = ['category_name', 'category_slug'];
+    protected $appends = ['category_name', 'category_slug', 'total_reviews'];
 
     public function category()
     {
@@ -62,5 +62,10 @@ class Book extends Model
     public function getCategorySlugAttribute()
     {
         return $this->category->slug;
+    }
+
+    public function getTotalReviewsAttribute()
+    {
+        return $this->reviews->count();
     }
 }

@@ -30,13 +30,13 @@ class CommentController extends Controller
         return view('comments.index', compact('comments'));
     }
 
-    public function reply($id)
+    public function replies($id)
     {
-        $replys = Comment::where('parent_id', $id)->get();
+        $replies = Comment::where('parent_id', $id)->get();
 
         return response()->json([
             'success' => true,
-            'data' => $replys,
+            'data' => $replies,
         ]);
     }
 

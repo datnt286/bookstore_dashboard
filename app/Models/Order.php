@@ -25,7 +25,9 @@ class Order extends Model
 
     public function getOrderDateAttribute()
     {
-        return Carbon::parse($this->attributes['created_at'])
+        $timestamp = $this->attributes['updated_at'] ?? $this->attributes['created_at'];
+
+        return Carbon::parse($timestamp)
             ->setTimezone('Asia/Ho_Chi_Minh')
             ->format('d/m/Y H:i');
     }
