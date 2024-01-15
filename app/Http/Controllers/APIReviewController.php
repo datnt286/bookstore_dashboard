@@ -13,7 +13,7 @@ class APIReviewController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'rating' => 'required|in:1,2,3,4,5',
+            'rating' => 'required',
         ], [
             'rating.required' => 'Bạn chưa chọn số sao.',
         ]);
@@ -53,46 +53,52 @@ class APIReviewController extends Controller
 
         $reviews = [];
         $totalReviews = 0;
-        $count1StarReviews = 0;
-        $count2StarsReviews = 0;
-        $count3StarsReviews = 0;
-        $count4StarsReviews = 0;
-        $count5StarsReviews = 0;
+        $count1Star = 0;
+        $count2Stars = 0;
+        $count3Stars = 0;
+        $count4Stars = 0;
+        $count5Stars = 0;
+        $averageRating = 0;
 
         if ($bookId) {
-            $reviews = Review::with('customer')
+            $reviews = Review::with('customer', 'book')
                 ->where('book_id', $bookId)
                 ->latest()
                 ->get();
             $totalReviews = $reviews->count();
-            $count1StarReviews = $reviews->where('rating', 1)->count();
-            $count2StarsReviews = $reviews->where('rating', 2)->count();
-            $count3StarsReviews = $reviews->where('rating', 3)->count();
-            $count4StarsReviews = $reviews->where('rating', 4)->count();
-            $count5StarsReviews = $reviews->where('rating', 5)->count();
+            $count1Star = $reviews->where('rating', 1)->count();
+            $count2Stars = $reviews->where('rating', 2)->count();
+            $count3Stars = $reviews->where('rating', 3)->count();
+            $count4Stars = $reviews->where('rating', 4)->count();
+            $count5Stars = $reviews->where('rating', 5)->count();
+            $averageRating = Book::find($bookId)->average_rating;
         } else if ($comboId) {
             $reviews = Review::with('customer')
                 ->where('combo_id', $comboId)
                 ->latest()
                 ->get();
             $totalReviews = $reviews->count();
-            $count1StarReviews = $reviews->where('rating', 1)->count();
-            $count2StarsReviews = $reviews->where('rating', 2)->count();
-            $count3StarsReviews = $reviews->where('rating', 3)->count();
-            $count4StarsReviews = $reviews->where('rating', 4)->count();
-            $count5StarsReviews = $reviews->where('rating', 5)->count();
+            $count1Star = $reviews->where('rating', 1)->count();
+            $count2Stars = $reviews->where('rating', 2)->count();
+            $count3Stars = $reviews->where('rating', 3)->count();
+            $count4Stars = $reviews->where('rating', 4)->count();
+            $count5Stars = $reviews->where('rating', 5)->count();
+            $averageRating = Combo::find($comboId)->average_rating;
         }
 
         return response()->json([
             'success' => true,
             'data' => [
                 'reviews' => $reviews,
+                'average_rating' => $averageRating,
                 'total_reviews' => $totalReviews,
-                'count_1_star_reviews' => $count1StarReviews,
-                'count_2_stars_reviews' => $count2StarsReviews,
-                'count_3_stars_reviews' => $count3StarsReviews,
-                'count_4_stars_reviews' => $count4StarsReviews,
-                'count_5_stars_reviews' => $count5StarsReviews,
+                'review_stats' => [
+                    'count_1_star' => $count1Star,
+                    'count_2_stars' => $count2Stars,
+                    'count_3_stars' => $count3Stars,
+                    'count_4_stars' => $count4Stars,
+                    'count_5_stars' => $count5Stars,
+                ]
             ],
         ]);
     }
