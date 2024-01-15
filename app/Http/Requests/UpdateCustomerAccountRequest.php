@@ -35,7 +35,7 @@ class UpdateCustomerAccountRequest extends FormRequest
                 'email:rfc,dns',
             ],
             'address' => 'required',
-            'avatar' => 'image',
+            'avatar' => $this->input('avatar') ? 'image' : '',
         ];
     }
 

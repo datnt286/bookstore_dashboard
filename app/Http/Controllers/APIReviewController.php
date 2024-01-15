@@ -61,7 +61,7 @@ class APIReviewController extends Controller
         $averageRating = 0;
 
         if ($bookId) {
-            $reviews = Review::with('customer', 'book')
+            $reviews = Review::with('customer')
                 ->where('book_id', $bookId)
                 ->latest()
                 ->get();
