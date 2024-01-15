@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class APICommentController extends Controller
 {
@@ -40,6 +41,8 @@ class APICommentController extends Controller
 
     public function getCommentsByProductId(Request $request)
     {
+        $perPage = $request->input('per_page', 5);
+
         $bookId = $request->input('book_id');
         $comboId = $request->input('combo_id');
 
@@ -48,20 +51,25 @@ class APICommentController extends Controller
                 ->where('book_id', $bookId)
                 ->whereNull('parent_id')
                 ->latest()
-                ->get();
+                ->paginate($perPage);
         } else if ($comboId) {
             $comments = Comment::with('customer', 'replies.customer')
                 ->where('combo_id', $comboId)
                 ->whereNull('parent_id')
                 ->latest()
-                ->get();
+                ->paginate($perPage);
         } else {
-            $comments = [];
+            $comments = new LengthAwarePaginator([], 0, $perPage);
         }
 
         return response()->json([
             'success' => true,
-            'data' => $comments,
+            'data' => [
+                'comments' => $comments->items(),
+                'per_page' => $comments->perPage(),
+                'total' => $comments->total(),
+                'total_pages' => $comments->lastPage(),
+            ],
         ]);
     }
 
