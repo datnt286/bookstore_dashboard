@@ -33,8 +33,8 @@ class BookController extends Controller
                     return $book->supplier->name;
                 })
                 ->addColumn('image', function ($book) {
-                    $image = $book->images->first();
-                    $imageUrl = $image ? asset('uploads/images/' . $image->name) : asset('img/default-image.jpg');
+                    $image = $book->image;
+                    $imageUrl = $image ? asset('uploads/images/' . $image) : asset('img/default-image.jpg');
                     return $imageUrl;
                 })
                 ->addColumn('action', function ($book) {

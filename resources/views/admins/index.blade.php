@@ -88,6 +88,10 @@
                             <input type="text" name="address" id="address" class="form-control" required>
                             <div class="invalid-feedback address-error">{{ $errors->first('address') }}</div>
                         </div>
+                        <div class="custom-control custom-checkbox text-center">
+                            <input type="checkbox" name="status" id="status" class="custom-control-input">
+                            <label for="status" class="custom-control-label">Còn hoạt động</label>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-end">
@@ -143,6 +147,10 @@
                     <div class="form-group">
                         <span class="text-lg font-weight-bold">Địa chỉ: </span>
                         <span id="address-detail" class="text-lg"></span>
+                    </div>
+                    <div class="form-group">
+                        <span class="text-lg font-weight-bold">Trạng thái: </span>
+                        <span id="status-detail" class="text-lg"></span>
                     </div>
                 </div>
             </div>
@@ -248,6 +256,7 @@
 
         var id = null;
         var avatar = null;
+        var status = 1;
         var formData = new FormData($('#form-store')[0]);
 
         $('#btn-create').click(function() {
@@ -257,6 +266,7 @@
             $('#form-store').trigger('reset');
             $('#avatar-preview').attr('src', 'img/default-avatar.jpg');
             $('#username').prop('readonly', false);
+            $('#status').prop('checked', true);
             $('#modal-title').text('Thêm admin');
             $('#modal-store').modal('show');
         });
@@ -278,6 +288,13 @@
                 $('#avatar-preview').attr('src', 'uploads/admins/' + res.data.avatar);
                 $('#username').prop('readonly', true);
                 $('#modal-title').text('Cập nhật admin');
+
+                if (res.data.status == 1) {
+                    $('#status').prop('checked', true);
+                } else {
+                    $('#status').prop('checked', false);
+                }
+
                 $('#modal-store').modal('show');
             } catch (error) {
                 handleError(error);
@@ -305,10 +322,16 @@
             }
         });
 
+        $('#status').change(function() {
+            status = $(this).is(':checked') ? 1 : 0;
+            formData.set('status', status);
+        });
+
         $('#btn-store').click(async function() {
             try {
                 id = $('#id').val();
                 var formData = new FormData($('#form-store')[0]);
+                formData.append('status', status);
 
                 if (id) {
                     var url = `{{ route('admin.update', ['id' => '_id_']) }}`.replace('_id_', id);
@@ -349,6 +372,13 @@
                 $('#email-detail').text(res.data.email);
                 $('#address-detail').text(res.data.address);
                 $('#avatar-detail-preview').attr('src', 'uploads/admins/' + res.data.avatar);
+
+                var statusText = res.data.status == 1 ? 'Còn hoạt động' : 'Không hoạt động';
+                $('#status-detail').text(statusText);
+
+                var statusClass = res.data.status == 1 ? 'text-success' : 'text-danger';
+                $('#status-detail').removeClass('text-success text-danger').addClass(statusClass);
+
                 $('#modal-detail').modal('show');
             } catch (error) {
                 handleError(error);

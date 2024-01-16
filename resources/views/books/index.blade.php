@@ -307,13 +307,13 @@
                     name: 'id',
                 },
                 {
-                    data: 'images',
-                    name: 'images',
+                    data: 'image',
+                    name: 'image',
                     orderable: false,
                     searchable: false,
                     render: function(data, type, row) {
-                        var imageUrl = data.length > 0 ? '{{ asset("uploads/images/") }}/' + data[0].name : '{{ asset("img/default-image.jpg") }}';
-                        return '<img src="' + imageUrl + '" alt="Hình ảnh" class="img img-thumbnail" style="max-width: 100px; max-height: 100px;">';
+                        var image = data ? data : '{{ asset("img/default-image.jpg") }}';
+                        return '<img src="' + image + '" alt="Hình ảnh" class="img img-thumbnail" style="max-width: 100px; max-height: 100px;">';
                     }
                 },
                 {

@@ -22,6 +22,11 @@ class OrderDetail extends Model
         return $this->belongsTo(Combo::class);
     }
 
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+
     public function getProductNameAttribute()
     {
         if ($this->book_id) {

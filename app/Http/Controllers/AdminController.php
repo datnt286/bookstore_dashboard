@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateAdminAccountRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Models\Admin;
 use App\Models\Book;
+use App\Models\Combo;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -32,11 +33,11 @@ class AdminController extends Controller
                 $totalQuantity += $order->order_detail->sum('quantity');
             }
 
-            // $bestsellers = Book::with('order_details')
-            //     ->orderByDesc('total_quantity_sold_this_month')
-            //     ->get();
+            $books = Book::all();
+            $bestsellers = $books->where('total_quantity_sold_this_month', '>', 0)
+                ->sortByDesc('total_quantity_sold_this_month')->take(5);
 
-            return view('index', compact('totalRevenue', 'totalOrders', 'totalCustomers', 'totalQuantity'));
+            return view('index', compact('totalRevenue', 'totalOrders', 'totalCustomers', 'totalQuantity', 'bestsellers'));
         }
 
         return 'Chưa đăng nhập!';
@@ -44,8 +45,7 @@ class AdminController extends Controller
 
     public function getMonthlyRevenue()
     {
-
-        return response()->json('abc');
+        return response()->json();
     }
 
     public function login()
@@ -176,6 +176,7 @@ class AdminController extends Controller
             'phone' => $request->phone,
             'email' => $request->email,
             'address' => $request->address,
+            'status' => $request->status,
         ];
 
         if ($request->hasFile('avatar')) {
@@ -203,6 +204,7 @@ class AdminController extends Controller
             'phone' => $request->phone,
             'email' => $request->email,
             'address' => $request->address,
+            'status' => $request->status,
         ];
 
         $password = $request->filled('password') ? ['password' => Hash::make($request->input('password'))] : [];

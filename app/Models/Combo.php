@@ -34,6 +34,11 @@ class Combo extends Model
         return $this->hasMany(Comment::class)->whereNull('parent_id')->latest();
     }
 
+    public function order_details()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
+
     public function getImagePathAttribute()
     {
         return env('APP_URL') . "/uploads/combos/{$this->image}";

@@ -59,75 +59,54 @@
     </div>
 </div>
 
+<div class="card card-primary card-outline">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="far fa-chart-bar"></i>
+            Doanh thu theo tháng
+        </h3>
+    </div>
+    <div class="card-body">
+        <div id="bar-chart" style="height: 300px;"></div>
+    </div>
+</div>
+
 <div class="row">
-    <!-- Bar chart -->
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="card card-primary card-outline">
             <div class="card-header">
                 <h3 class="card-title">
-                    <i class="far fa-chart-bar"></i>
-                    Doanh thu theo tháng
+                    <i class="fas fa-book"></i>
+                    Sách bán chạy tháng này
                 </h3>
-
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
             </div>
             <div class="card-body">
-                <div id="bar-chart" style="height: 300px;"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Line chart -->
-    <div class="col-md-12">
-        <div class="card card-primary card-outline">
-            <div class="card-header">
-                <h3 class="card-title">
-                    <i class="far fa-chart-bar"></i>
-                    Line Chart
-                </h3>
-
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="card-body">
-                <div id="line-chart" style="height: 300px;"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Donut chart -->
-    <div class="col-md-12">
-        <div class="card card-primary card-outline">
-            <div class="card-header">
-                <h3 class="card-title">
-                    <i class="far fa-chart-bar"></i>
-                    Donut Chart
-                </h3>
-
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="card-body">
-                <div id="donut-chart" style="height: 300px;"></div>
+                <table id="data-table" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Hình ảnh</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Số lượng đã bán</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($bestsellers as $bestseller)
+                        <tr>
+                            <td>{{ $bestseller->id }}</td>
+                            <td>
+                                <img src="uploads/images/{{ $bestseller->image }}" alt="Hình ảnh" class="img img-thumbnail" style="max-width: 100px; max-height: 100px;">
+                            </td>
+                            <td>{{ $bestseller->name }}</td>
+                            <td>{{ $bestseller->total_quantity_sold_this_month }}</td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan=3>Không có dữ liệu!</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -148,7 +127,6 @@
 
 <script>
     $(document).ready(function() {
-        // BAR CHART
         var bar_data = {
             data: [
                 [1, 10],
@@ -197,110 +175,6 @@
                     [11, 'Tháng 11'],
                     [12, 'Tháng 12'],
                 ]
-            }
-        })
-
-        // LINE CHART
-        //LINE randomly generated data
-        var sin = [],
-            cos = []
-        for (var i = 0; i < 14; i += 0.5) {
-            sin.push([i, Math.sin(i)])
-            cos.push([i, Math.cos(i)])
-        }
-        var line_data1 = {
-            data: sin,
-            color: '#3c8dbc'
-        }
-        var line_data2 = {
-            data: cos,
-            color: '#00c0ef'
-        }
-        $.plot('#line-chart', [line_data1, line_data2], {
-            grid: {
-                hoverable: true,
-                borderColor: '#f3f3f3',
-                borderWidth: 1,
-                tickColor: '#f3f3f3'
-            },
-            series: {
-                shadowSize: 0,
-                lines: {
-                    show: true
-                },
-                points: {
-                    show: true
-                }
-            },
-            lines: {
-                fill: false,
-                color: ['#3c8dbc', '#f56954']
-            },
-            yaxis: {
-                show: true
-            },
-            xaxis: {
-                show: true
-            }
-        })
-        //Initialize tooltip on hover
-        $('<div class="tooltip-inner" id="line-chart-tooltip"></div>').css({
-            position: 'absolute',
-            display: 'none',
-            opacity: 0.8
-        }).appendTo('body')
-        $('#line-chart').bind('plothover', function(event, pos, item) {
-
-            if (item) {
-                var x = item.datapoint[0].toFixed(2),
-                    y = item.datapoint[1].toFixed(2)
-
-                $('#line-chart-tooltip').html(item.series.label + ' of ' + x + ' = ' + y)
-                    .css({
-                        top: item.pageY + 5,
-                        left: item.pageX + 5
-                    })
-                    .fadeIn(200)
-            } else {
-                $('#line-chart-tooltip').hide()
-            }
-
-        })
-
-        // DONUT CHART
-        var donutData = [{
-                label: 'Series2',
-                data: 30,
-                color: '#3c8dbc'
-            },
-            {
-                label: 'Series3',
-                data: 20,
-                color: '#0073b7'
-            },
-            {
-                label: 'Series4',
-                data: 50,
-                color: '#00c0ef'
-            }
-        ]
-        $.plot('#donut-chart', donutData, {
-            series: {
-                pie: {
-                    show: true,
-                    radius: 1,
-                    innerRadius: 0.5,
-                    label: {
-                        show: true,
-                        radius: 2 / 3,
-                        formatter: labelFormatter,
-                        threshold: 0.1
-                    }
-
-                }
-            },
-            legend: {
-                show: false
             }
         })
     });

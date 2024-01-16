@@ -12,7 +12,7 @@ class Book extends Model
     use SoftDeletes;
     protected $table = 'books';
     protected $fillable = ['name', 'category_id', 'publisher_id', 'supplier_id', 'size', 'weight', 'num_pages', 'language', 'release_date', 'price', 'e_book_price', 'quantity', 'description', 'average_rating', 'slug'];
-    protected $appends = ['image_path', 'category_name', 'category_slug', 'total_reviews', 'total_quantity_sold_this_month'];
+    protected $appends = ['image', 'image_path', 'category_name', 'category_slug', 'total_reviews', 'total_quantity_sold_this_month'];
 
     public function images()
     {
@@ -49,6 +49,14 @@ class Book extends Model
         return $this->hasMany(OrderDetail::class);
     }
 
+    public function successful_order_details_this_month()
+    {
+        return $this->hasMany(OrderDetail::class)->whereHas('order', function ($query) {
+            $query->where('status', 4)
+                ->whereMonth('created_at', now()->month);
+        });
+    }
+
     public function reviews()
     {
         return $this->hasMany(Review::class)->latest();
@@ -57,6 +65,11 @@ class Book extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class)->whereNull('parent_id')->latest();
+    }
+
+    public function getImageAttribute()
+    {
+        return $this->images->first()->name;
     }
 
     public function getImagePathAttribute()
@@ -85,8 +98,6 @@ class Book extends Model
 
     public function getTotalQuantitySoldThisMonthAttribute()
     {
-        return $this->order_details()
-            ->whereMonth('order_details.created_at', now()->month)
-            ->sum('quantity');
+        return $this->successful_order_details_this_month()->sum('quantity');
     }
 }
