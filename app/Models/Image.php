@@ -10,9 +10,9 @@ class Image extends Model
     use HasFactory;
     protected $table = 'images';
     protected $fillable = ['book_id', 'name'];
-    protected $appends = ['absolute_path'];
+    protected $appends = ['image_path'];
 
-    public function getAbsolutePathAttribute()
+    public function getImagePathAttribute()
     {
         return env('APP_URL') . "/uploads/images/{$this->name}";
     }

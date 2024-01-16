@@ -36,9 +36,9 @@ class GoodsReceviedNoteDetail extends Model
     public function getProductImageAttribute()
     {
         if ($this->book_id) {
-            return $this->book->images->first()->absolute_path;
-        } elseif ($this->combo_id) {
-            return $this->combo->absolute_path;
+            return $this->book->image_path;
+        } else if ($this->combo_id) {
+            return $this->combo->image_path;
         }
 
         return null;

@@ -16,7 +16,7 @@ class Customer extends Authenticatable implements JWTSubject
     use Notifiable;
     protected $table = 'customers';
     protected $fillable = ['id', 'username', 'password', 'name', 'phone', 'email', 'address', 'avatar', 'status'];
-    protected $appends = ['avatar_image'];
+    protected $appends = ['avatar_path'];
 
     public function getJWTIdentifier()
     {
@@ -28,7 +28,7 @@ class Customer extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function getAvatarImageAttribute()
+    public function getAvatarPathAttribute()
     {
         return env('APP_URL') . "/uploads/customers/{$this->avatar}";
     }

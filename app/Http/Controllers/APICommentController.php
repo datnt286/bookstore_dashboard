@@ -41,7 +41,7 @@ class APICommentController extends Controller
 
     public function getCommentsByProductId(Request $request)
     {
-        $perPage = $request->input('per_page', 5);
+        $perPage = $request->input('per_page', 4);
 
         $bookId = $request->input('book_id');
         $comboId = $request->input('combo_id');
