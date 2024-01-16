@@ -54,6 +54,15 @@
 <!-- Summernote -->
 <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
 
+<!-- FLOT CHARTS -->
+<script src="{{ asset('plugins/flot/jquery.flot.js') }}"></script>
+
+<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+<script src="{{ asset('plugins/flot/plugins/jquery.flot.resize.js') }}"></script>
+
+<!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+<script src="{{ asset('plugins/flot/plugins/jquery.flot.pie.js') }}"></script>
+
 <script>
     var Toast = Swal.mixin({
         toast: true,

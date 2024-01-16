@@ -8,6 +8,10 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UpdateAdminAccountRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Models\Admin;
+use App\Models\Book;
+use App\Models\Customer;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -18,10 +22,30 @@ class AdminController extends Controller
     public function master()
     {
         if (auth()->check()) {
-            return view('index');
+            $totalRevenue = Order::where('status', 4)->sum('total');
+            $totalOrders = Order::where('status', 4)->count();
+            $totalCustomers = Customer::count();
+
+            $orders = Order::where('status', 4)->get();
+            $totalQuantity = 0;
+            foreach ($orders as $order) {
+                $totalQuantity += $order->order_detail->sum('quantity');
+            }
+
+            // $bestsellers = Book::with('order_details')
+            //     ->orderByDesc('total_quantity_sold_this_month')
+            //     ->get();
+
+            return view('index', compact('totalRevenue', 'totalOrders', 'totalCustomers', 'totalQuantity'));
         }
 
         return 'Chưa đăng nhập!';
+    }
+
+    public function getMonthlyRevenue()
+    {
+
+        return response()->json('abc');
     }
 
     public function login()

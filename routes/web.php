@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::post('account', [AdminController::class, 'updateAccount'])->name('update-account');
     Route::post('change-password', [AdminController::class, 'changePassword'])->name('change-password');
     Route::get('logout', [AdminController::class, 'logout'])->name('logout');
+    Route::get('get-monthly-revenue', [AdminController::class, 'getMonthlyRevenue'])->name('get-monthly-revenue');
 
     Route::prefix('admin')->group(function () {
         Route::name('admin.')->group(function () {

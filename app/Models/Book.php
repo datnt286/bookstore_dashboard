@@ -44,6 +44,11 @@ class Book extends Model
         return $this->belongsToMany(Combo::class);
     }
 
+    public function order_details()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
+
     public function reviews()
     {
         return $this->hasMany(Review::class)->latest();
@@ -80,11 +85,8 @@ class Book extends Model
 
     public function getTotalQuantitySoldThisMonthAttribute()
     {
-        return OrderDetail::whereHas('book', function ($query) {
-            $query->where('id', $this->id);
-        })
-            ->where('created_at', '>=', now()->startOfMonth())
-            ->where('created_at', '<=', now()->endOfMonth())
+        return $this->order_details()
+            ->whereMonth('order_details.created_at', now()->month)
             ->sum('quantity');
     }
 }
