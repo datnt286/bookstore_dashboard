@@ -336,7 +336,10 @@
                     data: 'price',
                     name: 'price',
                     render: function(data, type, row) {
-                        return data.toLocaleString() + ' ₫';
+                        return data.toLocaleString('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND'
+                        });
                     }
                 },
                 {
@@ -518,7 +521,10 @@
                 $('#category-detail').text(res.data.category);
                 $('#publisher-detail').text(res.data.publisher);
                 $('#supplier-detail').text(res.data.supplier);
-                $('#price-detail').text(res.data.price.toLocaleString() + ' ₫');
+                $('#price-detail').text(res.data.price.toLocaleString('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }));
                 $('#quantity-detail').text(res.data.quantity);
                 $('#e-book-price-detail').text(res.data.e_book_price.toLocaleString() + ' ₫');
                 $('#language-detail').text(res.data.language);

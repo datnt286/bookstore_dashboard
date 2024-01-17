@@ -233,7 +233,10 @@
                     data: 'price',
                     name: 'price',
                     render: function(data, type, row) {
-                        return data.toLocaleString() + ' ₫';
+                        return data.toLocaleString('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND'
+                        });
                     }
                 },
                 {
@@ -386,7 +389,10 @@
 
                 $('#name-detail').text(res.data.name);
                 $('#supplier-detail').text(res.data.supplier);
-                $('#price-detail').text(res.data.price.toLocaleString() + ' ₫');
+                $('#price-detail').text(res.data.price.toLocaleString('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }));
                 $('#quantity-detail').text(res.data.quantity);
                 $('#description-detail').text(res.data.description);
                 $('#image-detail-preview').attr('src', 'uploads/combos/' + res.data.image);

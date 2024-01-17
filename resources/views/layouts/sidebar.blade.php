@@ -130,6 +130,14 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="nav-icon fab fa-adversal"></i>
+                        <p>
+                            Quản lý slide
+                        </p>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

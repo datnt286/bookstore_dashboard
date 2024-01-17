@@ -138,7 +138,10 @@
                     data: 'total',
                     name: 'total',
                     render: function(data, type, row) {
-                        return data.toLocaleString() + ' ₫';
+                        return data.toLocaleString('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND'
+                        });
                     }
                 },
                 {
@@ -224,9 +227,9 @@
                                     </span>
                                 </div>
                             </td>
-                            <td class="align-middle">${detail.price.toLocaleString() + ' ₫'}</td>
+                            <td class="align-middle">${detail.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
                             <td class="align-middle">${detail.quantity}</td>
-                            <td class="align-middle">${(detail.price * detail.quantity).toLocaleString() + ' ₫'}</td>
+                            <td class="align-middle">${(detail.price * detail.quantity).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
                         </tr>
                     `);
                     });

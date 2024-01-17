@@ -43,7 +43,19 @@ class AdminController extends Controller
 
     public function getMonthlyRevenue()
     {
-        return response()->json();
+        $revenueStats = [];
+
+        for ($month = 1; $month <= 6; $month++) {
+            $revenueStats["revenueMonth{$month}"] = Order::where('status', 4)
+                ->whereYear('created_at', '=', date('Y'))
+                ->whereMonth('created_at', '=', $month)
+                ->sum('total');
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $revenueStats,
+        ]);
     }
 
     public function login()

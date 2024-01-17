@@ -59,19 +59,20 @@
     </div>
 </div>
 
-<div class="card card-primary card-outline">
-    <div class="card-header">
-        <h3 class="card-title">
-            <i class="far fa-chart-bar"></i>
-            Doanh thu theo tháng
-        </h3>
-    </div>
-    <div class="card-body">
-        <div id="bar-chart" style="height: 300px;"></div>
-    </div>
-</div>
-
 <div class="row">
+    <div class="col-md-6">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="far fa-chart-bar"></i>
+                    Doanh thu theo tháng
+                </h3>
+            </div>
+            <div class="card-body">
+                <div id="bar-chart" style="height: 300px;"></div>
+            </div>
+        </div>
+    </div>
     <div class="col-md-6">
         <div class="card card-primary card-outline">
             <div class="card-header">
@@ -84,7 +85,7 @@
                 <table id="data-table" class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Id</th>
+                            <th>#</th>
                             <th>Hình ảnh</th>
                             <th>Tên sản phẩm</th>
                             <th>Số lượng đã bán</th>
@@ -93,7 +94,7 @@
                     <tbody>
                         @forelse($bestsellers as $bestseller)
                         <tr>
-                            <td>{{ $bestseller->id }}</td>
+                            <td>{{ $loop->iteration }}</td>
                             <td>
                                 <img src="uploads/images/{{ $bestseller->image }}" alt="Hình ảnh" class="img img-thumbnail" style="max-width: 100px; max-height: 100px;">
                             </td>
@@ -127,56 +128,55 @@
 
 <script>
     $(document).ready(function() {
-        var bar_data = {
-            data: [
-                [1, 10],
-                [2, 8],
-                [3, 4],
-                [4, 13],
-                [5, 17],
-                [6, 9],
-                [7, 10],
-                [8, 8],
-                [9, 4],
-                [10, 13],
-                [11, 17],
-                [12, 9],
-            ],
-            bars: {
-                show: true
+        async function revenueStats() {
+            try {
+                var res = await axios.get("{{ route('get-monthly-revenue') }}");
+                var revenueStats = res.data.data;
+
+                var bar_data = {
+                    data: [
+                        [1, revenueStats.revenueMonth1],
+                        [2, revenueStats.revenueMonth2],
+                        [3, revenueStats.revenueMonth3],
+                        [4, revenueStats.revenueMonth4],
+                        [5, revenueStats.revenueMonth5],
+                        [6, revenueStats.revenueMonth6],
+                    ],
+                    bars: {
+                        show: true
+                    }
+                }
+                $.plot('#bar-chart', [bar_data], {
+                    grid: {
+                        borderWidth: 1,
+                        borderColor: '#f3f3f3',
+                        tickColor: '#f3f3f3'
+                    },
+                    series: {
+                        bars: {
+                            show: true,
+                            barWidth: 0.5,
+                            align: 'center',
+                        },
+                    },
+                    colors: ['#3c8dbc'],
+                    xaxis: {
+                        ticks: [
+                            [1, 'Tháng 1'],
+                            [2, 'Tháng 2'],
+                            [3, 'Tháng 3'],
+                            [4, 'Tháng 4'],
+                            [5, 'Tháng 5'],
+                            [6, 'Tháng 6'],
+                        ]
+                    }
+                })
+            } catch (error) {
+                handleError(error);
             }
         }
-        $.plot('#bar-chart', [bar_data], {
-            grid: {
-                borderWidth: 1,
-                borderColor: '#f3f3f3',
-                tickColor: '#f3f3f3'
-            },
-            series: {
-                bars: {
-                    show: true,
-                    barWidth: 0.5,
-                    align: 'center',
-                },
-            },
-            colors: ['#3c8dbc'],
-            xaxis: {
-                ticks: [
-                    [1, 'Tháng 1'],
-                    [2, 'Tháng 2'],
-                    [3, 'Tháng 3'],
-                    [4, 'Tháng 4'],
-                    [5, 'Tháng 5'],
-                    [6, 'Tháng 6'],
-                    [7, 'Tháng 7'],
-                    [8, 'Tháng 8'],
-                    [9, 'Tháng 9'],
-                    [10, 'Tháng 10'],
-                    [11, 'Tháng 11'],
-                    [12, 'Tháng 12'],
-                ]
-            }
-        })
+
+        revenueStats();
     });
 </script>
 @endsection
