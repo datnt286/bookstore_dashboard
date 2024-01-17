@@ -23,15 +23,6 @@ class BookController extends Controller
 
         if ($request->ajax()) {
             return DataTables::of($books)
-                ->addColumn('category_name', function ($book) {
-                    return $book->category->name;
-                })
-                ->addColumn('publisher_name', function ($book) {
-                    return $book->publisher->name;
-                })
-                ->addColumn('supplier_name', function ($book) {
-                    return $book->supplier->name;
-                })
                 ->addColumn('image', function ($book) {
                     $image = $book->image;
                     $imageUrl = $image ? asset('uploads/images/' . $image) : asset('img/default-image.jpg');

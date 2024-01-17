@@ -13,8 +13,13 @@ return new class extends Migration
     {
         Schema::create('sliders', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->unsignedBigInteger('book_id');
+            $table->string('image')->default('default-image.jpg');
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
+
+            $table->foreign('book_id')->references('id')->on('books')->nullable();
         });
     }
 

@@ -25,7 +25,6 @@ class UpdateComboRequest extends FormRequest
             'name' => [
                 'required',
                 'unique:combos,name,' . $this->request->get('id'),
-                'regex:/^[\p{L}\s\d]+$/u',
             ],
             'supplier_id' => 'required',
             'price' => 'required|numeric',
@@ -39,7 +38,6 @@ class UpdateComboRequest extends FormRequest
         return [
             'name.required' => 'Vui lòng nhập tên combo.',
             'name.unique' => 'Tên combo đã tồn tại.',
-            'name.regex' => 'Tên combo không được chứa ký tự đặc biệt.',
             'supplier_id.required' => 'Vui lòng chọn nhà cung cấp.',
             'price.required' => 'Vui lòng nhập giá combo.',
             'price.numeric' => 'Giá combo phải là số.',

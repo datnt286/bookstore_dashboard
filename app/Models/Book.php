@@ -12,7 +12,7 @@ class Book extends Model
     use SoftDeletes;
     protected $table = 'books';
     protected $fillable = ['name', 'category_id', 'publisher_id', 'supplier_id', 'size', 'weight', 'num_pages', 'language', 'release_date', 'price', 'e_book_price', 'quantity', 'description', 'average_rating', 'slug'];
-    protected $appends = ['image', 'image_path', 'category_name', 'category_slug', 'total_reviews', 'total_quantity_sold_this_month'];
+    protected $appends = ['image', 'image_path', 'category_name', 'publisher_name', 'supplier_name', 'category_slug', 'total_reviews', 'total_quantity_sold_this_month'];
 
     public function images()
     {
@@ -84,6 +84,16 @@ class Book extends Model
     public function getCategoryNameAttribute()
     {
         return $this->category->name;
+    }
+
+    public function getPublisherNameAttribute()
+    {
+        return $this->publisher->name;
+    }
+
+    public function getSupplierNameAttribute()
+    {
+        return $this->supplier->name;
     }
 
     public function getCategorySlugAttribute()

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateComboRequest extends FormRequest
+class CreateSliderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,9 @@ class CreateComboRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                'unique:combos,name,' . $this->request->get('id'),
+                'unique:sliders,name,' . $this->request->get('id'),
             ],
-            'supplier_id' => 'required',
-            'price' => 'required|numeric',
-            'quantity' => 'required|numeric',
+            'book_id' => 'required',
             'image' => 'required',
             'image' => 'image',
         ];
@@ -37,13 +35,9 @@ class CreateComboRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Vui lòng nhập tên combo.',
-            'name.unique' => 'Tên combo đã tồn tại.',
-            'supplier_id.required' => 'Vui lòng chọn nhà cung cấp.',
-            'price.required' => 'Vui lòng nhập giá combo.',
-            'price.numeric' => 'Giá combo phải là số.',
-            'quantity.required' => 'Vui lòng nhập số lượng combo.',
-            'quantity.numeric' => 'Số lượng combo phải là số.',
+            'name.required' => 'Vui lòng nhập tên slider.',
+            'name.unique' => 'Tên slider đã tồn tại.',
+            'book_id.required' => 'Vui lòng chọn sách.',
             'image.required' => 'Vui lòng chọn hình ảnh.',
             'image.image' => 'File phải là hình ảnh.',
         ];

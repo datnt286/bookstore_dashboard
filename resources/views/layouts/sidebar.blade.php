@@ -131,10 +131,10 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{ route('slider.index') }}" class="nav-link">
                         <i class="nav-icon fab fa-adversal"></i>
                         <p>
-                            Quản lý slide
+                            Quản lý slider
                         </p>
                     </a>
                 </li>

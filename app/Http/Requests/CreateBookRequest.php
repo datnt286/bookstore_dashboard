@@ -25,7 +25,6 @@ class CreateBookRequest extends FormRequest
             'name' => [
                 'required',
                 'unique:books,name,' . $this->request->get('id'),
-                'regex:/^[\p{L}\s\d]+$/u',
             ],
             'category_id' => 'required',
             'publisher_id' => 'required',
@@ -42,7 +41,6 @@ class CreateBookRequest extends FormRequest
         return [
             'name.required' => 'Vui lòng nhập tên sách.',
             'name.unique' => 'Tên sách đã tồn tại.',
-            'name.regex' => 'Tên sách không được chứa ký tự đặc biệt.',
             'category_id.required' => 'Vui lòng chọn thể loại.',
             'publisher_id.required' => 'Vui lòng chọn nhà xuất bản.',
             'supplier_id.required' => 'Vui lòng chọn nhà cung cấp.',

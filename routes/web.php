@@ -10,6 +10,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GoodsReceviedNoteController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PublisherController;
+use App\Http\Controllers\SliderController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
@@ -146,6 +147,18 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [CommentController::class, 'index'])->name('index');
             Route::get('replies/{id}', [CommentController::class, 'replies'])->name('replies');
             Route::get('destroy/{id}', [CommentController::class, 'destroy'])->name('destroy');
+        });
+    });
+
+    Route::prefix('slider')->group(function () {
+        Route::name('slider.')->group(function () {
+            Route::get('/', [SliderController::class, 'index'])->name('index');
+            Route::get('create', [SliderController::class, 'create'])->name('create');
+            Route::post('store', [SliderController::class, 'store'])->name('store');
+            Route::get('edit/{id}', [SliderController::class, 'edit'])->name('edit');
+            Route::post('update/{id}', [SliderController::class, 'update'])->name('update');
+            Route::get('destroy/{id}', [SliderController::class, 'destroy'])->name('destroy');
+            Route::get('{id}', [SliderController::class, 'show'])->name('show');
         });
     });
 });
