@@ -29,7 +29,7 @@ class AdminController extends Controller
             $orders = Order::where('status', 4)->get();
             $totalQuantity = 0;
             foreach ($orders as $order) {
-                $totalQuantity += $order->successful_order_details->sum('quantity');
+                $totalQuantity += $order->order_details->sum('quantity');
             }
 
             $bestsellers = Book::all()->where('total_quantity_sold_this_month', '>', 0)

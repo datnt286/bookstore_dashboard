@@ -23,13 +23,6 @@ class Order extends Model
         return $this->hasMany(OrderDetail::class);
     }
 
-    public function successful_order_details()
-    {
-        return $this->hasMany(OrderDetail::class)->whereHas('order', function ($query) {
-            $query->where('status', 4);
-        });
-    }
-
     public function getOrderDateAttribute()
     {
         $timestamp = $this->attributes['updated_at'] ?? $this->attributes['created_at'];
