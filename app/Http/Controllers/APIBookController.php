@@ -8,64 +8,18 @@ use Illuminate\Http\Request;
 
 class APIBookController extends Controller
 {
-    public function index(Request $request)
+    public function home()
     {
-        $perPage = $request->input('per_page', 16);
-        $query = Book::with('images');
-
-        if ($request->has('category_id')) {
-            $categoryIds = explode(',', $request->input('category_id'));
-            $query->whereIn('category_id', $categoryIds);
-        }
-
-        if ($request->has('price_range')) {
-            $priceRange = $request->input('price_range');
-            switch ($priceRange) {
-                case '1':
-                    $query->where('price', '<=', 100000);
-                    break;
-                case '2':
-                    $query->whereBetween('price', [100000, 300000]);
-                    break;
-                case '3':
-                    $query->whereBetween('price', [200000, 500000]);
-                    break;
-                case '4':
-                    $query->where('price', '>=', 500000);
-                    break;
-                default:
-            }
-        }
-
-        if ($request->has('author_id')) {
-            $authorIds = explode(',', $request->input('author_id'));
-            $query->whereHas('authors', function ($q) use ($authorIds) {
-                $q->whereIn('author_id', $authorIds);
-            });
-        }
-
-        $books = $query->paginate($perPage);
+        $newBooks = Book::latest()->take(4)->get();
+        $bestsellers = Book::all()->where('total_quantity_sold_this_month', '>', 0)
+            ->sortByDesc('total_quantity_sold_this_month')->take(4)->values();
+        $combos = Combo::take(4)->get();
 
         return response()->json([
             'success' => true,
             'data' => [
-                'books' => $books->items(),
-                'per_page' => $books->perPage(),
-                'total' => $books->total(),
-                'total_pages' => $books->lastPage(),
-            ],
-        ]);
-    }
-
-    public function getNewBooksAndCombos()
-    {
-        $newBooks = Book::with('images')->latest()->get();
-        $combos = Combo::all();
-
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'newBooks' => $newBooks,
+                'new_books' => $newBooks,
+                'bestsellers' => $bestsellers,
                 'combos' => $combos,
             ],
         ]);
@@ -75,7 +29,7 @@ class APIBookController extends Controller
     {
         $perPage = $request->input('per_page', 16);
 
-        $newBooks = Book::with('images')->latest()->paginate($perPage);
+        $newBooks = Book::latest()->paginate($perPage);
 
         return response()->json([
             'success' => true,
@@ -84,6 +38,30 @@ class APIBookController extends Controller
                 'per_page' => $newBooks->perPage(),
                 'total' => $newBooks->total(),
                 'total_pages' => $newBooks->lastPage(),
+            ],
+        ]);
+    }
+
+    public function getBestsellers(Request $request)
+    {
+        $perPage = $request->input('per_page', 16);
+        $page = $request->input('page', 1);
+
+        $books = Book::all();
+        $sortedBooks = $books->where('total_quantity_sold_this_month', '>', 0)
+            ->sortByDesc('total_quantity_sold_this_month');
+
+        $total = $sortedBooks->count();
+        $totalPages = ceil($total / $perPage);
+        $bestsellers = $sortedBooks->skip(($page - 1) * $perPage)->take($perPage)->values();
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'bestsellers' => $bestsellers,
+                'per_page' => $perPage,
+                'total' => $total,
+                'total_pages' => $totalPages,
             ],
         ]);
     }
@@ -142,6 +120,55 @@ class APIBookController extends Controller
         return response()->json([
             'success' => true,
             'data' => $books,
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $perPage = $request->input('per_page', 16);
+        $query = Book::with('images');
+
+        if ($request->has('category_id')) {
+            $categoryIds = explode(',', $request->input('category_id'));
+            $query->whereIn('category_id', $categoryIds);
+        }
+
+        if ($request->has('price_range')) {
+            $priceRange = $request->input('price_range');
+            switch ($priceRange) {
+                case '1':
+                    $query->where('price', '<=', 100000);
+                    break;
+                case '2':
+                    $query->whereBetween('price', [100000, 300000]);
+                    break;
+                case '3':
+                    $query->whereBetween('price', [200000, 500000]);
+                    break;
+                case '4':
+                    $query->where('price', '>=', 500000);
+                    break;
+                default:
+            }
+        }
+
+        if ($request->has('author_id')) {
+            $authorIds = explode(',', $request->input('author_id'));
+            $query->whereHas('authors', function ($q) use ($authorIds) {
+                $q->whereIn('author_id', $authorIds);
+            });
+        }
+
+        $books = $query->paginate($perPage);
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'books' => $books->items(),
+                'per_page' => $books->perPage(),
+                'total' => $books->total(),
+                'total_pages' => $books->lastPage(),
+            ],
         ]);
     }
 

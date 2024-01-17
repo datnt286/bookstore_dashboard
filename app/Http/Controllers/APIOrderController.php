@@ -82,12 +82,12 @@ class APIOrderController extends Controller
 
     public function index(Request $request)
     {
-        $orders = Order::with('order_detail')->where('customer_id', $request->customer_id)->latest()->get();
-        $ordered = Order::with('order_detail')->where('status', 1)->get();
-        $confirmed = Order::with('order_detail')->where('status', 2)->get();
-        $delivering = Order::with('order_detail')->where('status', 3)->get();
-        $delivered = Order::with('order_detail')->where('status', 4)->get();
-        $canceled = Order::with('order_detail')->where('status', 5)->get();
+        $orders = Order::with('order_details')->where('customer_id', $request->customer_id)->latest()->get();
+        $ordered = Order::with('order_details')->where('status', 1)->get();
+        $confirmed = Order::with('order_details')->where('status', 2)->get();
+        $delivering = Order::with('order_details')->where('status', 3)->get();
+        $delivered = Order::with('order_details')->where('status', 4)->get();
+        $canceled = Order::with('order_details')->where('status', 5)->get();
 
         return response()->json([
             'success' => true,

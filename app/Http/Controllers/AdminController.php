@@ -12,7 +12,6 @@ use App\Models\Book;
 use App\Models\Combo;
 use App\Models\Customer;
 use App\Models\Order;
-use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -30,11 +29,10 @@ class AdminController extends Controller
             $orders = Order::where('status', 4)->get();
             $totalQuantity = 0;
             foreach ($orders as $order) {
-                $totalQuantity += $order->order_detail->sum('quantity');
+                $totalQuantity += $order->successful_order_details->sum('quantity');
             }
 
-            $books = Book::all();
-            $bestsellers = $books->where('total_quantity_sold_this_month', '>', 0)
+            $bestsellers = Book::all()->where('total_quantity_sold_this_month', '>', 0)
                 ->sortByDesc('total_quantity_sold_this_month')->take(5);
 
             return view('index', compact('totalRevenue', 'totalOrders', 'totalCustomers', 'totalQuantity', 'bestsellers'));

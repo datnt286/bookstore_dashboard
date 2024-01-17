@@ -54,20 +54,21 @@ Route::prefix('order')->group(function () {
 
 Route::prefix('review')->group(function () {
     Route::post('create', [APIReviewController::class, 'create']);
-    Route::get('get-reviews-by-product-id', [APIReviewController::class, 'getReviewsByProductId']);
+    Route::get('reviews-by-product-id', [APIReviewController::class, 'getReviewsByProductId']);
     Route::get('check-delivered', [APIReviewController::class, 'checkDelivered']);
 });
 
 Route::prefix('comment')->group(function () {
     Route::post('create', [APICommentController::class, 'create']);
-    Route::get('get-comments-by-product-id', [APICommentController::class, 'getCommentsByProductId']);
+    Route::get('comments-by-product-id', [APICommentController::class, 'getCommentsByProductId']);
     Route::get('destroy/{id}', [APICommentController::class, 'destroy']);
 });
 
-Route::get('index', [APIBookController::class, 'index']);
-Route::get('get-newbooks-and-combos', [APIBookController::class, 'getNewBooksAndCombos']);
-Route::get('get-newbooks', [APIBookController::class, 'getNewBooks']);
-Route::get('get-combos', [APIBookController::class, 'getCombos']);
-Route::get('get-books-by-category-id/{category_id}', [APIBookController::class, 'getBooksByCategoryId']);
+Route::get('home', [APIBookController::class, 'home']);
+Route::get('newbooks', [APIBookController::class, 'getNewBooks']);
+Route::get('bestsellers', [APIBookController::class, 'getBestsellers']);
+Route::get('combos', [APIBookController::class, 'getCombos']);
+Route::get('books-by-category-id/{category_id}', [APIBookController::class, 'getBooksByCategoryId']);
+Route::get('store', [APIBookController::class, 'store']);
 Route::get('search', [APIBookController::class, 'search']);
 Route::get('{slug}', [APIBookController::class, 'getProductBySlug']);
