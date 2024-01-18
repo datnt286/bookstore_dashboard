@@ -122,11 +122,11 @@ class APIReviewController extends Controller
         $query = Order::where('customer_id', $customer_id);
 
         if ($book_id) {
-            $query->whereHas('order_detail', function ($q) use ($book_id) {
+            $query->whereHas('order_details', function ($q) use ($book_id) {
                 $q->where('book_id', $book_id);
             });
         } else if ($combo_id) {
-            $query->whereHas('order_detail', function ($q) use ($combo_id) {
+            $query->whereHas('order_details', function ($q) use ($combo_id) {
                 $q->where('combo_id', $combo_id);
             });
         }

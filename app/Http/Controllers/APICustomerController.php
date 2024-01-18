@@ -27,6 +27,7 @@ class APICustomerController extends Controller
         Customer::create([
             'username' => $request->username,
             'password' => Hash::make($request->password),
+            'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,
         ]);

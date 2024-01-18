@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateAPIOrderRequest;
 use App\Models\Book;
 use App\Models\Combo;
 use App\Models\Order;
@@ -10,7 +11,7 @@ use Illuminate\Http\Request;
 
 class APIOrderController extends Controller
 {
-    public function create(Request $request)
+    public function create(CreateAPIOrderRequest $request)
     {
         foreach ($request->products as $product) {
             if ($product['book_id']) {
