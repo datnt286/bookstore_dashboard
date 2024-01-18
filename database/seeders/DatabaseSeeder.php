@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             BookComboSeeder::class,
             AdminSeeder::class,
             CustomerSeeder::class,
+            SliderSeeder::class,
         ]);
     }
 }

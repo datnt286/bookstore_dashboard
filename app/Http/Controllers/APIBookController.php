@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Combo;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class APIBookController extends Controller
@@ -14,6 +15,7 @@ class APIBookController extends Controller
         $bestsellers = Book::all()->where('total_quantity_sold_this_month', '>', 0)
             ->sortByDesc('total_quantity_sold_this_month')->take(4)->values();
         $combos = Combo::take(4)->get();
+        $sliders = Slider::with('book')->where('status', 1)->get();
 
         return response()->json([
             'success' => true,
@@ -21,6 +23,7 @@ class APIBookController extends Controller
                 'new_books' => $newBooks,
                 'bestsellers' => $bestsellers,
                 'combos' => $combos,
+                'sliders' => $sliders,
             ],
         ]);
     }

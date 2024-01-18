@@ -10,7 +10,7 @@ class Slider extends Model
     use HasFactory;
     protected $table = 'sliders';
     protected $fillable = ['id', 'name', 'book_id', 'image', 'status'];
-    protected $appends = ['book_name'];
+    protected $appends = ['book_name', 'image_path'];
 
     public function book()
     {
@@ -20,5 +20,10 @@ class Slider extends Model
     public function getBookNameAttribute()
     {
         return $this->book->name;
+    }
+
+    public function getImagePathAttribute()
+    {
+        return env('APP_URL') . "/uploads/sliders/{$this->image}";
     }
 }
