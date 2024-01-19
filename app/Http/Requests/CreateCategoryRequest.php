@@ -27,8 +27,11 @@ class CreateCategoryRequest extends FormRequest
                 'unique:categories,name,' . $this->request->get('id'),
                 'regex:/^[\p{L}\s]+$/u',
             ],
-            'image' => 'required',
-            'image' => 'image',
+            'image' => [
+                'required',
+                'image',
+                'max:2048',
+            ]
         ];
     }
 
@@ -40,6 +43,7 @@ class CreateCategoryRequest extends FormRequest
             'name.regex' => 'Tên thể loại không được chứa số và ký tự đặc biệt.',
             'image.required' => 'Vui lòng chọn hình ảnh.',
             'image.image' => 'File phải là hình ảnh.',
+            'image.max' => 'Kích thước hình ảnh không được vượt quá 2 MB.',
         ];
     }
 }

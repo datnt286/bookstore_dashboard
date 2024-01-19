@@ -17,9 +17,6 @@ class OrderController extends Controller
 
         if ($request->ajax()) {
             return DataTables::of($orders)
-                ->addColumn('status', function ($order) {
-                    return $order->status;
-                })
                 ->addColumn('action', function ($order) {
                     return $order->status;
                 })

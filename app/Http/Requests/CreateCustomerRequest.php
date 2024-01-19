@@ -43,8 +43,11 @@ class CreateCustomerRequest extends FormRequest
                 'email:rfc,dns',
             ],
             'address' => 'required',
-            'avatar' => 'required',
-            'avatar' => 'image',
+            'avatar' => [
+                'required',
+                'image',
+                'max:2048',
+            ]
         ];
     }
 
@@ -66,6 +69,7 @@ class CreateCustomerRequest extends FormRequest
             'address.required' => 'Vui lòng nhập địa chỉ.',
             'avatar.required' => 'Vui lòng chọn hình ảnh.',
             'avatar.image' => 'File phải là hình ảnh.',
+            'avatar.max' => 'Kích thước hình ảnh không được vượt quá 2 MB.',
         ];
     }
 }

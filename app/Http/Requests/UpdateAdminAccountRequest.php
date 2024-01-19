@@ -35,6 +35,10 @@ class UpdateAdminAccountRequest extends FormRequest
                 'email:rfc,dns',
             ],
             'address' => 'required',
+            'avatar' => [
+                $this->has('avatar') ? 'image' : '',
+                $this->has('avatar') ? 'max:2048' : '',
+            ]
         ];
     }
 
@@ -50,6 +54,8 @@ class UpdateAdminAccountRequest extends FormRequest
             'email.unique' => 'Email đã tồn tại.',
             'email.email' => 'Sai định dạng email.',
             'address.required' => 'Vui lòng nhập địa chỉ.',
+            'avatar.image' => 'File phải là hình ảnh.',
+            'avatar.max' => 'Kích thước hình ảnh không được vượt quá 2 MB.',
         ];
     }
 }

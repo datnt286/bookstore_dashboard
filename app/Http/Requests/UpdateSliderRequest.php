@@ -27,7 +27,10 @@ class UpdateSliderRequest extends FormRequest
                 'unique:sliders,name,' . $this->request->get('id'),
             ],
             'book_id' => 'required',
-            'image' => 'image',
+            'image' => [
+                $this->has('image') ? 'image' : '',
+                $this->has('image') ? 'max:2048' : '',
+            ]
         ];
     }
 
@@ -38,6 +41,7 @@ class UpdateSliderRequest extends FormRequest
             'name.unique' => 'Tên slider đã tồn tại.',
             'book_id.required' => 'Vui lòng chọn sách.',
             'image.image' => 'File phải là hình ảnh.',
+            'image.max' => 'Kích thước hình ảnh không được vượt quá 2 MB.',
         ];
     }
 }

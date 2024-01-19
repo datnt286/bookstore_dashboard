@@ -27,8 +27,11 @@ class CreateSliderRequest extends FormRequest
                 'unique:sliders,name,' . $this->request->get('id'),
             ],
             'book_id' => 'required',
-            'image' => 'required',
-            'image' => 'image',
+            'image' => [
+                'required',
+                'image',
+                'max:2048',
+            ]
         ];
     }
 
@@ -40,6 +43,7 @@ class CreateSliderRequest extends FormRequest
             'book_id.required' => 'Vui lòng chọn sách.',
             'image.required' => 'Vui lòng chọn hình ảnh.',
             'image.image' => 'File phải là hình ảnh.',
+            'image.max' => 'Kích thước hình ảnh không được vượt quá 2 MB.',
         ];
     }
 }

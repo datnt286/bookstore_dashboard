@@ -129,8 +129,8 @@
                     name: 'content',
                 },
                 {
-                    data: 'status',
-                    name: 'status',
+                    data: 'customer_status',
+                    name: 'customer_status',
                     render: function(data, type, row) {
                         if (data === 1) {
                             return '<span class="badge badge-success">Đang hoạt động</span>';

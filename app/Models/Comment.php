@@ -13,7 +13,7 @@ class Comment extends Model
     use SoftDeletes;
     protected $table = 'comments';
     protected $fillable = ['customer_id', 'book_id', 'combo_id', 'parent_id', 'content'];
-    protected $appends = ['customer_name', 'product_name', 'comment_date'];
+    protected $appends = ['customer_name', 'customer_status', 'product_name', 'comment_date'];
 
     public function customer()
     {
@@ -38,6 +38,11 @@ class Comment extends Model
     public function getCustomerNameAttribute()
     {
         return $this->customer->name;
+    }
+
+    public function getCustomerStatusAttribute()
+    {
+        return $this->customer->status;
     }
 
     public function getProductNameAttribute()

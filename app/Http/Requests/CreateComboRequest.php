@@ -29,8 +29,11 @@ class CreateComboRequest extends FormRequest
             'supplier_id' => 'required',
             'price' => 'required|numeric',
             'quantity' => 'required|numeric',
-            'image' => 'required',
-            'image' => 'image',
+            'image' => [
+                'required',
+                'image',
+                'max:2048',
+            ]
         ];
     }
 
@@ -46,6 +49,7 @@ class CreateComboRequest extends FormRequest
             'quantity.numeric' => 'Số lượng combo phải là số.',
             'image.required' => 'Vui lòng chọn hình ảnh.',
             'image.image' => 'File phải là hình ảnh.',
+            'image.max' => 'Kích thước hình ảnh không được vượt quá 2 MB.',
         ];
     }
 }

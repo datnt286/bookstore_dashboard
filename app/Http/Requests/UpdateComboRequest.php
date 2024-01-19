@@ -29,7 +29,10 @@ class UpdateComboRequest extends FormRequest
             'supplier_id' => 'required',
             'price' => 'required|numeric',
             'quantity' => 'required|numeric',
-            'image' => 'image',
+            'image' => [
+                $this->has('image') ? 'image' : '',
+                $this->has('image') ? 'max:2048' : '',
+            ]
         ];
     }
 
@@ -44,6 +47,7 @@ class UpdateComboRequest extends FormRequest
             'quantity.required' => 'Vui lòng nhập số lượng combo.',
             'quantity.numeric' => 'Số lượng combo phải là số.',
             'image.image' => 'File phải là hình ảnh.',
+            'image.max' => 'Kích thước hình ảnh không được vượt quá 2 MB.',
         ];
     }
 }

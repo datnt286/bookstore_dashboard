@@ -14,7 +14,7 @@ class CommentController extends Controller
 
         if ($request->ajax()) {
             return DataTables::of($comments)
-                ->addColumn('status', function ($comment) {
+                ->addColumn('customer_status', function ($comment) {
                     return $comment->customer->status;
                 })
                 ->addColumn('action', function ($comment) {

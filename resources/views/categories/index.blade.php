@@ -49,8 +49,8 @@
                             <div>
                                 <img id="image-preview" src="{{ asset('img/default-image.jpg') }}" alt="Hình ảnh" class="img img-thumbnail my-2" style="max-width: 100px; max-height: 100px;">
                             </div>
-                            <div class="invalid-feedback image-error">{{ $errors->first('image') }}</div>
                             <input type="file" name="image" id="image" class="d-none">
+                            <div class="invalid-feedback image-error">{{ $errors->first('image') }}</div>
                             <label for="image" class="btn btn-secondary font-weight-normal mt-2">
                                 Chọn ảnh
                             </label>

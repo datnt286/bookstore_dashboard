@@ -27,7 +27,11 @@ class UpdateCategoryRequest extends FormRequest
                 'unique:categories,name,' . $this->request->get('id'),
                 'regex:/^[\p{L}\s]+$/u',
             ],
-            'image' => 'image',
+            'image' => $this->has('image') ? 'image' : '',
+            'image' => [
+                $this->has('image') ? 'image' : '',
+                $this->has('image') ? 'max:2048' : '',
+            ]
         ];
     }
 
@@ -38,6 +42,7 @@ class UpdateCategoryRequest extends FormRequest
             'name.unique' => 'Tên thể loại đã tồn tại.',
             'name.regex' => 'Tên thể loại không được chứa số và ký tự đặc biệt.',
             'image.image' => 'File phải là hình ảnh.',
+            'image.max' => 'Kích thước hình ảnh không được vượt quá 2 MB.',
         ];
     }
 }
