@@ -263,4 +263,9 @@ class AdminController extends Controller
             'message' => 'Xoá admin thành công!',
         ]);
     }
+
+    public function notFound()
+    {
+        return view('errors.404');
+    }
 }

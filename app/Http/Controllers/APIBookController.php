@@ -99,7 +99,7 @@ class APIBookController extends Controller
                 'success' => false,
                 'message' => 'Sản phẩm không tồn tại!',
                 'data' => null,
-            ]);
+            ], 404);
         }
 
         return response()->json([
@@ -123,6 +123,36 @@ class APIBookController extends Controller
         return response()->json([
             'success' => true,
             'data' => $books,
+        ]);
+    }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $perPage = $request->input('per_page', 16);
+
+        $books = Book::with('images')
+            ->where('slug', 'LIKE', '%' . $keyword . '%')
+            ->paginate($perPage);
+
+        $combos = Combo::where('slug', 'LIKE', '%' . $keyword . '%')
+            ->paginate($perPage);
+
+        $products = array_merge($books->items(), $combos->items());
+
+        $totalBooks = Book::where('slug', 'LIKE', '%' . $keyword . '%')->count();
+        $totalCombos = Combo::where('slug', 'LIKE', '%' . $keyword . '%')->count();
+        $totalProducts = $totalBooks + $totalCombos;
+        $total_pages = max($books->lastPage(), $combos->lastPage());
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'products' => $products,
+                'total' => $totalProducts,
+                'per_page' => $perPage,
+                'total_pages' => $total_pages,
+            ],
         ]);
     }
 
@@ -171,36 +201,6 @@ class APIBookController extends Controller
                 'per_page' => $books->perPage(),
                 'total' => $books->total(),
                 'total_pages' => $books->lastPage(),
-            ],
-        ]);
-    }
-
-    public function search(Request $request)
-    {
-        $keyword = $request->input('keyword');
-        $perPage = $request->input('per_page', 16);
-
-        $books = Book::with('images')
-            ->where('slug', 'LIKE', '%' . $keyword . '%')
-            ->paginate($perPage);
-
-        $combos = Combo::where('slug', 'LIKE', '%' . $keyword . '%')
-            ->paginate($perPage);
-
-        $products = array_merge($books->items(), $combos->items());
-
-        $totalBooks = Book::where('slug', 'LIKE', '%' . $keyword . '%')->count();
-        $totalCombos = Combo::where('slug', 'LIKE', '%' . $keyword . '%')->count();
-        $totalProducts = $totalBooks + $totalCombos;
-        $total_pages = max($books->lastPage(), $combos->lastPage());
-
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'products' => $products,
-                'total' => $totalProducts,
-                'per_page' => $perPage,
-                'total_pages' => $total_pages,
             ],
         ]);
     }

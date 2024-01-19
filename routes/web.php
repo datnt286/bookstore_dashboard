@@ -162,3 +162,5 @@ Route::middleware('auth')->group(function () {
         });
     });
 });
+
+Route::fallback([AdminController::class, 'notFound'])->name('not-found');

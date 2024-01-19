@@ -69,6 +69,6 @@ Route::get('newbooks', [APIBookController::class, 'getNewBooks']);
 Route::get('bestsellers', [APIBookController::class, 'getBestsellers']);
 Route::get('combos', [APIBookController::class, 'getCombos']);
 Route::get('books-by-category-id/{category_id}', [APIBookController::class, 'getBooksByCategoryId']);
-Route::get('store', [APIBookController::class, 'store']);
 Route::get('search', [APIBookController::class, 'search']);
+Route::get('store', [APIBookController::class, 'store']);
 Route::get('{slug}', [APIBookController::class, 'getProductBySlug']);

@@ -30,3 +30,20 @@
     max-width: 80px;
     max-height: 120px;
 }
+
+.not-found {
+    width: 100vw;
+    height: 100vh;
+}
+
+.not-found-image {
+    width: 300px;
+}
+
+.not-found-link {
+    color: #EB3E2d;
+}
+
+.not-found-link:hover {
+    color: #D10024;
+}
