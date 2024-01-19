@@ -13,7 +13,7 @@
 <body>
     <div class="not-found d-flex justify-content-center align-items-center">
         <div class="not-found-wrapper">
-            <img class="not-found-image" src="{{ asset('/img/not-found.jpg') }}" alt="NOT FOUND" />
+            <img class="not-found-image" src="{{ asset('/img/404-not-found.jpg') }}" alt="NOT FOUND" />
             <h2 class="mt-3">Không tìm thấy trang</h2>
             <p class="text-center mt-3">Trang bạn tìm kiếm không tồn tại!</p>
             <p class="text-center mt-3">
