@@ -1,3 +1,4 @@
+/* DataTables */
 .dataTables_filter {
     float: right;
 }
@@ -6,6 +7,7 @@
     vertical-align: middle;
 }
 
+/* Select 2 */
 .select2-selection__rendered {
     line-height: 29px !important;
 }
@@ -26,11 +28,13 @@
     margin-top: 0.31rem !important;
 }
 
+/* Product Image */
 .product-image {
     max-width: 80px;
     max-height: 120px;
 }
 
+/* Not Found */
 .not-found {
     width: 100vw;
     height: 100vh;

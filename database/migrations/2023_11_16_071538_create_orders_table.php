@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('total_payment')->nullable();
             $table->string('note')->nullable();
             $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('payment_status')->default(0);
             $table->timestamps();
 
             $table->foreign('customer_id')->references('id')->on('customers');

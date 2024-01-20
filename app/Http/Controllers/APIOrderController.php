@@ -81,6 +81,18 @@ class APIOrderController extends Controller
         ]);
     }
 
+    public function updatePaymentStatus($id)
+    {
+        $order = Order::find($id);
+
+        $order->update(['payment_status' => 1]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Thanh toán thành công!'
+        ]);
+    }
+
     public function index(Request $request)
     {
         $orders = Order::with('order_details')->where('customer_id', $request->customer_id)->latest()->get();
