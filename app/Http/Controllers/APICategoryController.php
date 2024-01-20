@@ -43,8 +43,9 @@ class APICategoryController extends Controller
         if (empty($category)) {
             return response()->json([
                 'success' => false,
-                'message' => "Thể loại không tồn tại!"
-            ]);
+                'message' => "Thể loại không tồn tại!",
+                'data' => null,
+            ], 404);
         }
 
         $books = $category->books()->with('images')->paginate($perPage);
