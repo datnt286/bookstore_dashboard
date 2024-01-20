@@ -170,27 +170,35 @@
             dom: 'Bfrtip',
             buttons: [{
                     extend: 'copy',
-                    text: 'Sao chép'
+                    text: 'Sao chép',
                 },
                 {
                     extend: 'excel',
-                    text: 'Xuất Excel'
+                    text: 'Xuất Excel',
+                    title: 'Danh sách combo',
+                    exportOptions: {
+                        columns: [0, 2, 3, 4]
+                    },
                 },
                 {
                     extend: 'pdf',
-                    text: 'Xuất PDF'
+                    text: 'Xuất PDF',
+                    title: 'Danh sách combo',
+                    exportOptions: {
+                        columns: [0, 2, 3, 4]
+                    },
                 },
                 {
                     extend: 'print',
-                    text: 'In'
+                    text: 'In',
                 },
                 {
                     extend: 'colvis',
-                    text: 'Hiển thị cột'
+                    text: 'Hiển thị cột',
                 },
                 {
                     extend: 'pageLength',
-                    text: 'Số dòng trên trang'
+                    text: 'Số dòng trên trang',
                 }
             ],
             language: {

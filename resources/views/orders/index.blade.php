@@ -23,6 +23,8 @@
                     <th>Điện thoại</th>
                     <th>Địa chỉ</th>
                     <th>Tổng thành tiền</th>
+                    <th>Hình thức thanh toán</th>
+                    <th>Trạng thái thanh toán</th>
                     <th>Trạng thái</th>
                     <th></th>
                 </tr>
@@ -76,27 +78,35 @@
             dom: 'Bfrtip',
             buttons: [{
                     extend: 'copy',
-                    text: 'Sao chép'
+                    text: 'Sao chép',
                 },
                 {
                     extend: 'excel',
-                    text: 'Xuất Excel'
+                    text: 'Xuất Excel',
+                    title: 'Danh sách hoá đơn',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                    },
                 },
                 {
                     extend: 'pdf',
-                    text: 'Xuất PDF'
+                    text: 'Xuất PDF',
+                    title: 'Danh sách hoá đơn',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                    },
                 },
                 {
                     extend: 'print',
-                    text: 'In'
+                    text: 'In',
                 },
                 {
                     extend: 'colvis',
-                    text: 'Hiển thị cột'
+                    text: 'Hiển thị cột',
                 },
                 {
                     extend: 'pageLength',
-                    text: 'Số dòng trên trang'
+                    text: 'Số dòng trên trang',
                 }
             ],
             language: {
@@ -142,6 +152,24 @@
                             style: 'currency',
                             currency: 'VND'
                         });
+                    }
+                },
+                {
+                    data: 'payment_method',
+                    name: 'payment_method',
+                    render: function(data, type, row) {
+                        return data === 1 ? 'Thanh toán khi nhận hàng' : 'Thanh toán Paypal'
+                    }
+                },
+                {
+                    data: 'payment_status',
+                    name: 'payment_status',
+                    render: function(data, type, row) {
+                        if (data === 1) {
+                            return '<span class="badge badge-success">Đã thanh toán</span>';
+                        } else {
+                            return '<span class="badge badge-warning">Chưa thanh toán</span>';
+                        }
                     }
                 },
                 {

@@ -70,15 +70,23 @@
             dom: 'Bfrtip',
             buttons: [{
                     extend: 'copy',
-                    text: 'Sao chép'
+                    text: 'Sao chép',
                 },
                 {
                     extend: 'excel',
-                    text: 'Xuất Excel'
+                    text: 'Xuất Excel',
+                    title: 'Danh sách bình luận',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4]
+                    },
                 },
                 {
                     extend: 'pdf',
-                    text: 'Xuất PDF'
+                    text: 'Xuất PDF',
+                    title: 'Danh sách bình luận',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4]
+                    },
                 },
                 {
                     extend: 'print',
@@ -86,11 +94,11 @@
                 },
                 {
                     extend: 'colvis',
-                    text: 'Hiển thị cột'
+                    text: 'Hiển thị cột',
                 },
                 {
                     extend: 'pageLength',
-                    text: 'Số dòng trên trang'
+                    text: 'Số dòng trên trang',
                 }
             ],
             language: {

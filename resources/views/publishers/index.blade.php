@@ -78,27 +78,35 @@
             dom: 'Bfrtip',
             buttons: [{
                     extend: 'copy',
-                    text: 'Sao chép'
+                    text: 'Sao chép',
                 },
                 {
                     extend: 'excel',
-                    text: 'Xuất Excel'
+                    text: 'Xuất Excel',
+                    title: 'Danh sách nhà xuất bản',
+                    exportOptions: {
+                        columns: [0, 1]
+                    },
                 },
                 {
                     extend: 'pdf',
-                    text: 'Xuất PDF'
+                    text: 'Xuất PDF',
+                    title: 'Danh sách nhà xuất bản',
+                    exportOptions: {
+                        columns: [0, 1]
+                    },
                 },
                 {
                     extend: 'print',
-                    text: 'In'
+                    text: 'In',
                 },
                 {
                     extend: 'colvis',
-                    text: 'Hiển thị cột'
+                    text: 'Hiển thị cột',
                 },
                 {
                     extend: 'pageLength',
-                    text: 'Số dòng trên trang'
+                    text: 'Số dòng trên trang',
                 }
             ],
             language: {

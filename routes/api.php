@@ -50,7 +50,6 @@ Route::prefix('order')->group(function () {
     Route::get('details/{id}', [APIOrderController::class, 'details']);
     Route::get('confirm/{id}', [APIOrderController::class, 'confirm']);
     Route::get('cancel/{id}', [APIOrderController::class, 'cancel']);
-    Route::get('update-payment-status/{id}', [APIOrderController::class, 'updatePaymentStatus']);
 });
 
 Route::prefix('review')->group(function () {

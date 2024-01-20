@@ -43,6 +43,8 @@ class APIOrderController extends Controller
             'phone' => $request->user['phone'],
             'address' => $request->user['address'],
             'total' => $total,
+            'payment_method' => $request->payment_method,
+            'payment_status' => $request->payment_status,
         ]);
 
         foreach ($request->products as $product) {
@@ -81,18 +83,6 @@ class APIOrderController extends Controller
         ]);
     }
 
-    public function updatePaymentStatus($id)
-    {
-        $order = Order::find($id);
-
-        $order->update(['payment_status' => 1]);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Thanh toán thành công!'
-        ]);
-    }
-
     public function index(Request $request)
     {
         $orders = Order::with('order_details')->where('customer_id', $request->customer_id)->latest()->get();
@@ -128,7 +118,7 @@ class APIOrderController extends Controller
     public function confirm($id)
     {
         $order = Order::find($id);
-        $order->update(['status' => 4]);
+        $order->update(['status' => 4, 'payment_status' => 1]);
 
         return response()->json([
             'success' => true,
