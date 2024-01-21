@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\Combo;
 use App\Models\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class APIBookController extends Controller
 {
@@ -128,8 +129,8 @@ class APIBookController extends Controller
 
     public function search(Request $request)
     {
-        $keyword = $request->input('keyword');
         $perPage = $request->input('per_page', 16);
+        $keyword = $request->input('keyword');
 
         $books = Book::with('images')
             ->where('slug', 'LIKE', '%' . $keyword . '%')
@@ -159,6 +160,7 @@ class APIBookController extends Controller
     public function store(Request $request)
     {
         $perPage = $request->input('per_page', 16);
+
         $query = Book::with('images');
 
         if ($request->has('category_id')) {
@@ -190,6 +192,15 @@ class APIBookController extends Controller
             $query->whereHas('authors', function ($q) use ($authorIds) {
                 $q->whereIn('author_id', $authorIds);
             });
+        }
+
+        $sort = $request->input('sort', 1);
+
+        if ($sort == 1) {
+            $query->latest();
+        } else if ($sort == 2) {
+            $query->select(['books.*', DB::raw('(SELECT SUM(quantity) FROM order_details WHERE order_details.book_id = books.id AND EXISTS (SELECT * FROM orders WHERE orders.id = order_details.order_id AND orders.status = 4 AND MONTH(orders.created_at) = MONTH(NOW()))) as total_quantity_sold_this_month')])
+                ->orderByDesc('total_quantity_sold_this_month');
         }
 
         $books = $query->paginate($perPage);
