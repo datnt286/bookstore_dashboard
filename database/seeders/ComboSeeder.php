@@ -20,6 +20,7 @@ class ComboSeeder extends Seeder
                 'price' => 550000,
                 'quantity' => 50,
                 'image' => 'bo-sach-giao-khoa-10.jpg',
+                'description' => 'Bộ sách giáo khoa 10',
                 'slug' => 'bo-sach-giao-khoa-10',
             ],
             [
@@ -28,6 +29,7 @@ class ComboSeeder extends Seeder
                 'price' => 130000,
                 'quantity' => 60,
                 'image' => 'combo-but-pha-diem-thi-thpt-quoc-gia.jpg',
+                'description' => 'Combo bứt phá điểm thi THPT quốc gia',
                 'slug' => 'combo-but-pha-diem-thi-thpt-quoc-gia',
             ],
             [
@@ -36,6 +38,7 @@ class ComboSeeder extends Seeder
                 'price' => 100000,
                 'quantity' => 60,
                 'image' => 'combo-chu-thuat-hoi-chien.jpg',
+                'description' => 'Combo chú thuật hồi chiến',
                 'slug' => 'combo-chu-thuat-hoi-chien',
             ],
         ]);

@@ -11,7 +11,7 @@ class Combo extends Model
     use HasFactory;
     use SoftDeletes;
     protected $table = 'combos';
-    protected $fillable = ['id', 'name', 'supplier_id', 'price', 'quantity', 'description', 'average_rating', 'slug', 'image'];
+    protected $fillable = ['id', 'name', 'supplier_id', 'price', 'quantity', 'image', 'description', 'average_rating', 'slug'];
     protected $appends = ['image_path', 'total_reviews'];
 
     public function supplier()

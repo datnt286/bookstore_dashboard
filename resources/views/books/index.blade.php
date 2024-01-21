@@ -535,7 +535,10 @@
                     currency: 'VND'
                 }));
                 $('#quantity-detail').text(res.data.quantity);
-                $('#e-book-price-detail').text(res.data.e_book_price.toLocaleString() + ' ₫');
+                // $('#e-book-price-detail').text(res.data.e_book_price.toLocaleString('vi-VN', {
+                //     style: 'currency',
+                //     currency: 'VND'
+                // }));
                 $('#language-detail').text(res.data.language);
                 $('#size-detail').text(res.data.size);
                 $('#weight-detail').text(res.data.weight);

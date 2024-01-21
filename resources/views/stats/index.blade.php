@@ -75,7 +75,7 @@
         <div class="card card-primary card-outline">
             <div class="card-header">
                 <h3 class="card-title">
-                    <i class="far fa-chart-bar"></i>
+                    <i class="fas fa-chart-pie"></i>
                     Doanh thu theo thể loại
                 </h3>
             </div>

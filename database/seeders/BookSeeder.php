@@ -26,6 +26,9 @@ class BookSeeder extends Seeder
                 'price' => 172000,
                 'e_book_price' => null,
                 'quantity' => 50,
+                'description' => 'Nhâm nhi Tết Giáp Thìn là ấn phẩm đặc biệt của Nhà xuất bản Kim Đồng. Nhâm nhi Tết đã trở thành món quà ý nghĩa của mỗi gia đình Việt được đón đợi như một phần của Tết.
+                Nhâm nhi Tết Giáp Thìn tuyển tập gồm 23 sáng tác Thơ - Văn - Nhạc - Họa chủ đề Xuân và Tết của nhiều tác giả dành riêng cho các em. Điều đặc biệt Nhâm nhi Tết trở thành nơi hội tụ các cây viết nổi tiếng viết cho thiếu nhi nhiều thế hệ. 
+                Nhâm nhi tết Giáp Thìn đưa bạn đọc thưởng Xuân khắp mọi miền đất nước: từ chốn thành thị đến miệt vườn, từ miền xuôi lên miền ngược, từ chuyện nay ngược về xưa.',
                 'slug' => 'nham-nhi-tet-giap-thin',
             ],
             [
@@ -40,6 +43,7 @@ class BookSeeder extends Seeder
                 'price' => 68000,
                 'e_book_price' => null,
                 'quantity' => 40,
+                'description' => '“Bên cửa ngắm Xuân“ gồm những vần thơ trong veo, dịu dàng như buổi sáng đầu tiên của mùa xuân mới, đang chờ các em hé cánh cửa để cùng nhau ngắm nhìn…',
                 'slug' => 'ben-cua-ngam-xuan',
             ],
             [
@@ -54,6 +58,9 @@ class BookSeeder extends Seeder
                 'price' => 30000,
                 'e_book_price' => null,
                 'quantity' => 50,
+                'description' => '“Cảm xúc này mình muốn gọi là tình yêu. Gọi là tình yêu nghe hay đấy.”
+                Vào một ngày nọ, cô sinh viên Đại học tên Yuki gặp chút rắc rối trên tàu điện và được đàn anh khoá trên - Itsuomi giúp đỡ.
+                Tiếp xúc với cô, một người điếc bẩm sinh, Itsuomi tỏ ra hết sức tự nhiên, không chút ái ngại. Lần đầu tiên, Yuki cảm nhận được một thế giới hết sức mới mẻ đang mở ra trước mắt, và dần dần, cô đã bị thu hút bởi anh...',
                 'slug' => 'ngon-ngu-yeu-thuong',
             ],
             [
@@ -68,6 +75,9 @@ class BookSeeder extends Seeder
                 'price' => 111000,
                 'e_book_price' => null,
                 'quantity' => 50,
+                'description' => 'Trên hòn đảo của rừng đước rừng dừa, của những bến sông và các đoàn tàu cá uy nghi, có chú khuyển mang cái tên lạ lùng là Hùm Xám. Sống vô tư giữa bạn bè đồng loại và các loài khác, được chủ yêu thương, thế nhưng thẳm sâu trong tâm hồn, một điều gì đó luôn thôi thúc Hùm Xám kiếm tìm. 
+                Điều bí mật ấy ở ngay trên hòn đảo hay thành phố bên kia dòng sông? 
+                Cần quay về quá khứ hay ngay hiện tại có thể tìm ra bí mật ấy? ',
                 'slug' => 'hum-xam-qua-song',
             ],
             [
@@ -82,6 +92,7 @@ class BookSeeder extends Seeder
                 'price' => 20000,
                 'e_book_price' => null,
                 'quantity' => 50,
+                'description' => 'Đại số 10',
                 'slug' => 'dai-so-10',
             ],
             [
@@ -96,6 +107,7 @@ class BookSeeder extends Seeder
                 'price' => 20000,
                 'e_book_price' => null,
                 'quantity' => 50,
+                'description' => 'Hình học 10',
                 'slug' => 'hinh-hoc-10',
             ],
             [
@@ -110,6 +122,7 @@ class BookSeeder extends Seeder
                 'price' => 20000,
                 'e_book_price' => null,
                 'quantity' => 50,
+                'description' => 'Ngữ văn 10',
                 'slug' => 'ngu-van-10',
             ],
             [
@@ -124,6 +137,7 @@ class BookSeeder extends Seeder
                 'price' => 20000,
                 'e_book_price' => null,
                 'quantity' => 50,
+                'description' => 'Tiếng anh 10',
                 'slug' => 'tieng-anh-10',
             ],
             [
@@ -138,6 +152,7 @@ class BookSeeder extends Seeder
                 'price' => 20000,
                 'e_book_price' => null,
                 'quantity' => 50,
+                'description' => 'Vật lí 10',
                 'slug' => 'vat-li-10',
             ],
             [
@@ -152,6 +167,7 @@ class BookSeeder extends Seeder
                 'price' => 20000,
                 'e_book_price' => null,
                 'quantity' => 50,
+                'description' => 'Hoá học 10',
                 'slug' => 'hoa-hoc-10',
             ],
             [
@@ -166,6 +182,7 @@ class BookSeeder extends Seeder
                 'price' => 50000,
                 'e_book_price' => null,
                 'quantity' => 50,
+                'description' => 'Bứt phá điểm thi THPT quốc gia môn Toán',
                 'slug' => 'but-pha-diem-thi-thpt-quoc-gia-mon-toan',
             ],
             [
@@ -180,6 +197,7 @@ class BookSeeder extends Seeder
                 'price' => 50000,
                 'e_book_price' => null,
                 'quantity' => 50,
+                'description' => 'Bứt phá điểm thi THPT quốc gia môn Ngữ văn',
                 'slug' => 'but-pha-diem-thi-thpt-quoc-gia-mon-ngu-van',
             ],
             [
@@ -194,6 +212,7 @@ class BookSeeder extends Seeder
                 'price' => 50000,
                 'e_book_price' => null,
                 'quantity' => 50,
+                'description' => 'Bứt phá điểm thi THPT quốc gia môn Tiếng anh',
                 'slug' => 'but-pha-diem-thi-thpt-quoc-gia-mon-tieng-anh',
             ],
             [
@@ -208,6 +227,7 @@ class BookSeeder extends Seeder
                 'price' => 30000,
                 'e_book_price' => null,
                 'quantity' => 30,
+                'description' => 'Itadori Yuji là một học sinh cấp Ba sở hữu năng lực thể chất phi thường. Hằng ngày cậu thường tới bệnh viện chăm người ông đang ốm liệt giường. Nhưng một ngày nọ, phong ấn của “chú vật” vốn ngủ yên trong trường bị phá giải, quái vật xuất hiện. Để cứu hai anh chị khóa trên đang gặp nguy hiểm, Itadori đã xông vào trường và... ',
                 'slug' => 'chu-thuat-hoi-chien-1',
             ],
             [
@@ -222,6 +242,7 @@ class BookSeeder extends Seeder
                 'price' => 30000,
                 'e_book_price' => null,
                 'quantity' => 30,
+                'description' => 'Chú thai bất ngờ xuất hiện tại trại cải tạo thanh thiếu niên. Nhóm Itadori, học sinh năm Nhất trường chuyên chú thuật, được cử đi cứu những người đang mắc kẹt bên trong. Nhưng chú thai sau khi hóa thành chú linh đã tấn công cả nhóm. Trước tình thế hiểm nghèo, Itadori đã trao quyền kiểm soát cơ thể cho Sukuna với hi vọng sẽ hạ gục chú linh, song...!? ',
                 'slug' => 'chu-thuat-hoi-chien-2',
             ],
             [
@@ -236,6 +257,8 @@ class BookSeeder extends Seeder
                 'price' => 30000,
                 'e_book_price' => null,
                 'quantity' => 30,
+                'description' => 'Todo Aoi và Zen’in Mai của trường chuyên chú thuật Kyoto xuất hiện trước mặt Fushiguro và Kugisaki! Todo hỏi Fushiguro thích kiểu con gái như thế nào và câu trả lời của cậu là...
+                Mặt khác, Itadori vẫn đang trong quá trình rèn luyện, để nâng cao kĩ năng thực chiến, cậu đã đến hiện trường án mạng do chú linh gây ra...',
                 'slug' => 'chu-thuat-hoi-chien-3',
             ],
             [
@@ -250,6 +273,7 @@ class BookSeeder extends Seeder
                 'price' => 30000,
                 'e_book_price' => null,
                 'quantity' => 30,
+                'description' => 'Tại hiện trường án mạng do chú linh gây ra, Itadori đã gặp gỡ Junpei, cả hai tâm đầu ý hợp. Nhưng Junpei lại tôn sùng chú linh Mahito, thủ phạm của vụ án. Mahito lợi dụng Junpei, hòng li gián cậu và Itadori. Junpei rơi vào cạm bẫy của hắn và...',
                 'slug' => 'chu-thuat-hoi-chien-4',
             ],
             [
@@ -264,6 +288,8 @@ class BookSeeder extends Seeder
                 'price' => 20000,
                 'e_book_price' => null,
                 'quantity' => 25,
+                'description' => 'Những thi thể không rõ danh tính liên tục được phát hiện… Thủ phạm là tổ chức Áo đen.
+                Đối thủ là Gin, Vodka, Chianti, Korn, Vermouth, Kir, và RUM. Kết thúc cuộc đấu trí cân tài cân sức ấy, sự thật được đưa ra ánh sáng là…',
                 'slug' => 'tham-tu-lung-danh-conan-100',
             ],
             [
@@ -278,6 +304,8 @@ class BookSeeder extends Seeder
                 'price' => 45000,
                 'e_book_price' => null,
                 'quantity' => 40,
+                'description' => 'Câu chuyện của Chainsaw Man mô tả một thế giới nơi ma quỷ và con người cùng tồn tại trên Trái đất, và trong đó con người có thể lập hiệp ước để đạt được sức mạnh của quỷ. 
+                Nhân vật chính là Denji, để hoàn trả số nợ khổng lồ của cha để lại, Denji cùng con quỷ nhỏ Pochita làm tất cả mọi công việc để có thể hoàn nợ. Sau một tai nạn, Denji bị giết, Pochita đã hòa làm một với Denji, giúp cậu hồi sinh và hóa thành “Quỷ cưa” hùng mạnh. Sau đó, Denji được Makima nhận vào tổ chức săn quỷ và hành trình diệt quỷ của Denji bắt đầu từ đây.',
                 'slug' => 'chainsaw-man-1',
             ],
             [
@@ -292,6 +320,7 @@ class BookSeeder extends Seeder
                 'price' => 86000,
                 'e_book_price' => 50000,
                 'quantity' => 50,
+                'description' => 'Đắc nhân tâm – How to win friends and Influence People  của Dale Carnegie là quyển sách nổi tiếng nhất, bán chạy nhất và có tầm ảnh hưởng nhất của mọi thời đại. Tác phẩm đã được chuyển ngữ sang hầu hết các thứ tiếng trên thế giới và có mặt ở hàng trăm quốc gia. ',
                 'slug' => 'dac-nhan-tam',
             ],
             [
@@ -306,6 +335,8 @@ class BookSeeder extends Seeder
                 'price' => 75000,
                 'e_book_price' => 50000,
                 'quantity' => 50,
+                'description' => 'Đây không phải là một cuốn sách dành riêng cho một người, mà là rất nhiều người…
+                Ắt hẳn ai trong chúng ta cũng đã có lúc cảm thấy tuyệt vọng, chán nản với cuộc sống. Xã hội ngày càng phát triển, người lớn càng bị cuốn vào nỗi lo cơm áo gạo tiền, trẻ con càng áp lực việc học hành để theo kịp các bạn, người lớn tuổi thì lo lắng bệnh tật,… Chính vì thế mà suốt một vòng đời của con người, chẳng mấy khoảnh khắc được thật sự hạnh phúc.',
                 'slug' => 'quang-ganh-lo-di-va-vui-song',
             ],
             [
@@ -320,6 +351,7 @@ class BookSeeder extends Seeder
                 'price' => 75000,
                 'e_book_price' => 50000,
                 'quantity' => 50,
+                'description' => 'Cuốn sách “Tuổi trẻ đáng giá bao nhiêu?” là một tác phẩm hữu ích với những người trẻ đang bước vào cuộc sống, những người đang tìm kiếm giá trị của tuổi trẻ. Tác giả đã cung cấp cho độc giả rất nhiều kinh nghiệm và kiến ​​thức bổ ích về ba khía cạnh chính của cuộc sống: Học, làm và đi. Bên cạnh đó, cuốn sách còn thể hiện một phần thứ tư quan trọng, đó là Đọc. Nếu bạn đọc cuốn sách này một cách bền bỉ, bạn sẽ bị thôi thúc không ngừng bởi ý muốn viết nên cuốn sách của riêng mình. Cuốn sách này phù hợp cho mọi lứa tuổi, từ trẻ em cho đến người lớn. Nếu bạn đang tìm kiếm định hướng cho cuộc sống của mình, hãy đọc “Tuổi trẻ đáng giá bao nhiêu?” và tìm được câu trả lời cho chính mình.',
                 'slug' => 'tuoi-tre-dang-gia-bao-nhieu',
             ],
             [
@@ -334,6 +366,7 @@ class BookSeeder extends Seeder
                 'price' => 75000,
                 'e_book_price' => 50000,
                 'quantity' => 50,
+                'description' => 'Hành trình của quyển sách này là hành trình đi tìm hạnh phúc khác với khuôn mẫu xã hội, là cuộc tìm kiếm từ bên ngoài vào bên trong, từ chốn đông người tới chỗ không người, tìm từ người khác đến tìm trong chính mình. Đó là một hành trình dài, nơi bạn có thể thấy những thay đổi trong quan niệm và suy nghĩ của người viết, từ một người trẻ nông nổi và nhiệt thành, đến một người đã trưởng thành hơn, trầm lắng hơn, nhẹ nhàng hơn, nhưng vẫn luôn tràn đầy tình yêu cuộc sống. Bạn sẽ bắt gặp ở đây những niềm vui giản dị, những điều đẹp đẽ trên muôn dặm đường dài, những suy tư về tình yêu, về các chuyến lữ hành, về những ngày đang sống. Hơn thế nữa, đây là cuộc hành trình của những chiêm nghiệm suy tư về hạnh phúc, về mục đích cuộc sống, về thân phận con người.',
                 'slug' => 'minh-noi-gi-khi-noi-ve-hanh-phuc',
             ],
             [
@@ -348,6 +381,7 @@ class BookSeeder extends Seeder
                 'price' => 75000,
                 'e_book_price' => 50000,
                 'quantity' => 50,
+                'description' => '“Cho Tôi Xin Một Vé Đi Tuổi Thơ” của Nguyễn Nhật Ánh là một hành trình đáng nhớ đưa bạn đọc trở về tuổi thơ hồn nhiên và đầy màu sắc. Cuốn sách này không chỉ đơn thuần là một tác phẩm văn học mà còn là một khoảnh khắc thần kỳ dành cho tâm hồn mỗi người.',
                 'slug' => 'cho-toi-xin-mot-ve-di-tuoi-tho',
             ],
             [
@@ -362,6 +396,7 @@ class BookSeeder extends Seeder
                 'price' => 75000,
                 'e_book_price' => 50000,
                 'quantity' => 50,
+                'description' => 'Có đôi khi vào những tháng năm bắt đầu vào đời, giữa vô vàn ngả rẽ và lời khuyên, khi rất nhiều dự định mà thiếu đôi phần định hướng, thì CẢM HỨNG là điều quan trọng để bạn trẻ bắt đầu bước chân đầu tiên trên con đường theo đuổi giấc mơ của mình. Cà Phê Cùng Tony là tập hợp những bài viết của tác giả Tony Buổi Sáng. Đúng như tên gọi, mỗi bài nhẹ nhàng như một tách cà phê, mà bạn trẻ có thể nhận ra một chút gì của chính mình hay bạn bè mình trong đó: Từ chuyện lớn như định vị bản thân giữa bạn bè quốc tế, cho đến chuyện nhỏ như nên chú ý những phép tắc xã giao thông thường.',
                 'slug' => 'ca-phe-cung-tony',
             ],
         ]);
