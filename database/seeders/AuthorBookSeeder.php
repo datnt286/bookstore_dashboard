@@ -16,35 +16,35 @@ class AuthorBookSeeder extends Seeder
         DB::table('author_book')->insert([
             [
                 'author_id' => 1,
-                'book_id' => 16,
+                'book_id' => 20,
             ],
             [
                 'author_id' => 1,
-                'book_id' => 17,
+                'book_id' => 21,
             ],
             [
                 'author_id' => 6,
-                'book_id' => 10,
-            ],
-            [
-                'author_id' => 6,
-                'book_id' => 11,
-            ],
-            [
-                'author_id' => 6,
-                'book_id' => 12,
-            ],
-            [
-                'author_id' => 6,
-                'book_id' => 13,
-            ],
-            [
-                'author_id' => 5,
                 'book_id' => 14,
             ],
             [
-                'author_id' => 7,
+                'author_id' => 6,
                 'book_id' => 15,
+            ],
+            [
+                'author_id' => 6,
+                'book_id' => 16,
+            ],
+            [
+                'author_id' => 6,
+                'book_id' => 17,
+            ],
+            [
+                'author_id' => 5,
+                'book_id' => 18,
+            ],
+            [
+                'author_id' => 7,
+                'book_id' => 19,
             ],
         ]);
     }
