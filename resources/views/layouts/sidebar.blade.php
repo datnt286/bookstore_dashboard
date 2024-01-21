@@ -9,7 +9,7 @@
             <div class="info">
                 <a href="{{ route('account') }}" class="d-block">
                     <div class="image mr-1">
-                        <img src="{{ asset('uploads/admins/' . auth()->user()->avatar) }}" alt="Ảnh đại diện" class="img-circle elevation-2" style="max-width: 34px; max-height: 34px;">
+                        <img src="{{ asset('uploads/admins/' . auth()->user()->avatar) }}" alt="Ảnh đại diện" class="img-circle elevation-2" style="width: 34px; height: 34px; object-fit: cover;">
                     </div>
                     {{ auth()->user()->name }}
                 </a>
