@@ -55,7 +55,8 @@
                                 <img src="{{ asset('img/default-image.jpg') }}" alt="Hình ảnh" class="img img-thumbnail" style="max-width: 100px; max-height: 100px;">
                             </div>
                             <input type="file" name="images[]" id="images" class="d-none" multiple>
-                            <label for="images" class="btn btn-secondary font-weight-normal">
+                            <div class="invalid-feedback images-error">{{ $errors->first('images') }}</div>
+                            <label for="images" class="btn btn-secondary font-weight-normal mt-2">
                                 Chọn ảnh
                             </label>
                         </div>
@@ -378,7 +379,7 @@
                 $('#supplier-id').empty();
                 $('#combo-ids').empty();
                 $('#images-preview').empty();
-                $('#images-preview').append('<img src="{{ asset("img/default-image.jpg") }}" alt="Hình ảnh" class="img img-thumbnail mb-3" style="max-width: 100px; max-height: 100px;">');
+                $('#images-preview').append('<img src="{{ asset("img/default-image.jpg") }}" alt="Hình ảnh" class="img img-thumbnail" style="max-width: 100px; max-height: 100px;">');
 
                 var response = await axios.get("{{ route('book.create') }}");
                 var res = response.data;

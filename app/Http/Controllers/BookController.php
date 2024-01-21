@@ -24,9 +24,7 @@ class BookController extends Controller
         if ($request->ajax()) {
             return DataTables::of($books)
                 ->addColumn('image', function ($book) {
-                    $image = $book->image;
-                    $imageUrl = $image ? asset('uploads/images/' . $image) : asset('img/default-image.jpg');
-                    return $imageUrl;
+                    return asset('uploads/images/' . $book->image);
                 })
                 ->addColumn('action', function ($book) {
                     return '<div class="project-actions text-right">' .

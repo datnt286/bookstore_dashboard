@@ -33,6 +33,11 @@ class CreateBookRequest extends FormRequest
             'price' => 'required|numeric',
             'e_book_price' => $this->input('e_book_price') ? 'numeric' : '',
             'quantity' => 'required|numeric',
+            'images' => [
+                'required',
+                'image',
+                'max:2048',
+            ],
         ];
     }
 
@@ -50,6 +55,9 @@ class CreateBookRequest extends FormRequest
             'e_book_price.numeric' => 'Giá e-book phải là số.',
             'quantity.required' => 'Vui lòng nhập số lượng sách.',
             'quantity.numeric' => 'Số lượng sách phải là số.',
+            'images.required' => 'Vui lòng chọn ít nhất một hình ảnh.',
+            'images.image' => 'File phải là hình ảnh.',
+            'images.max' => 'Kích thước hình ảnh không được vượt quá 2MB.',
         ];
     }
 }

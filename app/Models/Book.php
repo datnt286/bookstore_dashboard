@@ -69,7 +69,9 @@ class Book extends Model
 
     public function getImageAttribute()
     {
-        return $this->images->first()->name;
+        $image = $this->images->first();
+
+        return $image ? $image->name : 'default-image.jpg';
     }
 
     public function getImagePathAttribute()

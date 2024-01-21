@@ -44,9 +44,9 @@ class BookSeeder extends Seeder
             ],
             [
                 'name' => 'Ngôn ngữ yêu thương',
-                'category_id' => 1,
-                'publisher_id' => 1,
-                'supplier_id' => 1,
+                'category_id' => 2,
+                'publisher_id' => 2,
+                'supplier_id' => 2,
                 'size' => null,
                 'weight' => null,
                 'num_pages' => null,

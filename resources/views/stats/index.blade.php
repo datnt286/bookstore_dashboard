@@ -72,7 +72,7 @@
                 <div id="bar-chart" style="height: 300px;"></div>
             </div>
         </div>
-        <!-- <div class="card card-primary card-outline">
+        <div class="card card-primary card-outline">
             <div class="card-header">
                 <h3 class="card-title">
                     <i class="far fa-chart-bar"></i>
@@ -82,7 +82,7 @@
             <div class="card-body">
                 <div id="donut-chart" style="height: 300px;"></div>
             </div>
-        </div> -->
+        </div>
     </div>
     <div class="col-md-6">
         <div class="card card-primary card-outline">
@@ -139,7 +139,7 @@
 
 <script>
     $(document).ready(function() {
-        async function revenueStats() {
+        async function monthlyRevenue() {
             try {
                 var res = await axios.get("{{ route('get-monthly-revenue') }}");
                 var revenueStats = res.data.data;
@@ -187,43 +187,59 @@
             }
         }
 
-        revenueStats();
+        async function revenueByCategory() {
+            try {
+                var res = await axios.get("{{ route('get-revenue-by-category') }}");
+                var revenueStats = res.data.data;
 
-        var donutData = [{
-                label: 'Series2',
-                data: 30,
-                color: '#3c8dbc'
-            },
-            {
-                label: 'Series3',
-                data: 20,
-                color: '#0073b7'
-            },
-            {
-                label: 'Series4',
-                data: 50,
-                color: '#00c0ef'
-            }
-        ]
-        $.plot('#donut-chart', donutData, {
-            series: {
-                pie: {
-                    show: true,
-                    radius: 1,
-                    innerRadius: 0.5,
-                    label: {
-                        show: true,
-                        radius: 2 / 3,
-                        formatter: labelFormatter,
-                        threshold: 0.1
+                var donutData = [{
+                        label: 'Sách tự lực',
+                        data: revenueStats.revenue_self_helf,
+                        color: '#28a745'
+                    },
+                    {
+                        label: 'Truyện tranh',
+                        data: revenueStats.revenue_manga,
+                        color: '#00c0ef'
+                    },
+                    {
+                        label: 'Sách giáo khoa',
+                        data: revenueStats.revenue_textbook,
+                        color: '#ffc107'
                     }
-
-                }
-            },
-            legend: {
-                show: false
+                ]
+                $.plot('#donut-chart', donutData, {
+                    series: {
+                        pie: {
+                            show: true,
+                            radius: 1,
+                            innerRadius: 0.5,
+                            label: {
+                                show: true,
+                                radius: 2 / 3,
+                                formatter: labelFormatter,
+                                threshold: 0.1
+                            }
+                        }
+                    },
+                    legend: {
+                        show: false
+                    }
+                })
+            } catch (error) {
+                handleError(error);
             }
-        })
+        }
+
+        monthlyRevenue();
+        revenueByCategory();
+
+        function labelFormatter(label, series) {
+            return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">' +
+                label +
+                '<br>' +
+                Math.round(series.percent) + '%</div>'
+        }
     });
 </script>
 @endsection

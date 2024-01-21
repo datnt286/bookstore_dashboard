@@ -13,6 +13,7 @@ use App\Models\Combo;
 use App\Models\Customer;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
@@ -55,6 +56,44 @@ class AdminController extends Controller
         return response()->json([
             'success' => true,
             'data' => $revenueStats,
+        ]);
+    }
+
+    public function getRevenueByCategory()
+    {
+        $currentMonth = now()->month;
+
+        $categories = [
+            1 => 'self_helf',
+            2 => 'manga',
+            3 => 'textbook',
+        ];
+
+        $revenues = [];
+
+        foreach ($categories as $categoryId => $categoryName) {
+            $revenue = DB::table('order_details')
+                ->join('orders', 'order_details.order_id', '=', 'orders.id')
+                ->join('books', 'order_details.book_id', '=', 'books.id')
+                ->where('orders.status', 4)
+                ->whereMonth('orders.created_at', $currentMonth)
+                ->where('books.category_id', $categoryId)
+                ->sum(DB::raw('order_details.price * order_details.quantity'));
+
+            $revenues[$categoryName] = $revenue;
+        }
+
+        $totalRevenue = Order::where('status', 4)->sum('total');
+
+        $percentages = [];
+        foreach ($revenues as $categoryName => $revenue) {
+            $percentage = round(($revenue / $totalRevenue) * 100, 2);
+            $percentages["revenue_$categoryName"] = $percentage;
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $percentages,
         ]);
     }
 
