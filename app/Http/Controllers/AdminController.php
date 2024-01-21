@@ -19,7 +19,7 @@ use Yajra\DataTables\DataTables;
 
 class AdminController extends Controller
 {
-    public function master()
+    public function stats()
     {
         if (auth()->check()) {
             $totalRevenue = Order::where('status', 4)->sum('total');
@@ -35,7 +35,7 @@ class AdminController extends Controller
             $bestsellers = Book::all()->where('total_quantity_sold_this_month', '>', 0)
                 ->sortByDesc('total_quantity_sold_this_month')->take(5);
 
-            return view('index', compact('totalRevenue', 'totalOrders', 'totalCustomers', 'totalQuantity', 'bestsellers'));
+            return view('stats.index', compact('totalRevenue', 'totalOrders', 'totalCustomers', 'totalQuantity', 'bestsellers'));
         }
 
         return 'Chưa đăng nhập!';

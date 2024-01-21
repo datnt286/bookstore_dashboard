@@ -72,6 +72,17 @@
                 <div id="bar-chart" style="height: 300px;"></div>
             </div>
         </div>
+        <!-- <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="far fa-chart-bar"></i>
+                    Doanh thu theo thể loại
+                </h3>
+            </div>
+            <div class="card-body">
+                <div id="donut-chart" style="height: 300px;"></div>
+            </div>
+        </div> -->
     </div>
     <div class="col-md-6">
         <div class="card card-primary card-outline">
@@ -177,6 +188,42 @@
         }
 
         revenueStats();
+
+        var donutData = [{
+                label: 'Series2',
+                data: 30,
+                color: '#3c8dbc'
+            },
+            {
+                label: 'Series3',
+                data: 20,
+                color: '#0073b7'
+            },
+            {
+                label: 'Series4',
+                data: 50,
+                color: '#00c0ef'
+            }
+        ]
+        $.plot('#donut-chart', donutData, {
+            series: {
+                pie: {
+                    show: true,
+                    radius: 1,
+                    innerRadius: 0.5,
+                    label: {
+                        show: true,
+                        radius: 2 / 3,
+                        formatter: labelFormatter,
+                        threshold: 0.1
+                    }
+
+                }
+            },
+            legend: {
+                show: false
+            }
+        })
     });
 </script>
 @endsection

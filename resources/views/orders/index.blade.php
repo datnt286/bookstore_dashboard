@@ -22,7 +22,7 @@
                     <th>Tên khách hàng</th>
                     <th>Điện thoại</th>
                     <th>Địa chỉ</th>
-                    <th>Tổng thành tiền</th>
+                    <th>Tổng thanh toán</th>
                     <th>Hình thức thanh toán</th>
                     <th>Trạng thái thanh toán</th>
                     <th>Trạng thái</th>
@@ -145,8 +145,8 @@
                     name: 'address',
                 },
                 {
-                    data: 'total',
-                    name: 'total',
+                    data: 'total_payment',
+                    name: 'total_payment',
                     render: function(data, type, row) {
                         return data.toLocaleString('vi-VN', {
                             style: 'currency',
@@ -232,6 +232,9 @@
                     }
                 },
             ],
+            order: [
+                [0, 'desc']
+            ],
         });
 
         $('#data-table').on('click', '.btn-detail', async function() {
@@ -239,11 +242,13 @@
                 var id = $(this).data('id');
                 var response = await axios.get("{{ route('order.show', ['id' => '_id_']) }}".replace('_id_', id));
                 var res = response.data;
+                var total = 0;
 
                 $('.details-table tbody').empty();
 
                 if (res.success && res.data.length > 0) {
                     res.data.forEach(detail => {
+                        total += detail.price * detail.quantity;
                         $('.details-table tbody').append(`
                         <tr>
                             <td class="align-middle">${detail.id}</td>
@@ -261,6 +266,13 @@
                         </tr>
                     `);
                     });
+
+                    $('.details-table tbody').append(`
+                        <tr>
+                            <td colspan="4" class="align-middle text-right"><strong>Tổng thành tiền:</strong></td>
+                            <td class="align-middle">${total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
+                        </tr>
+                    `);
                 } else {
                     $('.details-table tbody').append('<tr><td colspan="5">Không có dữ liệu chi tiết!</td></tr>');
                 }

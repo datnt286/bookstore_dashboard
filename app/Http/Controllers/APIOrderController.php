@@ -36,6 +36,7 @@ class APIOrderController extends Controller
         }
 
         $total = 0;
+        $totalPayment = 0;
 
         $order = Order::create([
             'customer_id' => $request->user['customer_id'],
@@ -43,6 +44,7 @@ class APIOrderController extends Controller
             'phone' => $request->user['phone'],
             'address' => $request->user['address'],
             'total' => $total,
+            'shipping_fee' => $request->shipping_fee,
             'payment_method' => $request->payment_method,
             'payment_status' => $request->payment_status,
         ]);
@@ -72,9 +74,12 @@ class APIOrderController extends Controller
             }
         }
 
+        $totalPayment = $total + $request->shipping_fee;
+
         Order::where('id', $order->id)
             ->update([
                 'total' => $total,
+                'total_payment' => $totalPayment,
             ]);
 
         return response()->json([

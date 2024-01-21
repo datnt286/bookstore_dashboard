@@ -31,7 +31,7 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', [AdminController::class, 'master'])->name('/');
+    Route::get('/', [AdminController::class, 'stats'])->name('/');
     Route::get('account', [AdminController::class, 'account'])->name('account');
     Route::post('account', [AdminController::class, 'updateAccount'])->name('update-account');
     Route::post('change-password', [AdminController::class, 'changePassword'])->name('change-password');
