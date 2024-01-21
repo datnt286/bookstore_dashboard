@@ -144,7 +144,7 @@
                 var res = await axios.get("{{ route('get-monthly-revenue') }}");
                 var revenueStats = res.data.data;
 
-                var bar_data = {
+                var barData = {
                     data: [
                         [1, revenueStats.revenueMonth1],
                         [2, revenueStats.revenueMonth2],
@@ -157,7 +157,7 @@
                         show: true
                     }
                 }
-                $.plot('#bar-chart', [bar_data], {
+                $.plot('#bar-chart', [barData], {
                     grid: {
                         borderWidth: 1,
                         borderColor: '#f3f3f3',
@@ -192,7 +192,7 @@
                 var res = await axios.get("{{ route('get-revenue-by-category') }}");
                 var revenueStats = res.data.data;
 
-                var donutData = [{
+                var pieData = [{
                         label: 'Sách tự lực',
                         data: revenueStats.revenue_self_helf,
                         color: '#28a745'
@@ -208,12 +208,11 @@
                         color: '#ffc107'
                     }
                 ]
-                $.plot('#donut-chart', donutData, {
+                $.plot('#donut-chart', pieData, {
                     series: {
                         pie: {
                             show: true,
                             radius: 1,
-                            innerRadius: 0.5,
                             label: {
                                 show: true,
                                 radius: 2 / 3,
