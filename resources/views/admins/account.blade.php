@@ -63,7 +63,7 @@
                             <div class="row d-flex justify-content-center my-2">
                                 <label for="address" class="col-md-2 mt-2">Địa chỉ: </label>
                                 <div class="col-md-5">
-                                    <input type="text" name="address" id="address" value="{{ $admin->address }}" class="form-control">
+                                    <textarea name="address" id="address" class="form-control">{{ $admin->address }}</textarea>
                                     <div class="invalid-feedback address-error">{{ $errors->first('address') }}</div>
                                 </div>
                             </div>
@@ -163,6 +163,10 @@
         });
 
         $('#form-change-password input').on('input', function() {
+            clearValidationStyles($(this));
+        });
+
+        $('#form-account textarea').on('input', function() {
             clearValidationStyles($(this));
         });
 

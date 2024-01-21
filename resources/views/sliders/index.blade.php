@@ -164,7 +164,7 @@
                     orderable: false,
                     searchable: false,
                     render: function(data, type, row) {
-                        return '<img src="uploads/sliders/' + row.image + '" alt="Hình ảnh" class="img img-thumbnail" style="max-width: 200px; max-height: 100px;">';
+                        return '<img src="uploads/sliders/' + data + '" alt="Hình ảnh" class="img img-thumbnail" style="max-width: 200px; max-height: 100px;">';
                     }
                 },
                 {

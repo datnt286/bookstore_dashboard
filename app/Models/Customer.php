@@ -17,6 +17,7 @@ class Customer extends Authenticatable implements JWTSubject
     protected $table = 'customers';
     protected $fillable = ['id', 'username', 'password', 'name', 'phone', 'email', 'address', 'avatar', 'status'];
     protected $appends = ['avatar_path'];
+    protected $hidden = ['password', 'created_at', 'updated_at', 'deleted_at'];
 
     public function getJWTIdentifier()
     {

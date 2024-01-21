@@ -234,7 +234,7 @@
                     orderable: false,
                     searchable: false,
                     render: function(data, type, row) {
-                        return '<img src="uploads/admins/' + row.avatar + '" alt="Ảnh đại diện" class="img img-thumbnail" style="max-width: 100px; max-height: 100px;">';
+                        return '<img src="uploads/admins/' + data + '" alt="Ảnh đại diện" class="img img-thumbnail" style="max-width: 100px; max-height: 100px;">';
                     }
                 },
                 {

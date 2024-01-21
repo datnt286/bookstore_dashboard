@@ -71,4 +71,4 @@ Route::get('combos', [APIBookController::class, 'getCombos']);
 Route::get('books-by-category-id/{category_id}', [APIBookController::class, 'getBooksByCategoryId']);
 Route::get('search', [APIBookController::class, 'search']);
 Route::get('store', [APIBookController::class, 'store']);
-Route::get('{slug}', [APIBookController::class, 'getProductBySlug']);
+Route::get('san-pham/{slug}', [APIBookController::class, 'getProductBySlug']);

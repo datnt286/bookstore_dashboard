@@ -150,7 +150,7 @@
                     orderable: false,
                     searchable: false,
                     render: function(data, type, row) {
-                        return '<img src="uploads/categories/' + row.image + '" alt="Hình ảnh" class="img img-thumbnail" style="max-width: 100px; max-height: 100px;">';
+                        return '<img src="uploads/categories/' + data + '" alt="Hình ảnh" class="img img-thumbnail" style="max-width: 100px; max-height: 100px;">';
                     }
                 },
                 {
