@@ -80,14 +80,14 @@ class AdminController extends Controller
                 ->where('books.category_id', $categoryId)
                 ->sum(DB::raw('order_details.price * order_details.quantity'));
 
-            $revenues[$categoryName] = $revenue;
+            $revenues[$categoryName] = $revenue ?? 0;
         }
 
         $totalRevenue = Order::where('status', 4)->sum('total');
 
         $percentages = [];
         foreach ($revenues as $categoryName => $revenue) {
-            $percentage = round(($revenue / $totalRevenue) * 100, 2);
+            $percentage = ($totalRevenue != 0) ? round(($revenue / $totalRevenue) * 100, 2) : 0;
             $percentages["revenue_$categoryName"] = $percentage;
         }
 

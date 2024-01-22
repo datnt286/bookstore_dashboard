@@ -148,10 +148,7 @@
                     data: 'total_payment',
                     name: 'total_payment',
                     render: function(data, type, row) {
-                        return data.toLocaleString('vi-VN', {
-                            style: 'currency',
-                            currency: 'VND'
-                        });
+                        return data.toLocaleString() + ' ₫';
                     }
                 },
                 {
@@ -260,9 +257,9 @@
                                     </span>
                                 </div>
                             </td>
-                            <td class="align-middle">${detail.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
+                            <td class="align-middle">${detail.price.toLocaleString() + ' ₫'}</td>
                             <td class="align-middle">${detail.quantity}</td>
-                            <td class="align-middle">${(detail.price * detail.quantity).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
+                            <td class="align-middle">${(detail.price * detail.quantity).toLocaleString() + ' ₫'}</td>
                         </tr>
                     `);
                     });
@@ -270,7 +267,7 @@
                     $('.details-table tbody').append(`
                         <tr>
                             <td colspan="4" class="align-middle text-right"><strong>Tổng thành tiền:</strong></td>
-                            <td class="align-middle">${total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
+                            <td class="align-middle">${total.toLocaleString() + ' ₫'}</td>
                         </tr>
                     `);
                 } else {
