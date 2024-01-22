@@ -22,34 +22,28 @@ class CreateAPIOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'user.name' => [
+            'name' => [
                 'required',
                 'regex:/^[\p{L}\s]+$/u',
             ],
-            'user.phone' => [
+            'phone' => [
                 'required',
                 'regex:/^\d+$/',
                 'size:10',
             ],
-            'user.email' => [
-                'required',
-                'email:rfc,dns',
-            ],
-            'user.address' => 'required',
+            'address' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            'user.name.required' => 'Vui lòng nhập tên khách hàng.',
-            'user.name.regex' => 'Tên khách hàng không được chứa số hoặc ký tự đặc biệt.',
-            'user.phone.required' => 'Vui lòng nhập số điện thoại.',
-            'user.phone.regex' => 'Số điện thoại chỉ được chứa ký tự số và bắt đầu bằng số 0.',
-            'user.phone.size' => 'Số điện thoại phải đủ 10 ký tự.',
-            'user.email.required' => 'Vui lòng nhập email.',
-            'user.email.email' => 'Sai định dạng email.',
-            'user.address.required' => 'Vui lòng nhập địa chỉ.',
+            'name.required' => 'Vui lòng nhập tên khách hàng.',
+            'name.regex' => 'Tên khách hàng không được chứa số hoặc ký tự đặc biệt.',
+            'phone.required' => 'Vui lòng nhập số điện thoại.',
+            'phone.regex' => 'Số điện thoại chỉ được chứa ký tự số và bắt đầu bằng số 0.',
+            'phone.size' => 'Số điện thoại phải đủ 10 ký tự.',
+            'address.required' => 'Vui lòng nhập địa chỉ.',
         ];
     }
 }

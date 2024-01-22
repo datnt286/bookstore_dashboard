@@ -39,12 +39,13 @@ class APIOrderController extends Controller
         $totalPayment = 0;
 
         $order = Order::create([
-            'customer_id' => $request->user['customer_id'],
-            'name' => $request->user['name'],
-            'phone' => $request->user['phone'],
-            'address' => $request->user['address'],
+            'customer_id' => $request->customer_id,
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'address' => $request->address,
             'total' => $total,
             'shipping_fee' => $request->shipping_fee,
+            'total_payment' => $totalPayment,
             'payment_method' => $request->payment_method,
             'payment_status' => $request->payment_status,
         ]);
