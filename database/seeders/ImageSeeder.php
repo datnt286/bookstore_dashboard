@@ -84,38 +84,50 @@ class ImageSeeder extends Seeder
             ],
             [
                 'book_id' => 18,
-                'name' => 'tham-tu-lung-danh-conan-100.jpg',
-            ],
-            [
-                'book_id' => 19,
                 'name' => 'chainsaw-man-1.jpg',
             ],
             [
+                'book_id' => 19,
+                'name' => 'chainsaw-man-2.jpg',
+            ],
+            [
                 'book_id' => 20,
-                'name' => 'dac-nhan-tam.jpg',
+                'name' => 'chainsaw-man-3.jpg',
             ],
             [
                 'book_id' => 21,
-                'name' => 'quang-ganh-lo-di-va-vui-song.jpg',
+                'name' => 'chainsaw-man-4.jpg',
             ],
             [
                 'book_id' => 22,
-                'name' => 'tuoi-tre-dang-gia-bao-nhieu.jpg',
+                'name' => 'tham-tu-lung-danh-conan-100.jpg',
             ],
             [
                 'book_id' => 23,
-                'name' => 'minh-noi-gi-khi-noi-ve-hanh-phuc.jpg',
-            ],
-            [
-                'book_id' => 23,
-                'name' => 'minh-noi-gi-khi-noi-ve-hanh-phuc-2.jpg',
+                'name' => 'dac-nhan-tam.jpg',
             ],
             [
                 'book_id' => 24,
-                'name' => 'cho-toi-mot-ve-di-tuoi-tho.jpg',
+                'name' => 'quang-ganh-lo-di-va-vui-song.jpg',
             ],
             [
                 'book_id' => 25,
+                'name' => 'tuoi-tre-dang-gia-bao-nhieu.jpg',
+            ],
+            [
+                'book_id' => 26,
+                'name' => 'minh-noi-gi-khi-noi-ve-hanh-phuc.jpg',
+            ],
+            [
+                'book_id' => 26,
+                'name' => 'minh-noi-gi-khi-noi-ve-hanh-phuc-2.jpg',
+            ],
+            [
+                'book_id' => 27,
+                'name' => 'cho-toi-mot-ve-di-tuoi-tho.jpg',
+            ],
+            [
+                'book_id' => 28,
                 'name' => 'ca-phe-cung-tony.jpg',
             ],
         ]);

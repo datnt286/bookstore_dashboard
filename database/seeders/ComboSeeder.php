@@ -33,13 +33,22 @@ class ComboSeeder extends Seeder
                 'slug' => 'combo-but-pha-diem-thi-thpt-quoc-gia',
             ],
             [
-                'name' => 'Combo chú thuật hồi chiến',
+                'name' => 'Combo Chú thuật hồi chiến',
                 'supplier_id' => 1,
                 'price' => 100000,
                 'quantity' => 60,
                 'image' => 'combo-chu-thuat-hoi-chien.jpg',
-                'description' => 'Combo chú thuật hồi chiến',
+                'description' => 'Combo Chú thuật hồi chiến',
                 'slug' => 'combo-chu-thuat-hoi-chien',
+            ],
+            [
+                'name' => 'Combo Chainsaw man',
+                'supplier_id' => 2,
+                'price' => 150000,
+                'quantity' => 50,
+                'image' => 'combo-chainsaw-man.jpg',
+                'description' => 'Combo Chainsaw-man',
+                'slug' => 'combo-chainsaw-man',
             ],
         ]);
     }
