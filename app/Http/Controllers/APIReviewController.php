@@ -68,7 +68,7 @@ class APIReviewController extends Controller
                 ->where('book_id', $bookId)
                 ->latest()
                 ->paginate($perPage);
-            $allReviews = Review::all();
+            $allReviews = Review::where('book_id', $bookId)->get();
             $totalReviews = $allReviews->count();
             $count1Star = $allReviews->where('rating', 1)->count();
             $count2Stars = $allReviews->where('rating', 2)->count();
@@ -81,13 +81,13 @@ class APIReviewController extends Controller
                 ->where('combo_id', $comboId)
                 ->latest()
                 ->paginate($perPage);
-            $allCombos = Combo::all();
-            $totalReviews = $allCombos->count();
-            $count1Star = $allCombos->where('rating', 1)->count();
-            $count2Stars = $allCombos->where('rating', 2)->count();
-            $count3Stars = $allCombos->where('rating', 3)->count();
-            $count4Stars = $allCombos->where('rating', 4)->count();
-            $count5Stars = $allCombos->where('rating', 5)->count();
+            $allReviews = Review::where('combo_id', $comboId)->get();
+            $totalReviews = $allReviews->count();
+            $count1Star = $allReviews->where('rating', 1)->count();
+            $count2Stars = $allReviews->where('rating', 2)->count();
+            $count3Stars = $allReviews->where('rating', 3)->count();
+            $count4Stars = $allReviews->where('rating', 4)->count();
+            $count5Stars = $allReviews->where('rating', 5)->count();
             $averageRating = Combo::find($comboId)->average_rating;
         } else {
             $reviews = new LengthAwarePaginator([], 0, $perPage);

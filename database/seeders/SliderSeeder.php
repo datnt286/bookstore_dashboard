@@ -15,24 +15,24 @@ class SliderSeeder extends Seeder
     {
         DB::table('sliders')->insert([
             [
-                'name' => 'Slide 1',
+                'name' => 'Slide Nhâm nhi Tết Giáp Thìn',
                 'book_id' => 1,
-                'image' => 'slide-1.jpg',
+                'image' => 'slide-nham-nhi-tet-giap-thin.jpg',
             ],
             [
-                'name' => 'Slide 2',
+                'name' => 'Slide Bên cửa ngắm xuân',
                 'book_id' => 2,
-                'image' => 'slide-2.jpg',
+                'image' => 'slide-ben-cua-ngam-xuan.jpg',
             ],
             [
-                'name' => 'Slide 3',
+                'name' => 'Slide Ngôn ngữ yêu thương',
                 'book_id' => 3,
-                'image' => 'slide-3.jpg',
+                'image' => 'slide-ngon-ngu-yeu-thuong.jpg',
             ],
             [
-                'name' => 'Slide 4',
+                'name' => 'Slide Hùm xám qua sông',
                 'book_id' => 4,
-                'image' => 'slide-4.jpg',
+                'image' => 'slide-hum-xam-qua-song.jpg',
             ],
         ]);
     }
