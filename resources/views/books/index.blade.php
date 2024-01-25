@@ -463,7 +463,12 @@
                 });
 
                 res.data.book.images.forEach(function(image) {
-                    $('#images-preview').append('<img src="' + '{{ asset("uploads/images/") }}' + '/' + image.name + '" alt="Hình ảnh" class="img img-thumbnail mx-2" style="max-width: 100px; max-height: 100px;">');
+                    $('#images-preview').append(
+                        '<div class="img-wrapper">' +
+                        '<img src="' + '{{ asset("uploads/images/") }}' + '/' + image.name + '" alt="Hình ảnh" class="img img-thumbnail mx-2" style="max-width: 100px; max-height: 100px;">' +
+                        '<button class="btn-delete-img">X</button>' +
+                        '</div>'
+                    );
                 });
 
                 $('#modal-title').text('Cập nhật sách');
@@ -473,8 +478,10 @@
             }
         });
 
+        var input = null;
+
         $('#images').change(function(event) {
-            var input = event.target;
+            input = event.target;
             $('#images-preview').empty();
 
             formData.delete('images[]');
@@ -483,7 +490,20 @@
                 for (var i = 0; i < input.files.length; i++) {
                     var reader = new FileReader();
                     reader.onload = function(e) {
-                        $('#images-preview').append('<img src="' + e.target.result + '" alt="Hình ảnh" class="img img-thumbnail mx-2" style="max-width: 100px; max-height: 100px;">');
+                        var imagePreview = $(
+                            '<div class="img-wrapper">' +
+                            '<img src="' + e.target.result + '" alt="Hình ảnh" class="img img-thumbnail mx-2" style="max-width: 100px; max-height: 100px;">' +
+                            '<button class="btn-delete-img">X</button>' +
+                            '</div>'
+                        );
+
+                        imagePreview.find('.btn-delete-img').on('click', function() {
+                            var index = $(this).parent().index();
+                            formData.delete('images[]', input.files[index]);
+                            $(this).parent().remove();
+                        });
+
+                        $('#images-preview').append(imagePreview);
                     };
                     reader.readAsDataURL(input.files[i]);
 
