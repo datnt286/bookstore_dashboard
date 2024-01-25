@@ -129,15 +129,18 @@
             $('#quantity').val('');
         })
 
+        var customerName = null;
+        var customerPhone = null;
+
         $('#btn-add').click(function() {
             $('#customer-name, #customer-phone, #product, #quantity').removeClass('is-invalid');
             $('.customer-name-error, .customer-phone-error, .product-error, .quantity-error').text('');
 
-            var customerName = $('#customer-name').val();
-            var customerPhone = $('#customer-phone').val();
+            customerName = $('#customer-name').val();
+            customerPhone = $('#customer-phone').val();
             var selectedProduct = $('#product').val();
             var quantity = $('#quantity').val();
-            var hasError = false;           
+            var hasError = false;
 
             if (!customerName) {
                 $('#customer-name').addClass('is-invalid');
@@ -148,6 +151,12 @@
             if (!customerPhone) {
                 $('#customer-phone').addClass('is-invalid');
                 $('.customer-phone-error').text('Vui lòng nhập số điện thoại khách hàng.');
+                hasError = true;
+            }
+
+            if (!/^\d{10}$/.test(customerPhone)) {
+                $('#customer-phone').addClass('is-invalid');
+                $('.customer-phone-error').text('Vui lòng nhập số điện thoại hợp lệ (10 chữ số).');
                 hasError = true;
             }
 
@@ -244,6 +253,10 @@
         $('#btn-store').click(async function(event) {
             try {
                 var formData = new FormData($('#form-store')[0]);
+
+                formData.append('name', customerName);
+                formData.append('phone', customerPhone);
+
                 var response = await axios.post("{{ route('order.store') }}", formData);
                 var res = response.data;
 
@@ -254,6 +267,8 @@
                 $('#data-table tbody').empty();
                 $('#product-table').hide();
 
+                $('#customer-name').val('');
+                $('#customer-phone').val('');
                 $('#product').val($('#product option:first').val()).trigger('change');
                 $('#price').val('');
                 $('#quantity').val('');
