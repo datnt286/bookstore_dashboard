@@ -23,7 +23,25 @@ class AdminSeeder extends Seeder
                 'email' => 'ntdz2003@gmail.com',
                 'address' => 'TP. HCM',
                 'avatar' => 'dat.jpg',
-            ]
+            ],
+            [
+                'username' => 'lien',
+                'password' => Hash::make('123456'),
+                'name' => 'Trần Thị Mai Liên',
+                'phone' => '0987654321',
+                'email' => 'havy1772003@gmail.com',
+                'address' => 'TP. HCM',
+                'avatar' => 'default-avatar.jpg',
+            ],
+            [
+                'username' => 'dang',
+                'password' => Hash::make('123abc'),
+                'name' => 'Đào Hải Đăng',
+                'phone' => '0987612345',
+                'email' => 'seadark0104@gmail.com',
+                'address' => 'TP. HCM',
+                'avatar' => 'default-avatar.jpg',
+            ],
         ]);
     }
 }

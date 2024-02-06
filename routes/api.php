@@ -33,6 +33,24 @@ Route::middleware('auth:api')->group(function () {
     Route::get('me', [APICustomerController::class, 'me']);
     Route::post('update', [APICustomerController::class, 'update']);
     Route::post('change-password', [APICustomerController::class, 'changePassword']);
+
+    Route::prefix('order')->group(function () {
+        Route::get('/', [APIOrderController::class, 'index']);
+        Route::post('create', [APIOrderController::class, 'create']);
+        Route::get('details/{id}', [APIOrderController::class, 'details']);
+        Route::get('confirm/{id}', [APIOrderController::class, 'confirm']);
+        Route::get('cancel/{id}', [APIOrderController::class, 'cancel']);
+    });
+
+    Route::prefix('review')->group(function () {
+        Route::get('check-delivered', [APIReviewController::class, 'checkDelivered']);
+        Route::post('create', [APIReviewController::class, 'create']);
+    });
+
+    Route::prefix('comment')->group(function () {
+        Route::post('create', [APICommentController::class, 'create']);
+        Route::get('destroy/{id}', [APICommentController::class, 'destroy']);
+    });
 });
 
 Route::prefix('category')->group(function () {
@@ -44,24 +62,12 @@ Route::prefix('author')->group(function () {
     Route::get('/', [APIAuthorController::class, 'index']);
 });
 
-Route::prefix('order')->group(function () {
-    Route::get('/', [APIOrderController::class, 'index']);
-    Route::post('create', [APIOrderController::class, 'create']);
-    Route::get('details/{id}', [APIOrderController::class, 'details']);
-    Route::get('confirm/{id}', [APIOrderController::class, 'confirm']);
-    Route::get('cancel/{id}', [APIOrderController::class, 'cancel']);
-});
-
 Route::prefix('review')->group(function () {
-    Route::post('create', [APIReviewController::class, 'create']);
     Route::get('reviews-by-product-id', [APIReviewController::class, 'getReviewsByProductId']);
-    Route::get('check-delivered', [APIReviewController::class, 'checkDelivered']);
 });
 
 Route::prefix('comment')->group(function () {
-    Route::post('create', [APICommentController::class, 'create']);
     Route::get('comments-by-product-id', [APICommentController::class, 'getCommentsByProductId']);
-    Route::get('destroy/{id}', [APICommentController::class, 'destroy']);
 });
 
 Route::get('home', [APIBookController::class, 'home']);
