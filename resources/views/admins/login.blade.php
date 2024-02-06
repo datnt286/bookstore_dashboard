@@ -17,6 +17,11 @@
 </head>
 
 <body class="hold-transition login-page">
+
+    <div class="preloader flex-column justify-content-center align-items-center">
+        <img class="animation__shake" src="{{ asset('/img/preloader-logo.png') }}" alt="Logo" height="60" width="60">
+    </div>
+
     <div class="login-box">
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
@@ -70,7 +75,7 @@
                     </div>
                 </form>
                 <p class="mb-1">
-                    <a href="">Quên mật khẩu?</a>
+                    <a href="{{ route('reset-password') }}">Quên mật khẩu?</a>
                 </p>
             </div>
         </div>

@@ -15,8 +15,11 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
+
 
 class AdminController extends Controller
 {
@@ -195,6 +198,43 @@ class AdminController extends Controller
         auth()->logout();
 
         return redirect()->route('login');
+    }
+
+    public function resetPassword()
+    {
+        return view('reset-password.index');
+    }
+
+    public function handleResetPassword(Request $request)
+    {
+        if (empty($request->email)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Bạn chưa nhập email'
+            ], 422);
+        }
+
+        $newPassword = Str::random(6);
+        $admin = Admin::where('email', $request->email)->first();
+
+        if (empty($admin)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Không tìm thấy người dùng với địa chỉ email này.'
+            ], 404);
+        }
+
+        $admin->update(['password' => Hash::make($newPassword)]);
+
+        Mail::send('reset-password.mail', compact('admin', 'newPassword'), function ($email) use ($request) {
+            $email->subject('Reset mật khẩu');
+            $email->to($request->email);
+        });
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Mật khẩu mới vừa được gửi vào email của bạn. Vui lòng kiểm tra lại email.'
+        ]);
     }
 
     public function index(Request $request)

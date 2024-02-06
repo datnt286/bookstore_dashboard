@@ -28,6 +28,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('guest')->group(function () {
     Route::get('login', [AdminController::class, 'login'])->name('login');
     Route::post('login', [AdminController::class, 'handleLogin'])->name('handle-login');
+    Route::get('reset-password', [AdminController::class, 'resetPassword'])->name('reset-password');
+    Route::post('reset-password', [AdminController::class, 'handleResetPassword'])->name('handle-reset-password');
 });
 
 Route::middleware('auth')->group(function () {

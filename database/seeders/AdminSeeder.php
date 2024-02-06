@@ -20,7 +20,7 @@ class AdminSeeder extends Seeder
                 'password' => Hash::make('123'),
                 'name' => 'Nguyễn Văn Admin',
                 'phone' => '0123456789',
-                'email' => 'admin@gmail.com',
+                'email' => 'ntdz2003@gmail.com',
                 'address' => 'TP. HCM',
                 'avatar' => 'dat.jpg',
             ]

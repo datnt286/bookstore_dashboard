@@ -150,7 +150,7 @@ class APICustomerController extends Controller
 
         $customer->update(['password' => Hash::make($newPassword)]);
 
-        Mail::send('reset-password.index', compact('customer', 'newPassword'), function ($email) use ($request) {
+        Mail::send('reset-password.mail', compact('customer', 'newPassword'), function ($email) use ($request) {
             $email->subject('Reset mật khẩu');
             $email->to($request->email);
         });

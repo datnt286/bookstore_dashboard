@@ -1,0 +1,14 @@
+<div>
+    @if (!empty($admin->name))
+    <h2>Xin chào: {{ $admin->name }}</h2>
+    @endif
+
+    @if (!empty($customer->name))
+    <h2>Xin chào: {{ $customer->name }}</h2>
+    @endif
+
+    <h2>Mật khẩu mới của bạn là: <span style="color: red;">{{ $newPassword }}</span></h2>
+    <p>
+        Vui lòng đăng nhập với mật khẩu mới sau đó đổi mật khẩu.
+    </p>
+</div>
