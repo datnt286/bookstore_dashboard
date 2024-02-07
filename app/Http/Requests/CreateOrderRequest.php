@@ -28,8 +28,7 @@ class CreateOrderRequest extends FormRequest
             ],
             'phone' => [
                 'required',
-                'regex:/^\d+$/',
-                'size:10',
+                'regex:/^0\d{9}$/',
             ],
             'address' => 'required',
         ];
@@ -42,8 +41,7 @@ class CreateOrderRequest extends FormRequest
             'name.regex' => 'Họ tên không được chứa số hoặc ký tự đặc biệt.',
             'phone.required' => 'Vui lòng nhập số điện thoại.',
             'phone.unique' => 'Số điện thoại đã tồn tại.',
-            'phone.regex' => 'Số điện thoại chỉ được chứa ký tự số và bắt đầu bằng số 0.',
-            'phone.size' => 'Số điện thoại phải đủ 10 ký tự.',
+            'phone.regex' => 'Số điện thoại chỉ được chứa ký tự số, bắt đầu bằng số 0 và đủ 10 ký tự.',
             'address.required' => 'Vui lòng nhập địa chỉ.',
         ];
     }

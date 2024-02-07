@@ -28,8 +28,7 @@ class CreateAPIOrderRequest extends FormRequest
             ],
             'phone' => [
                 'required',
-                'regex:/^\d+$/',
-                'size:10',
+                'regex:/^0\d{9}$/',
             ],
             'address' => 'required',
         ];
@@ -41,8 +40,7 @@ class CreateAPIOrderRequest extends FormRequest
             'name.required' => 'Vui lòng nhập tên khách hàng.',
             'name.regex' => 'Tên khách hàng không được chứa số hoặc ký tự đặc biệt.',
             'phone.required' => 'Vui lòng nhập số điện thoại.',
-            'phone.regex' => 'Số điện thoại chỉ được chứa ký tự số và bắt đầu bằng số 0.',
-            'phone.size' => 'Số điện thoại phải đủ 10 ký tự.',
+            'phone.regex' => 'Số điện thoại chỉ được chứa ký tự số, bắt đầu bằng số 0 và đủ 10 ký tự.',
             'address.required' => 'Vui lòng nhập địa chỉ.',
         ];
     }

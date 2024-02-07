@@ -26,8 +26,7 @@ class UpdateCustomerAccountRequest extends FormRequest
             'phone' => [
                 'required',
                 'unique:customers,phone,' . $this->request->get('id'),
-                'regex:/^\d+$/',
-                'size:10',
+                'regex:/^0\d{9}$/',
             ],
             'email' => [
                 'required',
@@ -48,8 +47,7 @@ class UpdateCustomerAccountRequest extends FormRequest
             'name.required' => 'Vui lòng nhập họ tên.',
             'phone.required' => 'Vui lòng nhập số điện thoại.',
             'phone.unique' => 'Số điện thoại đã tồn tại.',
-            'phone.regex' => 'Số điện thoại chỉ được chứa ký tự số và bắt đầu bằng số 0.',
-            'phone.size' => 'Số điện thoại phải đủ 10 ký tự.',
+            'phone.regex' => 'Số điện thoại chỉ được chứa ký tự số, bắt đầu bằng số 0 và đủ 10 ký tự.',
             'email.required' => 'Vui lòng nhập email.',
             'email.unique' => 'Email đã tồn tại.',
             'email.email' => 'Sai định dạng email.',
