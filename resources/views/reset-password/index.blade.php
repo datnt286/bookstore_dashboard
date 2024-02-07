@@ -72,7 +72,7 @@
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
-                timer: 3000
+                timer: 3000,
             });
 
             $('#btn-reset-password').click(async function(event) {
@@ -84,14 +84,14 @@
                     var res = response.data;
 
                     Toast.fire({
+                        title: res.message,
                         icon: 'success',
-                        title: res.message
                     });
                 } catch (error) {
                     console.error('Lỗi: ', error);
                     Toast.fire({
-                        icon: 'error',
                         title: error.response.data.message,
+                        icon: 'error',
                     });
                 }
             });

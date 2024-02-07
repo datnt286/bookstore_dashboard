@@ -42,7 +42,10 @@ class OrderController extends Controller
             'admin_id' => auth()->id(),
             'name' => $request->name,
             'phone' => $request->phone,
+            'address' => '',
             'total' => $total,
+            'payment_method' => 3,
+            'payment_status' => 1,
             'status' => 4,
         ]);
 
@@ -72,7 +75,10 @@ class OrderController extends Controller
         }
 
         Order::find($order->id)
-            ->update(['total' => $total]);
+            ->update([
+                'total' => $total,
+                'total_payment' => $total
+            ]);
 
         return response()->json([
             'success' => true,

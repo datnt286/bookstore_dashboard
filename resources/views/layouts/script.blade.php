@@ -68,13 +68,13 @@
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 3000
+        timer: 3000,
     });
 
     function handleSuccess(res) {
         Toast.fire({
+            title: res.message,
             icon: 'success',
-            title: res.message
         });
     }
 
@@ -91,8 +91,8 @@
         } else {
             console.error('Lỗi: ', error);
             Toast.fire({
+                title: 'Có lỗi xảy ra!',
                 icon: 'error',
-                title: 'Có lỗi xảy ra!'
             });
         }
     }

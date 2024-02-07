@@ -155,7 +155,16 @@
                     data: 'payment_method',
                     name: 'payment_method',
                     render: function(data, type, row) {
-                        return data === 1 ? 'Thanh toán khi nhận hàng' : 'Thanh toán Paypal'
+                        switch (data) {
+                            case 1:
+                                return 'Thanh toán khi nhận hàng';
+                            case 2:
+                                return 'Thanh toán Paypal';
+                            case 3:
+                                return 'Thanh toán tại cửa hàng';
+                            default:
+                                return 'Phương thức thanh toán không xác định';
+                        }
                     }
                 },
                 {
