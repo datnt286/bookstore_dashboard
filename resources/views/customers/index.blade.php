@@ -5,12 +5,6 @@
     <div class="col-9">
         <h1 class="m-0">Quản lý khách hàng</h1>
     </div>
-    <div class="col-3 text-right">
-        <button type="button" id="btn-create" class="btn btn-success mt-2" data-toggle="modal" data-target="#modal-store">
-            <i class="fas fa-plus-circle"></i>
-            Thêm khách hàng
-        </button>
-    </div>
 </div>
 
 <div class="card">
@@ -61,18 +55,11 @@
                         </div>
                         <div class="form-group">
                             <label for="username">Tên đăng nhập:</label>
-                            <input type="text" name="username" id="username" class="form-control">
-                            <div class="invalid-feedback username-error">{{ $errors->first('username') }}</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Mật khẩu:</label>
-                            <input type="password" name="password" id="password" class="form-control">
-                            <div class="invalid-feedback password-error">{{ $errors->first('password') }}</div>
+                            <input type="text" name="username" id="username" class="form-control" readonly>
                         </div>
                         <div class="form-group">
                             <label for="name">Tên khách hàng:</label>
-                            <input type="text" name="name" id="name" class="form-control">
-                            <div class="invalid-feedback name-error">{{ $errors->first('name') }}</div>
+                            <input type="text" name="name" id="name" class="form-control" readonly>
                         </div>
                         <div class="form-group">
                             <label for="phone">Điện thoại:</label>
@@ -260,17 +247,6 @@
         var avatar = null;
         var formData = new FormData($('#form-store')[0]);
 
-        $('#btn-create').click(function() {
-            resetValidationForm();
-            id = null;
-            $('#id').val(null);
-            $('#form-store').trigger('reset');
-            $('#avatar-preview').attr('src', 'img/default-avatar.jpg');
-            $('#username').prop('readonly', false);
-            $('#modal-title').text('Thêm khách hàng');
-            $('#modal-store').modal('show');
-        });
-
         $('#data-table').on('click', '.btn-edit', async function() {
             try {
                 resetValidationForm();
@@ -280,13 +256,11 @@
 
                 $('#id').val(res.data.id);
                 $('#username').val(res.data.username);
-                $('#password').val('');
                 $('#name').val(res.data.name);
                 $('#phone').val(res.data.phone);
                 $('#email').val(res.data.email);
                 $('#address').val(res.data.address);
                 $('#avatar-preview').attr('src', 'uploads/customers/' + res.data.avatar);
-                $('#username').prop('readonly', true);
                 $('#modal-title').text('Cập nhật khách hàng');
                 $('#modal-store').modal('show');
             } catch (error) {
@@ -319,13 +293,7 @@
             try {
                 id = $('#id').val();
                 var formData = new FormData($('#form-store')[0]);
-
-                if (id) {
-                    var url = `{{ route('customer.update', ['id' => '_id_']) }}`.replace('_id_', id);
-                } else {
-                    var url = "{{ route('customer.store') }}";
-                }
-
+                var url = `{{ route('customer.update', ['id' => '_id_']) }}`.replace('_id_', id);
                 var response = await axios.post(url, formData);
                 var res = response.data;
 

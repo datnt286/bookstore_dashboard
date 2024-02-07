@@ -22,11 +22,6 @@ class UpdateCustomerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
-                'required',
-                'unique:customers,name,' . $this->request->get('id'),
-                'regex:/^[\p{L}\s]+$/u',
-            ],
             'phone' => [
                 'required',
                 'unique:customers,phone,' . $this->request->get('id'),
@@ -48,8 +43,6 @@ class UpdateCustomerRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Vui lòng nhập tên khách hàng.',
-            'name.regex' => 'Tên khách hàng không được chứa số hoặc ký tự đặc biệt.',
             'phone.required' => 'Vui lòng nhập số điện thoại.',
             'phone.unique' => 'Số điện thoại đã tồn tại.',
             'phone.regex' => 'Số điện thoại chỉ được chứa ký tự số, bắt đầu bằng số 0 và đủ 10 ký tự.',

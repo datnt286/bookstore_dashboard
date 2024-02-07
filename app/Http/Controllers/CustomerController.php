@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateCustomerRequest;
-use App\Http\Requests\CustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
@@ -32,39 +30,9 @@ class CustomerController extends Controller
         return view('customers.index', compact('customers'));
     }
 
-    public function store(CreateCustomerRequest $request)
-    {
-        $data = [
-            'username' => $request->username,
-            'password' => $request->password,
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'address' => $request->address,
-        ];
-
-        if ($request->hasFile('avatar')) {
-            $file = $request->file('avatar');
-            $extension = $file->getClientOriginalExtension();
-            $fileName = time() . '_' . $request->username . '.' . $extension;
-
-            $file->move(public_path('uploads/customers/'), $fileName);
-
-            $data['avatar'] = $fileName;
-        }
-
-        Customer::create($data);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Thêm mới khách hàng thành công!',
-        ]);
-    }
-
     public function update(UpdateCustomerRequest $request, $id)
     {
         $data = [
-            'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,
             'address' => $request->address,

@@ -118,7 +118,6 @@ Route::middleware('auth')->group(function () {
     Route::prefix('customer')->group(function () {
         Route::name('customer.')->group(function () {
             Route::get('/', [CustomerController::class, 'index'])->name('index');
-            Route::post('store', [CustomerController::class, 'store'])->name('store');
             Route::post('update/{id}', [CustomerController::class, 'update'])->name('update');
             Route::get('update-status/{id}', [CustomerController::class, 'updateStatus'])->name('update-status');
             Route::get('destroy/{id}', [CustomerController::class, 'destroy'])->name('destroy');
