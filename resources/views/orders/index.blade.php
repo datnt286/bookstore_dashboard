@@ -20,8 +20,8 @@
                 <tr>
                     <th>Id</th>
                     <th>Tên khách hàng</th>
-                    <th>Điện thoại</th>
                     <th>Địa chỉ</th>
+                    <th>Ngày đặt</th>
                     <th>Tổng thanh toán</th>
                     <th>Hình thức thanh toán</th>
                     <th>Trạng thái thanh toán</th>
@@ -137,12 +137,12 @@
                     name: 'name',
                 },
                 {
-                    data: 'phone',
-                    name: 'phone',
-                },
-                {
                     data: 'address',
                     name: 'address',
+                },
+                {
+                    data: 'order_date',
+                    name: 'order_date',
                 },
                 {
                     data: 'total_payment',

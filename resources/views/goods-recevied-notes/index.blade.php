@@ -21,6 +21,7 @@
                     <th>Id</th>
                     <th>Nhà cung cấp</th>
                     <th>Tên admin</th>
+                    <th>Ngày lập</th>
                     <th>Tổng tiền</th>
                     <th></th>
                 </tr>
@@ -31,6 +32,7 @@
                     <td>{{ $goodsReceviedNote->id }}</td>
                     <td>{{ $goodsReceviedNote->supplier->name }}</td>
                     <td>{{ $goodsReceviedNote->admin->name }}</td>
+                    <td>{{ $goodsReceviedNote->create_date }}</td>
                     <td>{{ $goodsReceviedNote->total }}</td>
                     <td>
                         <div class="project-actions text-right">
@@ -98,7 +100,7 @@
                     text: 'Xuất Excel',
                     title: 'Danh sách hoá đơn nhập',
                     exportOptions: {
-                        columns: [0, 1, 2, 3]
+                        columns: [0, 1, 2, 3, 4]
                     },
                 },
                 {
@@ -106,7 +108,7 @@
                     text: 'Xuất PDF',
                     title: 'Danh sách hoá đơn nhập',
                     exportOptions: {
-                        columns: [0, 1, 2, 3]
+                        columns: [0, 1, 2, 3, 4]
                     },
                 },
                 {
@@ -126,6 +128,7 @@
                 null,
                 null,
                 null,
+                null,
                 {
                     data: 'total',
                     render: function(data, type, row) {
@@ -135,7 +138,7 @@
                 null
             ],
             columnDefs: [{
-                targets: [4],
+                targets: [5],
                 orderable: false
             }],
             language: {
