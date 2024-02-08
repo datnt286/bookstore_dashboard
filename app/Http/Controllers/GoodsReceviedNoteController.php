@@ -8,7 +8,6 @@ use App\Models\GoodsReceviedNote;
 use App\Models\GoodsReceviedNoteDetail;
 use App\Models\Publisher;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class GoodsReceviedNoteController extends Controller
 {
@@ -34,7 +33,7 @@ class GoodsReceviedNoteController extends Controller
 
         $goodsReceviedNote = GoodsReceviedNote::create([
             'supplier_id' => $request->supplier_id,
-            'admin_id' => Auth::user()->id,
+            'admin_id' => auth()->id(),
             'total' => $total,
         ]);
 

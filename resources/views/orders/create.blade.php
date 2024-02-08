@@ -22,7 +22,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label>Nhân viên lập:</label>
-                    <input type="text" value="{{ Auth::user()->name }}" class="form-control" style="background-color: #fff; color: #000;" readonly>
+                    <input type="text" value="{{ auth()->user()->name }}" class="form-control" style="background-color: #fff; color: #000;" readonly>
                 </div>
                 <div class="form-group">
                     <label for="name">Tên khách hàng:</label>
@@ -154,6 +154,12 @@
                 hasError = true;
             }
 
+            if (!/^[a-zA-Z\s]+$/.test(customerName)) {
+                $('#customer-name').addClass('is-invalid');
+                $('.customer-name-error').text('Tên khách hàng không được chứa số hoặc ký tự đặc biệt.');
+                hasError = true;
+            }
+
             if (!/^\d{10}$/.test(customerPhone)) {
                 $('#customer-phone').addClass('is-invalid');
                 $('.customer-phone-error').text('Vui lòng nhập số điện thoại hợp lệ (10 chữ số).');
@@ -191,11 +197,11 @@
 
                 var oldAmount = parseInt(existingRow.find('.amount').text());
 
+                existingRow.find('.price-container').text(price);
+                existingRow.find('.quantity-container').text(quantity);
                 existingRow.find('.price').val(price);
                 existingRow.find('.quantity').val(quantity);
-                existingRow.find('td:eq(2)').text(price);
-                existingRow.find('td:eq(3)').text(quantity);
-                existingRow.find('td:eq(4)').text(amount);
+                existingRow.find('.amount').text(amount);
 
                 total = total - oldAmount + amount;
             } else {
@@ -256,6 +262,7 @@
 
                 formData.append('name', customerName);
                 formData.append('phone', customerPhone);
+                console.log([...formData])
 
                 var response = await axios.post("{{ route('order.store') }}", formData);
                 var res = response.data;

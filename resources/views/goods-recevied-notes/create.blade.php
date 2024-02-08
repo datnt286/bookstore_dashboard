@@ -22,7 +22,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label>Nhân viên lập:</label>
-                    <input type="text" value="{{ Auth::user()->name }}" class="form-control" style="background-color: #fff; color: #000;" readonly>
+                    <input type="text" value="{{ auth()->user()->name }}" class="form-control" style="background-color: #fff; color: #000;" readonly>
                 </div>
                 <div class="form-group">
                     <label for="supplier">Nhà cung cấp: </label>
@@ -225,13 +225,13 @@
 
                 var oldAmount = parseInt(existingRow.find('.amount').text());
 
+                existingRow.find('.import-price-container').text(importPrice);
+                existingRow.find('.price-container').text(price);
+                existingRow.find('.quantity-container').text(quantity);
                 existingRow.find('.import-price').val(importPrice);
                 existingRow.find('.price').val(price);
                 existingRow.find('.quantity').val(quantity);
-                existingRow.find('td:eq(2)').text(importPrice);
-                existingRow.find('td:eq(3)').text(price);
-                existingRow.find('td:eq(4)').text(quantity);
-                existingRow.find('td:eq(5)').text(amount);
+                existingRow.find('.amount').text(amount);
 
                 total = total - oldAmount + amount;
             } else {
@@ -293,7 +293,7 @@
                 var formData = new FormData($('#form-store')[0]);
 
                 formData.append('supplier_id', supplier_id);
-
+                console.log([...formData])
                 var response = await axios.post("{{ route('goods-recevied-note.store') }}", formData);
                 var res = response.data;
 
